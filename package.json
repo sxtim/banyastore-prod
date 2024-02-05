@@ -1,0 +1,50 @@
+{
+    "private": true,
+    "scripts": {
+        "dev-all-public": "npm --section=public run dev --kill-others-on-fail",
+        "dev-all": "npm --section=admin run dev && npm --section=public run dev --kill-others-on-fail",
+        "prod-all": "npm --section=admin run production && npm --section=public run production --kill-others-on-fail",
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "@vue/compiler-sfc": "^3.2.29",
+        "browser-sync": "^2.27.5",
+        "browser-sync-webpack-plugin": "^2.3.0",
+        "laravel-echo": "^1.11.4",
+        "laravel-mix-merge-manifest": "^2.0.0",
+        "pusher-js": "^7.0.6",
+        "terser-webpack-plugin": "^5.3.0",
+        "vue-loader": "^16.8.3"
+    },
+    "dependencies": {
+        "@fancyapps/ui": "^4.0.16",
+        "@vuelidate/core": "^2.0.0-alpha.33",
+        "@vuelidate/validators": "^2.0.0-alpha.26",
+        "autoprefixer": "^10.3.7",
+        "axios": "^0.21.4",
+        "chart.js": "^3.8.2",
+        "click-outside-vue3": "^4.0.1",
+        "cross-env": "^7.0.3",
+        "jquery": "^3.6.0",
+        "laravel-mix": "^6.0.34",
+        "lodash": "^4.17.21",
+        "maska": "^1.5.0",
+        "postcss": "^8.3.10",
+        "postcss-import": "^14.0.2",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "^1.43.3",
+        "sass-loader": "^12.2.0",
+        "simplemde": "^1.11.2",
+        "swiper": "^7.4.1",
+        "vue": "^3.2.23",
+        "vue-chartjs": "^4.1.1",
+        "vue-input-mask": "0.0.11",
+        "vuex": "^4.0.2"
+    }
+}

@@ -1,0 +1,45 @@
+#front
+/node_modules
+public/hot
+public/storage
+public/css/
+public/js/
+public/images/
+public/mix-manifest.json
+false
+.gitlab-ci.yml
+
+#storage
+/public/hot
+/public/storage
+/storage/*.key
+storage/tmp
+storage/secure_ecomily
+storage/secure_cashback
+
+#other
+/vendor
+.idea
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.cache/
+.composer/
+.subversion/
+ .docker
+ dump.sql
+
+# IDE
+*.swp
+.project
+.buildpath
+/.settings/*
+/.idea
+/docker
+
+#swagger
+storage/api-docs/api-docs.json
