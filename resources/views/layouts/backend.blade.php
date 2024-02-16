@@ -52,6 +52,7 @@
 
         <div class="links flex-wrap">
             <a href="{{ route('backend.index') }}" class="@yield('aside_index')">Информация</a>
+            <a href="{{ route('backend.shop.index') }}" class="@yield('aside_shop')">Интернет-магазин</a>
         </div>
 
     </div>
