@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class PropertyRequest extends FormRequest
 {
 
     /**
@@ -26,15 +26,13 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'sort' => 'numeric'
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'Необходимо ввести название категории',
-            'sort.numeric' => 'Укажите сортировку числом',
+            'name.required' => 'Необходимо ввести название свойства',
         ];
     }
 }

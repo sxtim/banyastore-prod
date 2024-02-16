@@ -64,7 +64,7 @@ class ProductController extends Controller
         return redirect()->route('backend.product.index')->with('success', 'Изменения сохранены');
     }
 
-    public function update(Product $product, ProductRequest $request)
+    public function update(Product $product, ProductRequest $request): RedirectResponse
     {
         $data = [
             'name' => $request->input('name'),

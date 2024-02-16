@@ -39,7 +39,7 @@ class CategoryController extends Controller
         return redirect()->route('backend.category.index')->with('success', 'Изменения сохранены');
     }
 
-    public function update(Category $category, CategoryRequest $request)
+    public function update(Category $category, CategoryRequest $request): RedirectResponse
     {
         $category->update([
             'name' => $request->input('name'),
