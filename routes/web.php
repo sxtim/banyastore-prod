@@ -35,6 +35,24 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('edit');
                 Route::patch('/edit/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'update'])->name('update');
             });
+
+            //Категории
+            Route::prefix('categories')->name('categories.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('create');
+                Route::post('/create', [\App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('store');
+                Route::get('/edit/{category}', [\App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{category}', [\App\Http\Controllers\Backend\CategoryController::class, 'update'])->name('update');
+            });
+
+            //Свойства
+            Route::prefix('properties')->name('properties.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\PropertyController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\Backend\PropertyController::class, 'create'])->name('create');
+                Route::post('/create', [\App\Http\Controllers\Backend\PropertyController::class, 'store'])->name('store');
+                Route::get('/edit/{property}', [\App\Http\Controllers\Backend\PropertyController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{property}', [\App\Http\Controllers\Backend\PropertyController::class, 'update'])->name('update');
+            });
         });
     });
 

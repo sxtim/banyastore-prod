@@ -12,19 +12,22 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $categories = Category::all();
+        $categories = Category::with(['subcategory'])->where('parent_id', null)->get();
         return view('backend.shop.category.index', compact('categories'));
     }
 
     public function create(): View
     {
-        return view('backend.shop.category.create');
+        $categories = Category::all();
+        return view('backend.shop.category.create', compact('categories'));
     }
 
-    public function edit(Category $category): View
+    public function edit(int $categoryId): View
     {
-        return view('backend.shop.category.create',
-            compact('category')
+        $category = Category::find($categoryId);
+        $categories = Category::all();
+        return view('backend.shop.category.edit',
+            compact('category', 'categories')
         );
     }
 
@@ -34,19 +37,22 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
             'parent_id' => $request->input('parent_id') ? $request->input('parent_id') : null,
             'sort' => $request->input('sort'),
+            'is_active' => true
         ]);
 
-        return redirect()->route('backend.category.index')->with('success', 'Изменения сохранены');
+        return redirect()->route('backend.categories.index')->with('success', 'Изменения сохранены');
     }
 
-    public function update(Category $category, CategoryRequest $request): RedirectResponse
+    public function update(int $categoryId, CategoryRequest $request): RedirectResponse
     {
+        $category = Category::findOrFail($categoryId);
         $category->update([
             'name' => $request->input('name'),
             'parent_id' => $request->input('parent_id') ? $request->input('parent_id') : null,
             'sort' => $request->input('sort'),
+            'is_active' => true
         ]);
 
-        return redirect()->route('backend.category.index')->with('success', 'Данные обновлены');
+        return redirect()->route('backend.categories.index')->with('success', 'Данные обновлены');
     }
 }

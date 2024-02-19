@@ -20,9 +20,19 @@
     @endif
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
             <a href="{{ route('backend.product.index') }}" class="btn btn-block btn-outline-primary">
                 Продукты
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ route('backend.categories.index') }}" class="btn btn-block btn-outline-primary">
+                Категории
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ route('backend.properties.index') }}" class="btn btn-block btn-outline-primary">
+                Свойства
             </a>
         </div>
     </div>

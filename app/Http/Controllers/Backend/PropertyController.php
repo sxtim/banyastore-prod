@@ -12,7 +12,7 @@ class PropertyController extends Controller
 {
     public function index(): View
     {
-        $properties = Property::all();
+        $properties = Property::paginate(15);
         return view('backend.shop.property.index', compact('properties'));
     }
 
@@ -23,7 +23,7 @@ class PropertyController extends Controller
 
     public function edit(Property $property): View
     {
-        return view('backend.shop.property.create',
+        return view('backend.shop.property.edit',
             compact('property')
         );
     }
@@ -35,7 +35,7 @@ class PropertyController extends Controller
             'is_required' => $request->boolean('is_required'),
         ]);
 
-        return redirect()->route('backend.property.index')->with('success', 'Изменения сохранены');
+        return redirect()->route('backend.properties.index')->with('success', 'Изменения сохранены');
     }
 
     public function update(Property $property, PropertyRequest $request): RedirectResponse
@@ -45,6 +45,6 @@ class PropertyController extends Controller
             'is_required' => $request->boolean('is_required'),
         ]);
 
-        return redirect()->route('backend.property.index')->with('success', 'Данные обновлены');
+        return redirect()->route('backend.properties.index')->with('success', 'Данные обновлены');
     }
 }
