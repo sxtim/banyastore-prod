@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Backend;
 
+use App\Models\Shop\Property\PropertyValue;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PropertyValueRequest extends FormRequest
 {
@@ -24,15 +26,28 @@ class PropertyValueRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required',
+        $data = [
+            'name' => ['required', Rule::unique('property_values','name')->where('property_id', $this->route()->parameter('propertyId')) ]
         ];
+
+        if($this->method() == 'PATCH') {
+            $propertyValueId = $this->route()->parameter('propertyValueId');
+            $propertyValue = PropertyValue::findOrFail($propertyValueId);
+            $data = [
+                'name' => [
+                    'required',
+                    Rule::unique('property_values','name')->ignore($propertyValueId)->where('property_id', $propertyValue->property_id) ]
+            ];
+        }
+
+        return $data;
     }
 
     public function messages(): array
     {
         return [
             'name.required' => 'Необходимо ввести значение свойства',
+            'name.unique' => 'У этого свойства уже есть такое значение'
         ];
     }
 }

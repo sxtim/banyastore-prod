@@ -53,6 +53,15 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{property}', [\App\Http\Controllers\Backend\PropertyController::class, 'edit'])->name('edit');
                 Route::patch('/edit/{property}', [\App\Http\Controllers\Backend\PropertyController::class, 'update'])->name('update');
             });
+
+            //Значения свойств
+            Route::prefix('property-values')->name('property-values.')->group(function () {
+                Route::get('/{propertyId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'index'])->name('index');
+                Route::get('/create/{propertyId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'create'])->name('create');
+                Route::post('/create/{propertyId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'store'])->name('store');
+                Route::get('/edit/{propertyValueId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{propertyValueId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'update'])->name('update');
+            });
         });
     });
 

@@ -57,7 +57,9 @@
                             {{ $property->is_required ? 'Да' : 'Нет' }}
                         </td>
                         <td>
-
+                             <a href="{{ route('backend.property-values.index', ['propertyId' => $property->id]) }}">
+                                 Значения
+                             </a>
                         </td>
                         <td>
                             <a href="{{ route('backend.properties.edit', ['property' => $property->id]) }}">
