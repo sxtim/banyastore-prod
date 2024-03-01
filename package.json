@@ -13,6 +13,8 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@editorjs/editorjs": "^2.27.2",
+        "@editorjs/header": "^2.7.0",
         "@vue/compiler-sfc": "^3.2.29",
         "browser-sync": "^2.27.5",
         "browser-sync-webpack-plugin": "^2.3.0",

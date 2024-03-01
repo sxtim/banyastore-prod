@@ -11,6 +11,11 @@
             <option value="0">
                 Не выбрано
             </option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ isset($product) && $product->category_id === $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
         </select>
     </div>
     <div class="col-4">
@@ -22,11 +27,11 @@
 <div class="row mt-3">
     <div class="col-12">
         <label for="description" class="main-label">Описание</label>
-        <textarea name="description" id="description" class="form-control">
-            {{ old('description', ( isset($product) ? $product->description : '')) }}
-        </textarea>
+        <div id="editorjs"></div>
+        <input type="hidden" id="description" name="description"/>
     </div>
 </div>
+
 
 @isset($product)
     <div class="row mt-3">
@@ -43,8 +48,32 @@
     <div class="col-2">
         <label for="sort" class="main-label">Сортировка</label>
         <input type="number" name="sort" id="sort" class="form-control" autocomplete="off"
-               value="{{ old('sort', ( isset($product) ? $product->sort : '')) }}">
+               value="{{ old('sort', ( isset($product) ? $product->sort : 0)) }}">
     </div>
+</div>
+
+
+<div class="row mt-3">
+    <h4>Свойства</h4>
+</div>
+<div class="row mt-3">
+    @foreach($properties as $property)
+        <div class="col-3">
+            <label for="properties" class="main-label">
+                {{ $property->name }}
+            </label>
+            <select name="properties[]" class="form-control">
+                <option value="">
+                    Не выбрано
+                </option>
+                @foreach($property->values as $value)
+                    <option value="{{ $value->id }}" {{ isset($product) && $product->propertiesValues->where('id', $value->id)->first() ? 'selected' : '' }}>
+                        {{ $value->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    @endforeach
 </div>
 <div class="row justify-content-end">
     <div class="form-group col-md-6 btn-wrap">

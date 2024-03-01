@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Backend;
 
+use App\Rules\ProductProperties;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -26,11 +27,11 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category_id' => 'required',
+            'category' => 'required',
             'price' => 'required|numeric',
             'image' => 'image|max:1000', //2 MB
-            'description' => 'max:255',
-            'sort' => 'numeric'
+            'sort' => 'numeric',
+            'properties' => new ProductProperties()
         ];
     }
 
@@ -38,13 +39,12 @@ class ProductRequest extends FormRequest
     {
         return [
             'name.required' => 'Необходимо ввести название товара',
-            'category_id.required' => 'Необходимо выбрать категорию',
+            'category.required' => 'Необходимо выбрать категорию',
             'price.required' => 'Необходимо ввести стоимость товара',
             'price.numeric' => 'Стоимость товара должна быть числом',
             'image.required' => 'Необходимо загрузить изображение',
             'image.image' => 'Изображение: ожидается файл форматов jpg, png или gif',
             'image.max' => 'Изображение: максимальный размер файла 1Мб',
-            'description.max' => 'Максимальная длина описания товара: 255 символов',
             'sort.numeric' => 'Укажите сортировку числом',
         ];
     }

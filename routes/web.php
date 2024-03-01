@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/create', [\App\Http\Controllers\Backend\ProductController::class, 'store'])->name('store');
                 Route::get('/edit/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('edit');
                 Route::patch('/edit/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'update'])->name('update');
+                Route::post('/add-image', [\App\Http\Controllers\Backend\ProductController::class, 'addImage'])->name('add-image');
+                Route::post('/delete-image', [\App\Http\Controllers\Backend\ProductController::class, 'deleteImage'])->name('delete-image');
             });
 
             //Категории

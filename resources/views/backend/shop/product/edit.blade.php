@@ -29,12 +29,114 @@
         </div>
     @endif
 
-    <form class="form-wrap-modif" action="{{ route('backend.product.update', ['product' => $product->id]) }}" method="post" enctype="multipart/form-data">
+    <form class="form-wrap-modif"
+          action="{{ route('backend.product.update', ['product' => $product->id]) }}"
+          method="post"
+          enctype="multipart/form-data"
+          id="product_form"
+    >
         @method('PATCH')
         @include('backend.shop.product.form')
     </form>
 
+    @php
+        $content = json_encode($product->description, JSON_UNESCAPED_UNICODE);
+        $content = old('description', $content)
+    @endphp
 @endsection
 
 @section('scripts')
+    <script>
+
+        window.initEditor = function (data) {
+            let element = document.getElementById('editorjs')
+            const editor = new EditorJS({
+                holder: 'editorjs',
+                tools: {
+                    header: HeaderEditorJs,
+
+                    image: {
+                        class: ImageBlockEditorJs,
+                        config: {
+                            endpoint: '/backend/product/add-image',
+                            deleteFileEndpoint: '/backend/product/delete-image',
+                        },
+                    },
+                    // image: {
+                    //     class: ImageTool,
+                    //     config: {
+                    //         endpoints: {
+                    //             byFile: upload_dir
+                    //         }
+                    //     }
+                    // }
+                },
+                onChange: () => {
+                    editor.save().then((outputData) => {
+                        console.log(JSON.stringify(outputData));
+                        localStorage.setItem('lastText', JSON.stringify(outputData));
+                    })
+                },
+                data: data,
+                i18n: {
+                    messages: {
+                        ui: {
+                            "blockTunes": {
+                                "toggler": {
+                                    "Click to tune": "Нажмите, чтобы настроить",
+                                    "or drag to move": "или перетащите"
+                                },
+                            },
+                            "inlineToolbar": {
+                                "converter": {
+                                    "Convert to": "Конвертировать в"
+                                }
+                            },
+                            "toolbar": {
+                                "toolbox": {
+                                    "Add": "Добавить"
+                                }
+                            }
+                        },
+                        toolNames: {
+                            "Text": "Параграф",
+                            "Heading": "Заголовок",
+                            "Image": "Изображение",
+                        },
+                        tools: {
+                            "image": {
+                                "Caption": "Подпись"
+                            }
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('product_form').addEventListener('submit', function () {
+
+                editor.save().then((outputData) => {
+                    console.log(JSON.stringify(outputData));
+
+                    document.getElementById('description').value = JSON.stringify(outputData);
+                    //    $('#blog_description', this).val(JSON.stringify(outputData));
+                }).catch((error) => {
+                    console.log('Saving failed: ', error)
+                });
+            });
+        }
+        initEditor({!! $content !!} );
+
+        // document.getElementById('blog_form').addEventListener('submit', function () {
+        //     console.log('stop')
+        //     return false;
+        //     editor.save().then((outputData) => {
+        //         console.log(JSON.stringify(outputData));
+        //
+        //         $('#blog_description', this).val(JSON.stringify(outputData));
+        //     }).catch((error) => {
+        //         console.log('Saving failed: ', error)
+        //     });
+        // });
+
+    </script>
 @endsection
