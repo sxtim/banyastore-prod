@@ -29,6 +29,7 @@ class News extends Model
     protected $casts = [
         'start_at' => 'datetime',
         'end_at' => 'datetime',
+        'detail_text' => 'array'
     ];
 
     protected $hidden = [
