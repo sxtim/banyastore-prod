@@ -64,6 +64,22 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{propertyValueId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'edit'])->name('edit');
                 Route::patch('/edit/{propertyValueId}', [\App\Http\Controllers\Backend\PropertyValueController::class, 'update'])->name('update');
             });
+
+            //Пользователи
+            Route::prefix('users')->name('users.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\UserController::class, 'index'])->name('index');
+            });
+
+            //Акции
+            Route::prefix('actions')->name('actions.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\ActionController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\Backend\ActionController::class, 'create'])->name('create');
+                Route::post('/create', [\App\Http\Controllers\Backend\ActionController::class, 'store'])->name('store');
+                Route::get('/edit/{actionId}', [\App\Http\Controllers\Backend\ActionController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{actionId}', [\App\Http\Controllers\Backend\ActionController::class, 'update'])->name('update');
+                Route::post('/add-image', [\App\Http\Controllers\Backend\ActionController::class, 'addImage'])->name('add-image');
+                Route::post('/delete-image', [\App\Http\Controllers\Backend\ActionController::class, 'deleteImage'])->name('delete-image');
+            });
         });
     });
 
