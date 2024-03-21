@@ -36,7 +36,7 @@ class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        $product->load(['propertiesValues']);
+        $product->load(['propertiesValues','discount']);
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
         return view('backend.shop.product.edit',

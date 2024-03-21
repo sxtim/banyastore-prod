@@ -91,6 +91,15 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/add-image', [\App\Http\Controllers\Backend\NewsController::class, 'addImage'])->name('add-image');
                 Route::post('/delete-image', [\App\Http\Controllers\Backend\NewsController::class, 'deleteImage'])->name('delete-image');
             });
+
+            //Скидки
+            Route::prefix('discount')->name('discount.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\DiscountController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\Backend\DiscountController::class, 'create'])->name('create');
+                Route::post('/create', [\App\Http\Controllers\Backend\DiscountController::class, 'store'])->name('store');
+                Route::get('/edit/{discountId}', [\App\Http\Controllers\Backend\DiscountController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{discountId}', [\App\Http\Controllers\Backend\DiscountController::class, 'update'])->name('update');
+            });
         });
     });
 

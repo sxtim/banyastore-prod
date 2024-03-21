@@ -29,6 +29,7 @@ class Product extends Model
         'is_active',
         'sort',
         'slug',
+        'discount_id'
     ];
 
     protected $hidden = [
@@ -65,4 +66,23 @@ class Product extends Model
             ->with(['property']);
     }
 
+    public function discount(): BelongsTo
+    {
+        return $this->belongsTo(Discount::class)->where('is_active', true);
+    }
+
+
+    public function getCurrentPrice(): float
+    {
+        if ($this->discount) {
+            if ($this->discount->type === Discount::TYPE_RUB && $this->discount->discount < $this->price) {
+                return $this->price - $this->discount->discount;
+            } elseif ($this->discount->type === Discount::TYPE_PERCENT && $this->discount->discount < 100) {
+                $discount = round(($this->price / 100) * $this->discount->discount);
+                return $this->price - $discount;
+            }
+        }
+
+        return $this->price;
+    }
 }

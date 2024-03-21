@@ -35,6 +35,11 @@
                 Свойства
             </a>
         </div>
+        <div class="col-md-3">
+            <a href="{{ route('backend.discount.index') }}" class="btn btn-block btn-outline-primary">
+                Скидки
+            </a>
+        </div>
     </div>
 
 

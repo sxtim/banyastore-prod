@@ -20,6 +20,7 @@
     </div>
     <div class="col-4">
         <label for="sort" class="main-label">Цена</label>
+        {{ isset($product) && $product->getCurrentPrice() != $product->price ? '(Со скидкой: '. $product->getCurrentPrice().')' : ''}}
         <input type="text" name="price" id="price" class="form-control" autocomplete="off"
                value="{{ old('price', ( isset($product) ? $product->price : '')) }}">
     </div>
