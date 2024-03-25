@@ -1,0 +1,272 @@
+.header {
+  background-color: var(--black);
+}
+
+.header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.header__logo {
+  max-width: 130px;
+  img {
+
+    height: auto;
+  }
+}
+
+.header__contacts {
+  display: flex;
+  align-items: center;
+  font-size: var(--base-font-size);
+  justify-content: space-between;
+  gap: 15px;
+  width: 700px;
+  margin: 0 15px;
+
+  @media(max-width: 768px) {
+    margin: 0 3px;
+  }
+
+  li {
+    &:not(:last-child) {
+      display: flex;
+      align-items: center;
+      @media (max-width: 998px) {
+        display: none;
+      }
+
+      img {
+        height: 22px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 998px) {
+    width: auto;
+    justify-content: center;
+  }
+
+}
+
+.phone {
+  font-size: var(--base-font-size);
+  color: var(--white);
+  line-height: 140%;
+
+  span {
+    display: block;
+    font-size: var(--base-font-size);
+    color: var(--green);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: .3s ease-in-out;
+
+    &:hover {
+      color: var(--white);
+    }
+  }
+
+
+}
+
+.header__phone {
+  @media(max-width: 768px) {
+    display: none;
+
+  }
+}
+
+.header__shop-menu {
+  display: flex;
+  margin: 5px 0;
+}
+
+.shop-menu__item {
+  width: 66px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //border-radius: 5px;
+  background-color: #3B3B3B;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px #777777, inset 0 0 0px #777777;
+  transition: .1s;
+
+  &:active {
+    box-shadow: 0 0px 0px #777777, inset 0 0 10px #777777;
+    transform: scale(0.99);
+  }
+
+  &:hover {
+    transition: .1s;
+    background-color: var(--green-dark);
+
+    @media (max-width: 998px) {
+      //background-color: transparent;
+      //box-shadow: none;
+    }
+
+  }
+
+  svg {
+    display: flex;
+    align-items: center;
+  }
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  span {
+    background-color: var(--green-dark);
+    transition: .1s;
+  }
+
+  :hover span {
+    background-color: var(--gray-dark);
+    transition: .1s;
+  }
+
+  @media (max-width: 998px) {
+    width: 45px;
+    height: 45px;
+    background-color: transparent;
+    box-shadow: none;
+
+    span {
+      font-size: 10px;
+    }
+
+    &:not(:last-child) {
+      margin-right: 3px;
+    }
+
+  }
+
+}
+
+.shop-menu__item-phone {
+  display: none;
+  @media(max-width: 768px) {
+    display: flex;
+  }
+}
+
+.quantity {
+  position: absolute;
+  padding: 4px 6px;
+  top: 35%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: var(--white);
+  background-color: var(--green-dark);
+  border-radius: 20px;
+}
+
+.shop-menu__favorites-link {
+  position: relative;
+}
+
+.shop-menu__cart-link {
+  position: relative;
+}
+
+.header__bottom {
+  background-color: var(--black-dark);
+}
+
+.header__bottom-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+
+  @media(max-width: 988px) {
+    justify-content: space-around;
+  }
+
+}
+
+.header__dropdown-menu {
+  @media (max-width: 998px) {
+    display: none;
+  }
+}
+
+.header__nav {
+  width: 400px;
+  margin: 0 20px;
+
+  @media(max-width: 988px) {
+    display: none;
+  }
+
+}
+
+.nav__list {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  a {
+    color: var(--white);
+    position: relative;
+    pointer-events: all;
+
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 2px;
+      background-color: var(--green-dark);
+      bottom: -4px;
+      left: 0;
+      transform-origin: right;
+      transform: scaleX(0);
+      transition: transform 0.1s ease-in-out;
+    }
+
+    &:hover::before {
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+
+  }
+}
+
+.header__social {
+  margin-right: 10px;
+
+  }
+
+
+
+.header__mobile-nav-btn {
+  margin-left: 12px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

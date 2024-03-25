@@ -1,0 +1,134 @@
+.menu {
+
+  a {
+    display: block;
+    margin: 0;
+    padding: 12px 20px;
+    color: var(--black);
+    text-decoration: none;
+    //background-color: #fff;
+  }
+
+  li {
+    position: relative;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    &.parent {
+      &:before {
+        content: '';
+        z-index: 200;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-top: -4px;
+        margin-left: -20px;
+        display: block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 20px 0 20px;
+        border-color: var(--green-dark) transparent transparent transparent;
+        transition: margin-top .1s ease-out;
+
+      }
+    }
+
+    .dropdown-menu__title {
+      padding: 8px 13px;
+      border-radius: 5px;
+      //transition-property: all;
+      //transition: .1s ease-in-out;
+      //border: 1px solid var(--green-dark);
+      box-shadow: 0 1px 5px #777777, inset 0 0 0px #777777;
+      background-color: var(--green-dark);
+      display: flex;
+      color: var(--white);
+      font-size: var(--base-font-size);
+      cursor: pointer;
+
+      span {
+        text-align: center;
+      }
+
+      //&:hover,
+      //&:focus {
+      //  //box-shadow:none;
+      //}
+      img {
+            margin-right: 10px;
+          }
+
+
+    }
+
+    &:hover,
+    &:focus {
+      & > a {
+
+        text-decoration: none;
+        color: #fff;
+        background-color: var(--gray-dark);
+      }
+
+      &:before {
+        margin-top: 0;
+        border-top-color: var(--green-dark);
+      }
+
+      .children {
+        opacity: 1;
+        transform: rotateX(0) translateZ(0);
+      }
+    }
+  }
+
+  .children {
+
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    backface-visibility: hidden;
+    transform: rotateX(-90deg);
+    transform-style: preserve-3d;
+    transform-origin: top center;
+    transition: transform .1s step-start , opacity .1s .1s;
+  //cubic-bezier(.17, .67, .59, 1.21)
+    z-index: 100;
+    list-style-type: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    margin: 0;
+    padding: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+    text-align: left;
+
+    li {
+      float: none;
+    }
+
+    a {
+      background-color: transparent;
+
+      &:hover,
+      &:focus {
+        color: var(--green);
+        background-color: #e8e8e8;
+      }
+    }
+  }
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}

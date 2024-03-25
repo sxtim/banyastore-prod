@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware(['auth'])->group(function () {
 
     Route::middleware('role:admin')->group(function () {
@@ -103,6 +98,11 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+});
+
+
+Route::get('/', function () {
+    return view('index');
 });
 
 require __DIR__.'/auth.php';

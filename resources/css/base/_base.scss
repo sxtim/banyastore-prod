@@ -1,0 +1,26 @@
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: var(--page-bg);
+	color: var(--text-color);
+    font-family: var(--font-main);
+	font-size: var(--base-font-size);
+}
+
+img {
+	display: block;
+}
+
+.title-s {
+	color: var(--text-color-dark);
+	font-weight: 600;
+	font-size: 32px;
+	line-height: 100%;
+
+	@media (max-width: 768px) {
+		font-size: 24px;
+	}
+}
+

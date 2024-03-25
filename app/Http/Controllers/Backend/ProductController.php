@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\ProductFilter;
 use App\Http\Requests\Backend\ProductRequest;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
@@ -21,10 +22,16 @@ class ProductController extends Controller
     const DIR_OTHER_IMAGES_PRODUCTS = 'public/products/other/';
 
 
-    public function index(): View
+    public function index(ProductFilter $filter): View
     {
-        $products = Product::paginate(15);
-        return view('backend.shop.product.index', compact('products'));
+        $products = Product::filter($filter)->with(['category'])->paginate(15);
+        $categories = Category::all();
+        $filters = $filter->filters();
+        return view('backend.shop.product.index', compact(
+            'products',
+            'filters',
+            'categories'
+        ));
     }
 
     public function create(): View

@@ -21,7 +21,7 @@ if (['public', 'admin'].includes(process.env.npm_config_section)) {
       minimizer: [new TerserPlugin()],
     },
   };
-  mix.sass('resources/css/layouts/app.scss', 'public/css')
+  mix.sass('resources/css/main.scss', 'public/css')
     .js('resources/js/app.js', 'public/js')
     .copyDirectory('resources/fonts', 'public/css/fonts')
     .copyDirectory('resources/images', 'public/images')

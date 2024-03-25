@@ -1,0 +1,17 @@
+.social {
+  width: 138px;
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+
+  svg {
+    display: flex;
+    align-items: center;
+  }
+
+  :hover svg #profile,
+  :hover svg rect {
+    fill: var(--green-dark);
+    transition: .3s;
+  }
+}

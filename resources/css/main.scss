@@ -1,0 +1,37 @@
+/* Base */
+@import "./base/reset";
+@import "./base/vars";
+@import "./base/base";
+@import "./base/utils";
+@import "./base/containers";
+@import "./base/sticky-footer";
+
+/* Blocks*/
+@import "./blocks/breadcrump";
+@import "./blocks/buttons";
+@import "./blocks/card-catalog";
+@import "./blocks/card-comment";
+@import "./blocks/card-news";
+@import "./blocks/card-product";
+@import "./blocks/dropdown-menu";
+@import "./blocks/footer";
+@import "./blocks/header";
+@import "./blocks/lk-main";
+@import "./blocks/logo";
+@import "./blocks/mobile-nav";
+@import "./blocks/nav-icon";
+@import "./blocks/news";
+@import "./blocks/product-detail";
+@import "./blocks/pagination-page";
+@import "./blocks/search-form";
+@import "./blocks/section-3d-projects";
+@import "./blocks/section-benefits";
+@import "./blocks/section-brands";
+@import "./blocks/section-catalog";
+@import "./blocks/section-news-main";
+@import "./blocks/section-popular-goods";
+@import "./blocks/section-popular-goods";
+@import "./blocks/section-top";
+@import "./blocks/slider-custom";
+@import "./blocks/social";
+

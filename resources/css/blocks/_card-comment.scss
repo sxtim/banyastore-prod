@@ -1,0 +1,49 @@
+.card-comment {
+  display: flex;
+  //max-width: 580px;
+  height: 140px;
+  color: var(--text-color-dark);
+  border-radius: 5px;
+  box-shadow: 0 0px 0px #777777, inset 0 0 5px #777777;
+  padding: 20px;
+}
+
+.card-comment__name {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+}
+
+.card-comment__date {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 114%;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+}
+
+.card-comment__message {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+
+}
+
+.card-comment__link {
+  align-self: flex-end;
+  color: var(--green-dark);
+}
+
