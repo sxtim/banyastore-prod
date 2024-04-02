@@ -10,6 +10,7 @@ use App\Models\Shop\Property\PropertyValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -17,6 +18,14 @@ use Spatie\Sluggable\SlugOptions;
 class Product extends Model
 {
     use Filterable, HasSlug;
+
+    const HIT_TAG = 'hit';
+    const NEW_TAG = 'new';
+
+    const LIST_TAG = [
+        self::HIT_TAG => 'Хит',
+        self::NEW_TAG => 'Новинка',
+    ];
 
     protected $table = 'products';
 
@@ -29,7 +38,9 @@ class Product extends Model
         'is_active',
         'sort',
         'slug',
-        'discount_id'
+        'discount_id',
+        'preview_text',
+        'tag'
     ];
 
     protected $hidden = [
@@ -44,7 +55,8 @@ class Product extends Model
 
     protected $casts = [
         'price' => 'float',
-        'description' => 'array'
+        'description' => 'array',
+        'preview_text' => 'array'
     ];
 
 
@@ -84,5 +96,15 @@ class Product extends Model
         }
 
         return $this->price;
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        return Storage::url($this->image);
+    }
+
+    public function getTag(): string
+    {
+        return $this->tag ? self::LIST_TAG[$this->tag] : '';
     }
 }

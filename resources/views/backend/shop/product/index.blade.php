@@ -66,6 +66,7 @@
                 <thead>
                 <tr>
                     <th>Название</th>
+                    <th>Активность</th>
                     <th>Категория</th>
                     <th>Сортировка</th>
                     <th style="width: 50px">&nbsp;</th>
@@ -75,6 +76,7 @@
                 @forelse($products as $product)
                     <tr>
                         <td>{{ $product->name }}</td>
+                        <td>{{ $product->is_active ? 'Да' : 'Нет' }}</td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->sort }}</td>
                         <td><a href="{{ route('backend.product.edit', ['product' => $product->id]) }}">Ред.</a></td>

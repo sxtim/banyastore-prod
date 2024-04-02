@@ -2,11 +2,11 @@
     <div class="container">
         <div class="header__top">
             <a href="/" class="header__logo logo">
-                <img src="./images/icons/logo.svg" alt="logo">
+                <img src="/images/icons/logo.svg" alt="logo">
             </a>
             <ul class="header__contacts">
                 <li>
-                    <img src="./images/icons/location.svg" alt="loc">
+                    <img src="/images/icons/location.svg" alt="loc">
                     <span>МО г. Домодедово, Белые Столбы,<br>улица Авенариуса, строение 6</span>
                 </li>
                 <li>Время работы:<br>9:00 - 18:00</li>

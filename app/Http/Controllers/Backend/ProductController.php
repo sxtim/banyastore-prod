@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Filters\ProductFilter;
+use App\Http\Requests\Backend\ImageRequest;
 use App\Http\Requests\Backend\ProductRequest;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
@@ -14,13 +15,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     const DIR_PRODUCTS = 'public/products/';
     const DIR_OTHER_IMAGES_PRODUCTS = 'public/products/other/';
-
 
     public function index(ProductFilter $filter): View
     {
@@ -38,7 +37,8 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
-        return view('backend.shop.product.create', compact('categories','properties'));
+        $tags = Product::LIST_TAG;
+        return view('backend.shop.product.create', compact('categories','properties','tags'));
     }
 
     public function edit(Product $product): View
@@ -46,8 +46,9 @@ class ProductController extends Controller
         $product->load(['propertiesValues','discount']);
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
+        $tags = Product::LIST_TAG;
         return view('backend.shop.product.edit',
-            compact('categories', 'product','properties')
+            compact('categories', 'product','properties','tags')
         );
     }
 
@@ -64,10 +65,13 @@ class ProductController extends Controller
         $data = [
             'name' => $request->input('name'),
             'description' => json_decode($request->input('description'), true),
+            'preview_text' => $request->input('preview_text') ? json_decode($request->input('preview_text'), true) : null,
             'category_id' => $request->input('category'),
             'price' => $request->input('price'),
             'sort' => $request->input('sort'),
-            'image' => $image ? self::DIR_PRODUCTS . $filename : ''
+            'image' => $image ? self::DIR_PRODUCTS . $filename : '',
+            'tag' => $request->input('tag'),
+            'is_active' => $request->boolean('is_active')
         ];
 
         $valueProperties = [];
@@ -93,9 +97,12 @@ class ProductController extends Controller
         $data = [
             'name' => $request->input('name'),
             'description' => json_decode($request->input('description'), true),
+            'preview_text' => $request->input('preview_text') ? json_decode($request->input('preview_text'), true) : null,
             'category_id' => $request->input('category'),
             'price' => $request->input('price'),
             'sort' => $request->input('sort'),
+            'tag' => $request->input('tag'),
+            'is_active' => $request->boolean('is_active')
         ];
 
         $image = $request->file('image');
@@ -126,7 +133,7 @@ class ProductController extends Controller
         return redirect()->route('backend.product.index')->with('success', 'Данные обновлены');
     }
 
-    public function addImage(Request $request): JsonResponse
+    public function addImage(ImageRequest $request): JsonResponse
     {
         $extension = $request->file('image')->getClientOriginalExtension();
         $filename = uniqid() . '.' . $extension;
@@ -141,7 +148,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function deleteImage(Request $request): void
+    public function deleteImage(ImageRequest $request): void
     {
         Storage::delete($request->input('file'));
     }

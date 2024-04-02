@@ -6,7 +6,23 @@
                value="{{ old('name', ( isset($product) ? $product->name : '')) }}">
     </div>
     <div class="col-4">
-        <label for="title" class="main-label">Категория</label>
+        <label for="price" class="main-label">Цена</label>
+        {{ isset($product) && $product->getCurrentPrice() != $product->price ? '(Со скидкой: '. $product->getCurrentPrice().')' : ''}}
+        <input type="text" name="price" id="price" class="form-control" autocomplete="off"
+               value="{{ old('price', ( isset($product) ? $product->price : '')) }}">
+    </div>
+    <div class="col-4">
+        <label for="sort" class="main-label">Активность</label>
+        <div>
+            <span>Да?</span>
+            <input type="checkbox" name="is_active" id="is_active" autocomplete="off"
+                   {{ isset($product) && $product->is_active ? 'checked' : '' }}>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-6">
+        <label for="category" class="main-label">Категория</label>
         <select class="form-control" name="category">
             <option value="0">
                 Не выбрано
@@ -18,15 +34,27 @@
             @endforeach
         </select>
     </div>
-    <div class="col-4">
-        <label for="sort" class="main-label">Цена</label>
-        {{ isset($product) && $product->getCurrentPrice() != $product->price ? '(Со скидкой: '. $product->getCurrentPrice().')' : ''}}
-        <input type="text" name="price" id="price" class="form-control" autocomplete="off"
-               value="{{ old('price', ( isset($product) ? $product->price : '')) }}">
+    <div class="col-6">
+        <label for="tag" class="main-label">Плашка</label>
+        <select class="form-control" name="tag">
+            <option value="">
+                Не выбрано
+            </option>
+            @foreach($tags as $key => $tag)
+                <option value="{{ $key }}" {{ isset($product) && $product->tag === $key ? 'selected' : '' }}>
+                    {{ $tag }}
+                </option>
+            @endforeach
+        </select>
     </div>
 </div>
 <div class="row mt-3">
-    <div class="col-12">
+    <div class="col-6">
+        <label for="preview_text" class="main-label">Краткое описание</label>
+        <div id="editorjs-preview"></div>
+        <input type="hidden" id="preview_text" name="preview_text"/>
+    </div>
+    <div class="col-6">
         <label for="description" class="main-label">Описание</label>
         <div id="editorjs"></div>
         <input type="hidden" id="description" name="description"/>

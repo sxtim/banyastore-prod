@@ -41,7 +41,10 @@
 
     @php
         $content = json_encode($product->description, JSON_UNESCAPED_UNICODE);
-        $content = old('description', $content)
+        $content = old('description', $content);
+
+        $contentPreview = json_encode($product->preview_text, JSON_UNESCAPED_UNICODE);
+        $contentPreview = old('preview_text', $contentPreview);
     @endphp
 @endsection
 
@@ -73,7 +76,6 @@
                 },
                 onChange: () => {
                     editor.save().then((outputData) => {
-                        console.log(JSON.stringify(outputData));
                         localStorage.setItem('lastText', JSON.stringify(outputData));
                     })
                 },
@@ -126,17 +128,83 @@
         }
         initEditor({!! $content !!} );
 
-        // document.getElementById('blog_form').addEventListener('submit', function () {
-        //     console.log('stop')
-        //     return false;
-        //     editor.save().then((outputData) => {
-        //         console.log(JSON.stringify(outputData));
-        //
-        //         $('#blog_description', this).val(JSON.stringify(outputData));
-        //     }).catch((error) => {
-        //         console.log('Saving failed: ', error)
-        //     });
-        // });
+
+        window.initEditorPreview = function (data) {
+            let element = document.getElementById('editorjs-preview')
+            const editor = new EditorJS({
+                holder: 'editorjs-preview',
+                tools: {
+                    header: HeaderEditorJs,
+
+                    image: {
+                        class: ImageBlockEditorJs,
+                        config: {
+                            endpoint: '/backend/product/add-image',
+                            deleteFileEndpoint: '/backend/product/delete-image',
+                        },
+                    },
+                    // image: {
+                    //     class: ImageTool,
+                    //     config: {
+                    //         endpoints: {
+                    //             byFile: upload_dir
+                    //         }
+                    //     }
+                    // }
+                },
+                onChange: () => {
+                    editor.save().then((outputData) => {
+                        localStorage.setItem('lastText', JSON.stringify(outputData));
+                    })
+                },
+                data: data,
+                i18n: {
+                    messages: {
+                        ui: {
+                            "blockTunes": {
+                                "toggler": {
+                                    "Click to tune": "Нажмите, чтобы настроить",
+                                    "or drag to move": "или перетащите"
+                                },
+                            },
+                            "inlineToolbar": {
+                                "converter": {
+                                    "Convert to": "Конвертировать в"
+                                }
+                            },
+                            "toolbar": {
+                                "toolbox": {
+                                    "Add": "Добавить"
+                                }
+                            }
+                        },
+                        toolNames: {
+                            "Text": "Параграф",
+                            "Heading": "Заголовок",
+                            "Image": "Изображение",
+                        },
+                        tools: {
+                            "image": {
+                                "Caption": "Подпись"
+                            }
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('product_form').addEventListener('submit', function () {
+
+                editor.save().then((outputData) => {
+                    console.log(JSON.stringify(outputData));
+
+                    document.getElementById('preview_text').value = JSON.stringify(outputData);
+                    //    $('#blog_description', this).val(JSON.stringify(outputData));
+                }).catch((error) => {
+                    console.log('Saving failed: ', error)
+                });
+            });
+        }
+        initEditorPreview({!! $contentPreview !!} );
 
     </script>
 @endsection
