@@ -45,7 +45,7 @@
         "sass-loader": "^12.2.0",
         "simplemde": "^1.11.2",
         "swiper": "^7.4.1",
-        "vue": "^3.2.23",
+        "vue": "^3.2.26",
         "vue-chartjs": "^4.1.1",
         "vue-input-mask": "0.0.11",
         "vuex": "^4.0.2"
