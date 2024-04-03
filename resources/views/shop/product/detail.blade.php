@@ -27,7 +27,7 @@
                         {{ $product->name }}
                     </h1>
 
-                    @if ($product->preview_text['blocks'])
+                    @if ($product->preview_text && isset($product->preview_text['blocks']))
                         @foreach($product->preview_text['blocks'] as $block)
                             @if ($block['type'] == 'header' && isset($block['data']['level']))
                                 <h{{ $block['data']['level'] }}  >
@@ -125,7 +125,7 @@
                          aria-labelledby="tab1"
                          tabindex="0">
 
-                        @if ($product->description['blocks'])
+                        @if ($product->description && isset($product->description['blocks']))
                             @foreach($product->description['blocks'] as $block)
                                 @if ($block['type'] == 'header' && isset($block['data']['level']))
                                     <h{{ $block['data']['level'] }}  >
