@@ -26,7 +26,7 @@
                     <h1 class="product-detail__title title-s">
                         {{ $product->name }}
                     </h1>
- 
+
                     @if ($product->preview_text && isset($product->preview_text['blocks']))
                         @foreach($product->preview_text['blocks'] as $block)
                             @if ($block['type'] == 'header' && isset($block['data']['level']))
