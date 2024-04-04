@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -47,6 +48,11 @@ class News extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function getPreviewImg(): string
+    {
+        return Storage::url($this->preview_img);
     }
 
 }

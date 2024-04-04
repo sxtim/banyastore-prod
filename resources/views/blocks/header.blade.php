@@ -89,7 +89,11 @@
                         <li><a href="#!">О компании</a></li>
                         <li><a href="#!">Акции</a></li>
                         <li><a href="#!">3D проект</a></li>
-                        <li><a href="news.html">Новости</a></li>
+                        <li>
+                            <a href="{{ route('news.index') }}">
+                                Новости
+                            </a>
+                        </li>
                     </ul>
                 </nav>
 

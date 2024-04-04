@@ -46,6 +46,9 @@
                     <th>№</th>
                     <th>Название</th>
                     <th>Сортировка</th>
+                    <th>Активность</th>
+                    <th>Дата начала</th>
+                    <th>Дата конца</th>
                     <th style="width: 50px">&nbsp;</th>
                 </tr>
                 </thead>
@@ -60,6 +63,15 @@
                         </td>
                         <td>
                             {{ $item->sort }}
+                        </td>
+                        <td>
+                            {{ $item->is_active ? 'Да' : 'Нет' }}
+                        </td>
+                        <td>
+                            {{ $item->start_at }}
+                        </td>
+                        <td>
+                            {{ $item->end_at }}
                         </td>
                         <td>
                             <a href="{{ route('backend.news.edit', ['newsId' => $item->id]) }}">
