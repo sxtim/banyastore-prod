@@ -15,6 +15,48 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 
+/**
+ *
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property int $category_id
+ * @property float $price
+ * @property int $is_active
+ * @property int $sort
+ * @property string $image
+ * @property array $description
+ * @property array|null $preview_text
+ * @property string|null $tag
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $discount_id
+ * @property-read \App\Models\Shop\Category $category
+ * @property-read \App\Models\Shop\Discount|null $discount
+ * @property-read string $image_url
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, PropertyValue> $propertiesValues
+ * @property-read int|null $properties_values_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Product filter(\App\Http\Filters\QueryFilter $filter)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereDiscountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePreviewText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereTag($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Product extends Model
 {
     use Filterable, HasSlug;
@@ -33,6 +75,7 @@ class Product extends Model
         'category_id',
         'name',
         'description',
+        'quantity',
         'price',
         'image',
         'is_active',
