@@ -61,9 +61,7 @@ class DatabaseBasketService implements BasketInterface
 
         $cartItem = $user->basket->products->firstWhere('product_id', $productId);
 
-        $product = Product::find($productId);
-
-        if (!$cartItem && $product->quantity > 0) {
+        if (!$cartItem) {
             $user->basket->products()->create([
                 'product_id' => $productId,
                 'quantity' => 1
@@ -77,12 +75,9 @@ class DatabaseBasketService implements BasketInterface
 
         $cartItem = $user->basket->products()->firstWhere('product_id', $productId);
 
-        $product = Product::find($productId);
-
-        if (!$cartItem && $product->quantity > 0) {
+        if (!$cartItem) {
             $this->add($productId);
-        }
-        if ($product->quantity > $cartItem->quantity) {
+        } else {
             $cartItem->update(['quantity' => $cartItem->quantity + 1]);
         }
     }
@@ -106,8 +101,8 @@ class DatabaseBasketService implements BasketInterface
     public function remove(int $productId): void
     {
         $user = Auth::getUser();
-    //    $user->basket->touch();
-    //    $user->basket->touchOwners();
+        $user->basket->touch();
+        $user->basket->touchOwners();
 
         $user->basket->products()->where('product_id', $productId)->delete();
     }

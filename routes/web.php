@@ -108,7 +108,15 @@ Route::get('/product/{slug}', [\App\Http\Controllers\Shop\ProductController::cla
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
 Route::get('/basket', [\App\Http\Controllers\BasketController::class, 'index'])->name('basket.index');
 
+//Аякс
+Route::prefix('ajax')->name('ajax.')->group(function () {
 
+    //Аякс-корзина
+    Route::prefix('basket')->name('basket.')->group(function () {
+        Route::post('/get-count', [\App\Http\Controllers\Ajax\BasketController::class, 'getCount'])->name('get-count');
+        Route::post('/add', [\App\Http\Controllers\Ajax\BasketController::class, 'add'])->name('add');
+    });
+});
 
 Route::get('/', function () {
     return view('index');

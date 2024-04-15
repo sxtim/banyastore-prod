@@ -4,7 +4,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('product', $product) }}
-    <section class="product-detail section">
+    <section class="product-detail section" id="catalog">
         <div class="container">
             <div class="product-detail__content">
                 <div class="product-detail__logo">

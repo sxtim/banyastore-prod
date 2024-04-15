@@ -4,7 +4,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('category', $category) }}
-    <section class="catalog section">
+    <section class="catalog section" id="catalog">
         <div class="container">
             <h1 class="catalog__title title-s">
                 {{ $category->name }}
