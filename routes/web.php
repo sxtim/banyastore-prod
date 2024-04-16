@@ -113,8 +113,12 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
 
     //Аякс-корзина
     Route::prefix('basket')->name('basket.')->group(function () {
+        Route::post('/get-basket', [\App\Http\Controllers\Ajax\BasketController::class, 'getBasket'])->name('get-basket');
         Route::post('/get-count', [\App\Http\Controllers\Ajax\BasketController::class, 'getCount'])->name('get-count');
         Route::post('/add', [\App\Http\Controllers\Ajax\BasketController::class, 'add'])->name('add');
+        Route::post('/remove', [\App\Http\Controllers\Ajax\BasketController::class, 'remove'])->name('remove');
+        Route::post('/decrement', [\App\Http\Controllers\Ajax\BasketController::class, 'decrement'])->name('decrement');
+        Route::post('/increment', [\App\Http\Controllers\Ajax\BasketController::class, 'increment'])->name('increment');
     });
 });
 

@@ -4,9 +4,7 @@ namespace App\Services\Basket;
 
 class BasketItem
 {
-    public int $basket_product_id;
-
-    public int $basket_id;
+    public int $productId;
 
     public int $quantity;
 
@@ -33,17 +31,9 @@ class BasketItem
     /**
      * @return int
      */
-    public function getBasketProductId(): int
+    public function getProductId(): int
     {
-        return $this->basket_product_id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getBasketId(): int
-    {
-        return $this->basket_id;
+        return $this->productId;
     }
 
     /**

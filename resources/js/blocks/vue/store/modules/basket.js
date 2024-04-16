@@ -15,6 +15,11 @@ export default {
         },
     },
     actions: {
+        initBasket({commit}){
+            axios.post(window.location.origin + `/ajax/basket/get-basket`).then(response => {
+                commit('setProducts', response.data.items);
+            });
+        },
         initCount({commit}){
             axios.post(window.location.origin + `/ajax/basket/get-count`).then(response => {
                 commit('setCount', response.data.count);
@@ -32,6 +37,7 @@ export default {
                 product_id: productId.productId
             }).then(response => {
                 commit('setProducts', response.data.items);
+                commit('setCount', response.data.count);
             });
         },
         decrementProduct({dispatch, commit, state}, productId) {
@@ -39,6 +45,15 @@ export default {
                 product_id: productId.productId
             }).then(response => {
                 commit('setProducts', response.data.items);
+                commit('setCount', response.data.count);
+            });
+        },
+        removeProduct({dispatch, commit, state}, productId) {
+            axios.post(window.location.origin + `/ajax/basket/remove`, {
+                product_id: productId.productId
+            }).then(response => {
+                commit('setProducts', response.data.items);
+                commit('setCount', response.data.count);
             });
         },
         updateProduct({dispatch, commit, state}, {productId, quantity}) {
@@ -47,6 +62,7 @@ export default {
                 quantity: quantity
             }).then(response => {
                 commit('setProducts', response.data.items);
+                commit('setCount', response.data.count);
             });
         }
     },

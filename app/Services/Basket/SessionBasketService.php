@@ -55,8 +55,7 @@ class SessionBasketService implements BasketInterface
 
                 $basketItem = new BasketItem();
 
-                $basketItem->basket_product_id = $basketProduct->id;
-                $basketItem->basket_id = $basketProduct->basket_id;
+                $basketItem->productId = $basketProduct->product->id;
                 $basketItem->quantity = $basketProduct->quantity;
                 $basketItem->price = $basketProduct->product->getCurrentPrice();
                 $basketItem->oldPrice = $basketProduct->product->price;
