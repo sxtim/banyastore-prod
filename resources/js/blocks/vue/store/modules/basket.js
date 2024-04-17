@@ -3,8 +3,16 @@ import axios from 'axios'
 export default {
     namespaced: true,
     state: () => ({
+        name: '',
+        city: '',
+        phone: '',
+        street: '',
+        mail: '',
+        house: '',
         products: [],
-        count: 0
+        count: 0,
+        delivery: 1,
+        pay: 1
     }),
     mutations: {
         setProducts(state, products) {
@@ -12,6 +20,30 @@ export default {
         },
         setCount(state, count) {
             state.count = count;
+        },
+        setDelivery(state, delivery) {
+            state.delivery = delivery;
+        },
+        setPay(state, pay) {
+            state.pay = pay;
+        },
+        setName(state, name) {
+            state.name = name;
+        },
+        setPhone(state, phone) {
+            state.phone = phone;
+        },
+        setCity(state, city) {
+            state.city = city;
+        },
+        setStreet(state, street) {
+            state.street = street;
+        },
+        setMail(state, mail) {
+            state.mail = mail;
+        },
+        setHouse(state, house) {
+            state.house = house;
         },
     },
     actions: {
@@ -72,6 +104,51 @@ export default {
         },
         getCount(state) {
             return state.count;
+        },
+        getDelivery(state) {
+            return state.delivery;
+        },
+        getPay(state) {
+            return state.pay;
+        },
+        getName(state) {
+            return state.name;
+        },
+        getCity(state) {
+            return state.city;
+        },
+        getStreet(state) {
+            return state.street;
+        },
+        getMail(state) {
+            return state.mail;
+        },
+        getHouse(state) {
+            return state.house;
+        },
+        getTotalOldPrice(state) {
+            let total = 0;
+            state.products.forEach(product => {
+                total += product.quantity * product.oldPrice;
+            });
+
+            return total
+        },
+        getTotalPrice(state) {
+            let total = 0;
+            state.products.forEach(product => {
+                total += product.quantity * product.price;
+            });
+
+            return total
+        },
+        getTotalDiscount(state) {
+            let total = 0;
+            state.products.forEach(product => {
+                total += product.quantity * product.discount;
+            });
+
+            return total
         },
     }
 };
