@@ -23,7 +23,10 @@
 <!--                            </div>-->
 <!--                        </div>-->
 <!--                    </div>&lt;!&ndash; acc-single &ndash;&gt;-->
-                    <a href="#!" class="cart__order-btn btn btn-medium" type="button">Оформить заказ</a>
+                    <div class="cart__order-btn btn btn-medium" @click="store">
+                        Оформить заказ
+                    </div>
+                    <div style="color: red" v-for="error in errors">{{ error }}</div>
                 </div>
             </div>
 
@@ -60,11 +63,14 @@ export default {
     computed: {
         ...mapGetters({
             products: "basket/getProducts",
+            errors: "basket/getErrors"
         })
     },
 
     methods: {
-
+        store() {
+            this.$store.dispatch('basket/store');
+        }
     },
 }
 </script>

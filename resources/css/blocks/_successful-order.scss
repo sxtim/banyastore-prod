@@ -1,0 +1,23 @@
+.successful-order__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 800px;
+  margin: 100px auto;
+}
+
+
+
+.successful-order__subtitle {
+  color: var(--text-color-dark);
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.btn-successful-order {
+  max-width: 400px;
+  width: 100%;
+}

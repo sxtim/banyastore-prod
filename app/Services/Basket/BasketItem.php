@@ -77,4 +77,8 @@ class BasketItem
     }
 
 
+    public function getOldPrice(): float
+    {
+        return $this->oldPrice;
+    }
 }

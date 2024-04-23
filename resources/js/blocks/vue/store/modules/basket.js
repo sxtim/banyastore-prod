@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {commit} from "lodash/seq";
 
 export default {
     namespaced: true,
@@ -12,7 +13,8 @@ export default {
         products: [],
         count: 0,
         delivery: 1,
-        pay: 1
+        pay: 1,
+        errors: []
     }),
     mutations: {
         setProducts(state, products) {
@@ -45,8 +47,32 @@ export default {
         setHouse(state, house) {
             state.house = house;
         },
+        setErrors(state, errors) {
+            state.errors = errors;
+        },
     },
     actions: {
+        store({state, commit}) {
+            axios.post(window.location.origin + `/ajax/order/store`, {
+                name: state.name,
+                phone: state.phone,
+                mail: state.mail,
+                payment_variant_id: state.pay,
+                delivery_variant_id: state.delivery,
+                city_name: state.city,
+                street: state.street,
+                house: state.house
+            }).then(response => {
+                if (response.data.status === 'success') {
+                    location.href = response.data.link
+                } else {
+                    commit('setErrors', ['Что-то пошло не так'])
+                }
+            }).catch(error => {console.log(error.response.data.errors)
+                commit('setErrors', error.response.data.errors)
+            });
+
+        },
         initBasket({commit}){
             axios.post(window.location.origin + `/ajax/basket/get-basket`).then(response => {
                 commit('setProducts', response.data.items);
@@ -150,5 +176,8 @@ export default {
 
             return total
         },
+        getErrors(state) {
+            return state.errors
+        }
     }
 };

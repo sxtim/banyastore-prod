@@ -120,7 +120,14 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
         Route::post('/decrement', [\App\Http\Controllers\Ajax\BasketController::class, 'decrement'])->name('decrement');
         Route::post('/increment', [\App\Http\Controllers\Ajax\BasketController::class, 'increment'])->name('increment');
     });
+
+    //Заказ
+    Route::post('/order/store', [\App\Http\Controllers\Ajax\OrderController::class, 'store'])->name('order.store');
 });
+
+
+//Успешный заказ
+Route::get('/order/success', [\App\Http\Controllers\OrderController::class, 'success'])->name('order.success');
 
 Route::get('/', function () {
     return view('index');
