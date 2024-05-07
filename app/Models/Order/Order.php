@@ -3,6 +3,7 @@ namespace App\Models\Order;
 
 use App\Models\Delivery\Delivery;
 use App\Models\Delivery\DeliveryVariant;
+use App\Models\Order\OrderStatus\OrderStatus;
 use App\Models\Payment\PaymentVariant;
 use App\Models\Shop\Product;
 use App\Models\User;
@@ -98,5 +99,10 @@ class Order extends Model
     public function deliveries(): HasMany
     {
         return $this->hasMany(Delivery::class, 'order_id');
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(OrderStatus::class, 'status_id');
     }
 }

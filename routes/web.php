@@ -95,6 +95,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{discountId}', [\App\Http\Controllers\Backend\DiscountController::class, 'edit'])->name('edit');
                 Route::patch('/edit/{discountId}', [\App\Http\Controllers\Backend\DiscountController::class, 'update'])->name('update');
             });
+
+            //Заказы
+            Route::prefix('order')->name('order.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('index');
+            });
         });
     });
 

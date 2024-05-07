@@ -43,15 +43,9 @@
 
 <div class="nav nav--modif mb-4">
     <div class="main-box d-flex justify-content-between">
-        <div class="hamburger hamburger--modif hamburger3 ssm-toggle-nav" title="open nav">
-            <span class="bar bar1"></span>
-            <span class="bar bar2"></span>
-            <span class="bar bar3"></span>
-            <span class="bar bar4"></span>
-        </div>
-
         <div class="links flex-wrap">
             <a href="{{ route('backend.index') }}" class="@yield('aside_index')">Информация</a>
+            <a href="{{ route('backend.order.index') }}" class="@yield('aside_orders')">Заказы</a>
             <a href="{{ route('backend.shop.index') }}" class="@yield('aside_shop')">Интернет-магазин</a>
             <a href="{{ route('backend.actions.index') }}" class="@yield('aside_actions')">Акции</a>
             <a href="{{ route('backend.news.index') }}" class="@yield('aside_news')">Новости</a>
