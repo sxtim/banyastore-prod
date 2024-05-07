@@ -69,9 +69,9 @@
 
                     <div class="product-detail__content-row-bottom">
                         <div class="product-detail__price-container">
-                            <span class="product-detail__price">{{ $product->getCurrentPrice() }} ₽ </span>
+                            <span class="product-detail__price">{{ number_format($product->getCurrentPrice(), 0, '.', ' ') }} ₽ </span>
                             @if ($product->price > $product->getCurrentPrice())
-                                <span class="product-detail__price-old">{{ $product->price }} ₽</span>
+                                <span class="product-detail__price-old">{{ number_format($product->price, 0, '.', ' ') }} ₽</span>
                             @endif
                         </div>
                         <div class="product-detail__btns-container">

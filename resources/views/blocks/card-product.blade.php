@@ -28,11 +28,11 @@
         <div class="card__row-2">
             <div class="card__price-container">
           <span class="card__price">
-               {{ $product->getCurrentPrice() }}
+              {{ number_format($product->getCurrentPrice(), 0, '.', ' ') }} ₽
           </span>
                 @if ($product->price > $product->getCurrentPrice())
                     <span class="card__price-old">
-                        {{ $product->price }}
+                        {{ number_format($product->price, 0, '.', ' ') }} ₽
                     </span>
                 @endif
 
