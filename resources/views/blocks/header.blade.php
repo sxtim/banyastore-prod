@@ -43,7 +43,7 @@
                     </a>
                 </li>
                 <li class="shop-menu__item">
-                    <a href="#!" class="shop-menu__favorites-link">
+                    <a href="{{ route('personal.favorites') }}" class="shop-menu__favorites-link">
                         <div class="shop-menu__item">
                             <favorite-icon-component></favorite-icon-component>
                         </div>

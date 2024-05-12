@@ -18,7 +18,11 @@ export default {
     }),
     mutations: {
         setProducts(state, products) {
-            state.products = products;
+            state.products = []
+            for (let k in products) {
+                state.products.push(products[k])
+            }
+            // state.products = products;
         },
         setCount(state, count) {
             state.count = count;
@@ -121,9 +125,9 @@ export default {
         },
         getCount(state) {
             let count = 0;
-            state.products.forEach(product => {
-                count += product.quantity;
-            });
+            for (let k in state.products) {
+                count += state.products[k].quantity;
+            }
 
             return count
         },

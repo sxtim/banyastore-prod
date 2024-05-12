@@ -20,6 +20,8 @@ export default {
 
     mounted() {
         this.$store.dispatch('basket/initBasket');
+        console.log('dd')
+        console.log(this.count)
     },
     computed: {
         ...mapGetters({

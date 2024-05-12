@@ -22,3 +22,8 @@ Breadcrumbs::for('personal', function ($trail) {
     $trail->push('Личный кабинет', route('personal.index'));
 });
 
+Breadcrumbs::for('favorites', function ($trail) {
+    $trail->parent('personal');
+    $trail->push('Избранное', route('personal.favorites'));
+});
+

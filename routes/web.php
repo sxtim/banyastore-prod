@@ -108,6 +108,9 @@ Route::middleware(['auth'])->group(function () {
     //Личный кабинет
     Route::prefix('personal')->name('personal.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Personal\PersonalController::class, 'index'])->name('index');
+        Route::post('/update/{id}', [\App\Http\Controllers\Personal\PersonalController::class, 'update'])->name('update');
+        Route::post('/password/{id}', [\App\Http\Controllers\Personal\PersonalController::class, 'password'])->name('password');
+        Route::get('/favorites', [\App\Http\Controllers\Personal\PersonalController::class, 'favorites'])->name('favorites');
     });
 });
 
