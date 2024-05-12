@@ -103,6 +103,12 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+
+
+    //Личный кабинет
+    Route::prefix('personal')->name('personal.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Personal\PersonalController::class, 'index'])->name('index');
+    });
 });
 
 
@@ -128,6 +134,10 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
 
     //Заказ
     Route::post('/order/store', [\App\Http\Controllers\Ajax\OrderController::class, 'store'])->name('order.store');
+
+    //Избранное
+    Route::post('/favorite/get-data', [\App\Http\Controllers\Ajax\FavoriteController::class, 'getData'])->name('favorite.get-data');
+    Route::post('/favorite/product', [\App\Http\Controllers\Ajax\FavoriteController::class, 'product'])->name('favorite.product');
 });
 
 

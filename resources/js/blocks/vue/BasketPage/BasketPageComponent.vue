@@ -58,7 +58,6 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('basket/initBasket');
     },
     computed: {
         ...mapGetters({

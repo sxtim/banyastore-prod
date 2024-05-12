@@ -29,9 +29,10 @@ class ProductRequest extends FormRequest
             'name' => 'required',
             'category' => 'required',
             'price' => 'required|numeric',
-            'image' => 'image|max:1000', //2 MB
+            'image' => 'image|max:1000',
             'sort' => 'numeric',
-            'properties' => new ProductProperties()
+            'properties' => new ProductProperties(),
+            'additional-images.*' => 'image|max:1000',
         ];
     }
 
@@ -46,6 +47,8 @@ class ProductRequest extends FormRequest
             'image.image' => 'Изображение: ожидается файл форматов jpg, png или gif',
             'image.max' => 'Изображение: максимальный размер файла 1Мб',
             'sort.numeric' => 'Укажите сортировку числом',
+            'additional-images.*.mimes' => 'Докумены должны быть в формате pdf',
+            'additional-images.*.max' => 'Максимальный размер файла в документа 1Мб',
         ];
     }
 }

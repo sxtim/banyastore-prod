@@ -17,4 +17,8 @@ Breadcrumbs::for('product', function ($trail, $product) {
     $trail->push($product->name, route('products.detail', ['slug' => $product->slug]));
 });
 
+Breadcrumbs::for('personal', function ($trail) {
+    $trail->parent('feed');
+    $trail->push('Личный кабинет', route('personal.index'));
+});
 

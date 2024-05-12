@@ -3,16 +3,22 @@ require('./bootstrap');
 import  './modules/sliders';
 import  './modules/product-detail-tabs';
 import store from "./blocks/vue/store/store";
-
+//
 import {createApp} from 'vue';
 import BasketIconComponent from "./blocks/vue/Header/BasketIconComponent";
+import FavoriteIconComponent from "./blocks/vue/Header/FavoriteIconComponent";
 import BasketPageComponent from "./blocks/vue/BasketPage/BasketPageComponent";
 import BtnAddBasketComponent from "./blocks/vue/Button/BtnAddBasketComponent";
+import BtnDetailAddBasketComponent from "./blocks/vue/Button/BtnDetailAddBasketComponent";
+import BtnFavoriteProductComponent from "./blocks/vue/Button/BtnFavoriteProductComponent";
+import BtnDetailFavoriteProductComponent from "./blocks/vue/Button/BtnDetailFavoriteProductComponent";
 
+//
 if (document.getElementById('header')) {
     createApp({
         components: {
             BasketIconComponent,
+            FavoriteIconComponent
         }
     }).use(store)
         .mount("#header")
@@ -31,6 +37,9 @@ if (document.getElementById('catalog')) {
     createApp({
         components: {
             BtnAddBasketComponent,
+            BtnDetailAddBasketComponent,
+            BtnFavoriteProductComponent,
+            BtnDetailFavoriteProductComponent
         }
     }).use(store)
         .mount("#catalog")

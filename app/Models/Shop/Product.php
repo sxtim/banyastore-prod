@@ -6,10 +6,12 @@ use App\Http\Filters\Filterable;
 //use App\Http\Filters\ProductFilter;
 
 
+use App\Models\Shop\ProductFile;
 use App\Models\Shop\Property\PropertyValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -92,8 +94,7 @@ class Product extends Model
     ];
 
     protected $appends = [
-        'image_url',
-        'pdf_url'
+        'image_url'
     ];
 
     protected $casts = [
@@ -149,5 +150,34 @@ class Product extends Model
     public function getTag(): string
     {
         return $this->tag ? self::LIST_TAG[$this->tag] : '';
+    }
+
+    //дополнительные картинки к товару
+    public function additionalImages(): HasMany
+    {
+        return $this
+            ->hasMany(ProductFile::class, 'product_id')
+            ->where('type', ProductFile::TYPE_IMAGE);
+    }
+
+    public function favorite(int $userId): Product
+    {
+        if ($this->favorites->where('user_id', $userId)->isNotEmpty()) {
+
+            $this->favorites()->where('user_id', $userId)->delete();
+
+            return $this;
+        }
+
+        $this->favorites()->create([
+            'user_id' => $userId
+        ]);
+
+        return $this;
+    }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(ProductFavorite::class, 'product_id');
     }
 }

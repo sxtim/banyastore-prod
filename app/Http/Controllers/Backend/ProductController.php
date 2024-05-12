@@ -8,6 +8,7 @@ use App\Http\Requests\Backend\ImageRequest;
 use App\Http\Requests\Backend\ProductRequest;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
+use App\Models\Shop\ProductFile;
 use App\Models\Shop\Property\Property;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -43,7 +44,7 @@ class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        $product->load(['propertiesValues','discount']);
+        $product->load(['propertiesValues','discount','additionalImages']);
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
         $tags = Product::LIST_TAG;
@@ -61,6 +62,7 @@ class ProductController extends Controller
             Storage::put(self::DIR_PRODUCTS . $filename, File::get($image));
         }
 
+        $additionalImages = $request->file('additional-images');
 
         $data = [
             'name' => $request->input('name'),
@@ -81,12 +83,25 @@ class ProductController extends Controller
             }
         }
 
-        DB::transaction(function () use ($data, $valueProperties) {
+        DB::transaction(function () use ($data, $valueProperties, $additionalImages) {
             $product = Product::create($data);
             if ($valueProperties) {
                 $product->propertiesValues()->attach($valueProperties);
             }
 
+            //добавление дополнительных изображений
+            if ($additionalImages) {
+                foreach ($additionalImages as $file) {
+                    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    Storage::put(self::DIR_PRODUCTS . $filename, File::get($file));
+
+                    $product->additionalImages()->create([
+                        'file_path' => self::DIR_PRODUCTS . $filename,
+                        'type' => ProductFile::TYPE_IMAGE
+                    ]);
+                }
+            }
         });
 
         return redirect()->route('backend.product.index')->with('success', 'Изменения сохранены');
@@ -121,13 +136,28 @@ class ProductController extends Controller
             }
         }
 
-        DB::transaction(function () use ($product, $data, $valueProperties) {
+        $additionalImages = $request->file('additional-images');
+
+        DB::transaction(function () use ($product, $data, $valueProperties, $additionalImages) {
             $product->update($data);
             if ($valueProperties) {
                 $product->propertiesValues()->detach();
                 $product->propertiesValues()->attach($valueProperties);
             }
 
+            //добавление дополнительных изображений
+            if ($additionalImages) {
+                foreach ($additionalImages as $file) {
+                    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    Storage::put(self::DIR_PRODUCTS . $filename, File::get($file));
+
+                    $product->additionalImages()->create([
+                        'file_path' => self::DIR_PRODUCTS . $filename,
+                        'type' => ProductFile::TYPE_IMAGE
+                    ]);
+                }
+            }
         });
 
         return redirect()->route('backend.product.index')->with('success', 'Данные обновлены');

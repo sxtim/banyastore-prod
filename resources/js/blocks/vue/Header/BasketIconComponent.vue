@@ -19,7 +19,7 @@ export default {
     name: "BasketIconComponent",
 
     mounted() {
-        this.$store.dispatch('basket/initCount');
+        this.$store.dispatch('basket/initBasket');
     },
     computed: {
         ...mapGetters({

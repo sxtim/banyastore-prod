@@ -65,14 +65,30 @@
 @isset($product)
     <div class="row mt-3">
         <div class="col-4">
-            <img src="{{ $product->image_url }}" alt="" class="img-fluid">
+            <img src="{{ $product->getImageUrlAttribute() }}" alt="" class="img-fluid" style="max-width:150px;">
         </div>
+        @if ($product->additionalImages)
+            <div class="col-4">
+                @foreach($product->additionalImages as $image)
+                    <span style="display: inline-block;position: relative">
+                        <img src="{{ $image->getImageUrlAttribute() }}" alt="" class="img-fluid" style="max-width:150px;">
+                        <span style="text-decoration: underline; cursor:pointer; color: #03a2ff" id="del-additional-image" param="{{ $image->id }}">
+                            Удалить
+                        </span>
+                    </span>
+                @endforeach
+            </div>
+        @endif
     </div>
 @endisset
 <div class="row mt-3">
     <div class="col-4">
-        <label for="image" class="main-label">Изображение</label>
+        <label for="image" class="main-label">Изображение продукта</label>
         <input type="file" name="image" id="image" class="form-control-file" autocomplete="off">
+    </div>
+    <div class="col-4">
+        <label for="additional-images" class="main-label">Изображения для слайдера</label>
+        <input type="file" name="additional-images[]" id="additional-images" class="form-control-file" autocomplete="off" multiple>
     </div>
     <div class="col-2">
         <label for="sort" class="main-label">Сортировка</label>

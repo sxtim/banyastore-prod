@@ -28,7 +28,7 @@ class BasketController extends Controller
         $basket->add($request->input('product_id'));
 
         return response()->json([
-            'count' => $basket->getCount()
+            'items' => $basket->getBasket()
         ]);
     }
 
@@ -37,8 +37,7 @@ class BasketController extends Controller
         $basket->remove($request->input('product_id'));
 
         return response()->json([
-            'items' => $basket->getBasket(),
-            'count' => $basket->getCount()
+            'items' => $basket->getBasket()
         ]);
     }
 
@@ -47,8 +46,7 @@ class BasketController extends Controller
         $basket->increment($request->input('product_id'));
 
         return response()->json([
-            'items' => $basket->getBasket(),
-            'count' => $basket->getCount()
+            'items' => $basket->getBasket()
         ]);
     }
 
@@ -57,8 +55,7 @@ class BasketController extends Controller
         $basket->decrement($request->input('product_id'));
 
         return response()->json([
-            'items' => $basket->getBasket(),
-            'count' => $basket->getCount()
+            'items' => $basket->getBasket()
         ]);
     }
 }
