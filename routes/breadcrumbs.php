@@ -12,6 +12,11 @@ Breadcrumbs::for('category', function ($trail, $category) {
     $trail->push($category->name, route('products.by-category', ['slug' => $category->slug]));
 });
 
+Breadcrumbs::for('search', function ($trail) {
+    $trail->parent('feed');
+    $trail->push('Поиск', route('products.search'));
+});
+
 Breadcrumbs::for('product', function ($trail, $product) {
     $trail->parent('category', $product->category);
     $trail->push($product->name, route('products.detail', ['slug' => $product->slug]));

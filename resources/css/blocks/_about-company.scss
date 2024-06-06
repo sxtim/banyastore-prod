@@ -1,0 +1,36 @@
+.about-company__content-txt {
+  margin-top: 40px;
+  color: var(--text-color-dark);
+  font-size: 18px;
+  line-height: 130%;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+
+}
+
+.table {
+  width: 100%;
+
+}
+td, tr, th {
+  border: 1px solid #333;
+  padding: 6px 4px;
+}
+tbody {
+  text-align: left;
+}
+
+
+
+.about-company__rekvizity-table {
+  color: var(--text-color-dark);
+  margin: 40px auto;
+  border-collapse: collapse!important;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+}

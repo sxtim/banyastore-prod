@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\DiscountRequest;
 use App\Models\Order\Order;
-use App\Models\Shop\Discount;
-use App\Models\Shop\Product;
-use Illuminate\Support\Facades\DB;
+use App\Models\Order\OrderStatus\OrderStatus;
+use App\Models\User;
+use App\Services\Order\OrderStatusChangeService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -19,9 +19,40 @@ class OrderController extends Controller
         return view('backend.order.index', compact('orders'));
     }
 
-    public function create(): View
+    public function show(int $id): View
     {
-        $products = Product::all();
-        return view('backend.discount.create', compact('products'));
+        $statuses = OrderStatus::all();
+        $order = Order::findOrFail($id);
+        $order->load(['products','user','deliveryVariant','paymentVariant','deliveries','status']);
+        return view('backend.order.show', compact('order','statuses'));
+    }
+
+    public function updateUser(int $id, Request $request): JsonResponse
+    {
+        $order = Order::findOrFail($id);
+        $user = User::findOrFail($request->input('user_id'));
+        $order->update([
+            'user_id' => $user->id
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'name' => $user->getFullName()
+        ]);
+    }
+
+    public function updateStatus(int $id, Request $request, OrderStatusChangeService $service): JsonResponse
+    {
+        try{
+            $service->setStatus($id, $request->input('status_id'));
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

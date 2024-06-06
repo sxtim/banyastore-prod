@@ -14,20 +14,24 @@
       <div class="footer__col">
         <h2 class="footer__title">Каталог товаров</h2>
         <ul>
-          <li><a href="#!">Печи для бани и сауны</a></li>
-          <li><a href="#!">Специальные дымоходы</a></li>
-          <li><a href="#!">Отопительные печи</a></li>
-          <li><a href="#!">Освещение для бани</a></li>
-<!--          <li><a href="#!" class="logo"><img src="./img/icons/logo.png" alt="logo"></a></li>-->
+            @foreach($menu as $itemMenu)
+                @if ($itemMenu->parent_id === null)
+                    <li>
+                        <a href="{{ route('products.by-category', ['slug' => $itemMenu->slug]) }}">
+                            {{ $itemMenu->name }}
+                        </a>
+                    </li>
+                @endif
+            @endforeach
         </ul>
       </div>
       <div class="footer__col">
         <h2>Информация</h2>
         <ul>
-          <li><a href="#!">О компании</a></li>
+          <li><a href="{{ route('company.index') }}">О компании</a></li>
           <li><a href="#!">Доставка</a></li>
           <li><a href="#!">Гарантия</a></li>
-          <li><a href="#!">Реквизиты</a></li>
+          <li><a href="{{ route('company.index') }}">Реквизиты</a></li>
           <li class="footer__cr"><a href="#!">2024 © Banyastore</a></li>
         </ul>
       </div>

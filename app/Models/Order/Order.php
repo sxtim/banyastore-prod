@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -104,5 +105,33 @@ class Order extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(OrderStatus::class, 'status_id');
+    }
+
+    public function listProducts(): Collection
+    {
+        $result = collect();
+        foreach ($this->products as $product) {
+            $element = $result->where('product_id', '=', $product->id)->first();
+            if ($element) {
+                $result->transform(function ($item) use ($product){
+                    if ($item['product_id'] == $product->id) {
+                        $item['quantity']++;
+                        $item['totalPrice'] = round($item['price'] * $item['quantity'],2);
+                    }
+                    return $item;
+                });
+            } else {
+                $result->push([
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'totalPrice' => $product->pivot->price,
+                    'price' => $product->pivot->price,
+                    'base_price' => $product->pivot->base_price,
+                    'discount' => $product->pivot->discount,
+                    'quantity' => 1
+                ]);
+            }
+        }
+        return $result;
     }
 }

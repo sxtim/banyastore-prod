@@ -25,6 +25,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(['blocks.dropdown-menu'], MenuComposer::class);
+        View::composer(['blocks.dropdown-menu','blocks.footer'], MenuComposer::class);
     }
 }

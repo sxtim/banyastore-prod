@@ -99,6 +99,9 @@ Route::middleware(['auth'])->group(function () {
             //Заказы
             Route::prefix('order')->name('order.')->group(function () {
                 Route::get('/', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('index');
+                Route::get('/show/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('show');
+                Route::post('/update-user/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updateUser'])->name('update-user');
+                Route::post('/update-status/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updateStatus'])->name('update-status');
             });
         });
     });
@@ -121,6 +124,8 @@ Route::get('/category/{slug}', [\App\Http\Controllers\Shop\ProductController::cl
 Route::get('/product/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'detail'])->name('products.detail');
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
 Route::get('/basket', [\App\Http\Controllers\BasketController::class, 'index'])->name('basket.index');
+Route::get('/search/', [\App\Http\Controllers\Shop\ProductController::class, 'search'])->name('products.search');
+Route::get('/company/', [\App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
 
 //Аякс
 Route::prefix('ajax')->name('ajax.')->group(function () {

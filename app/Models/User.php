@@ -98,4 +98,9 @@ class User extends Authenticatable
                 $basket->save();
             });
     }
+
+    public function getFullName():string
+    {
+        return $this->surname . ' ' .$this->name;
+    }
 }

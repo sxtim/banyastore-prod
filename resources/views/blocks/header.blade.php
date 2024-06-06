@@ -70,7 +70,7 @@
                 </nav>
                 <nav class="header__nav nav">
                     <ul class="nav__list">
-                        <li><a href="#!">О компании</a></li>
+                        <li><a href="{{ route('company.index') }}">О компании</a></li>
                         <li><a href="#!">Акции</a></li>
                         <li><a href="#!">3D проект</a></li>
                         <li>
@@ -83,9 +83,9 @@
 
                 @include('blocks/social-icon')
 
-                <form action="" class="header__search-form search-form">
+                <form class="header__search-form search-form" action="{{ route('products.search') }}">
                     <button type="submit" class="search__form-btn"></button>
-                    <input type="text" class="search-form-txt" placeholder="Поиск по каталогу">
+                    <input type="text" name="query" class="search-form-txt" placeholder="Поиск по каталогу">
                 </form>
             </div>
         </div>

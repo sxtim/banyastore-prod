@@ -46,6 +46,7 @@
                     <th>Почта</th>
                     <th>Вариант оплаты</th>
                     <th>Вариант доставки</th>
+                    <th>Создан</th>
                     <th style="width: 50px">&nbsp;</th>
                 </tr>
                 </thead>
@@ -78,7 +79,14 @@
                         <td>
                             {{ $order->deliveryVariant->name }}
                         </td>
-                        <td></td>
+                        <td>
+                            {{ $order->created_at->format('d.m.Y H:i:s') }}
+                        </td>
+                        <td>
+                            <a href="{{ route('backend.order.show',['id' => $order->id]) }}">
+                                Посмотреть
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
