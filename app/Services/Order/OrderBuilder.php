@@ -124,7 +124,6 @@ class OrderBuilder
                     'discount' => $basketItem->getOldPrice() > $basketItem->getPrice() ? $basketItem->getOldPrice() - $basketItem->getPrice() : 0,
                 ];
             }
-
         }
 
         $this->order->price = $totalPrice;
@@ -134,18 +133,12 @@ class OrderBuilder
 
             $order->products()->attach($products);
 
-            foreach ($this->delivery as $delivery) {
-
-                if ($delivery instanceof DeliveryDto) {
-                    $order->deliveries()->create([
-                        'city_name' => $delivery->getCityName(),
-                        'street' => $delivery->getStreet(),
-                        'house' => $delivery->getHouse(),
-                        'address' => $delivery->getCityName().', '.$delivery->getStreet().', '.$delivery->getHouse()
-                    ]);
-                }
-
-            }
+            $order->deliveries()->create([
+                'city_name' => $this->delivery->getCityName(),
+                'street' => $this->delivery->getStreet(),
+                'house' => $this->delivery->getHouse(),
+                'address' => $this->delivery->getCityName().', '.$this->delivery->getStreet().', '.$this->delivery->getHouse()
+            ]);
 
             $order->save();
         });

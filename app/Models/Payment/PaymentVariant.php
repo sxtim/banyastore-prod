@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentVariant extends Model
 {
-
+    const ALFA = 'alfa';
 
     protected $fillable = [
         'name',

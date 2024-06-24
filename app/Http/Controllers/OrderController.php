@@ -14,4 +14,9 @@ class OrderController extends Controller
     {
         return view('successful-order');
     }
+
+    public function error(): View
+    {
+        return view('error-order');
+    }
 }

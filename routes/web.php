@@ -114,6 +114,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', [\App\Http\Controllers\Personal\PersonalController::class, 'update'])->name('update');
         Route::post('/password/{id}', [\App\Http\Controllers\Personal\PersonalController::class, 'password'])->name('password');
         Route::get('/favorites', [\App\Http\Controllers\Personal\PersonalController::class, 'favorites'])->name('favorites');
+        Route::get('/orders', [\App\Http\Controllers\Personal\OrderController::class, 'index'])->name('orders');
+        Route::get('/orders/{id}', [\App\Http\Controllers\Personal\OrderController::class, 'detail'])->name('orders.detail');
+        Route::get('/orders/pay/{id}', [\App\Http\Controllers\Personal\OrderController::class, 'pay'])->name('orders.pay');
     });
 });
 
@@ -126,6 +129,8 @@ Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->nam
 Route::get('/basket', [\App\Http\Controllers\BasketController::class, 'index'])->name('basket.index');
 Route::get('/search/', [\App\Http\Controllers\Shop\ProductController::class, 'search'])->name('products.search');
 Route::get('/company/', [\App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
+Route::get('/actions', [\App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
+Route::get('/actions/{slug}', [\App\Http\Controllers\ActionController::class, 'detail'])->name('actions.detail');
 
 //Аякс
 Route::prefix('ajax')->name('ajax.')->group(function () {
@@ -151,6 +156,9 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
 
 //Успешный заказ
 Route::get('/order/success', [\App\Http\Controllers\OrderController::class, 'success'])->name('order.success');
+
+//Не успешный заказ
+Route::get('/order/error', [\App\Http\Controllers\OrderController::class, 'error'])->name('order.error');
 
 Route::get('/', function () {
     return view('index');

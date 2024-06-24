@@ -28,7 +28,7 @@ class OrderService
             ->setName($newOrderDto->getName())
             ->setPhone($newOrderDto->getPhone())
             ->setMail($newOrderDto->getMail())
-            ->setUser($user?->id)
+            ->setUser($user)
             ->setDeliveryVariant($newOrderDto->getDeliveryVariant())
             ->setPaymentVariant($newOrderDto->getPaymentVariant())
             ->setDelivery($newOrderDto->getDeliveryDto())

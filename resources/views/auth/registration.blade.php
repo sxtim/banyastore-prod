@@ -9,7 +9,18 @@
             <h1 class="lk__title title-s">Личный кабинет</h1>
             <div class="lk__container">
 
-                @include('blocks/menu-personal')
+                <nav class="lk__nav">
+                    <ul class="lk__nav-item">
+                        <a class="btn-lk-nav btn btn-lk-nav-active" href="{{ route('personal.index') }}">Личные данные</a>
+                    </ul>
+                    <ul class="lk__nav-item"><a class="btn-lk-nav btn" href="#!">Заказы</a></ul>
+                    <ul class="lk__nav-item">
+                        <a class="btn-lk-nav btn" href="{{ route('personal.favorites') }}">Избранное</a>
+                    </ul>
+                    <ul class="lk__nav-item">
+                        <a class="btn-lk-nav btn" href="{{ route('basket.index') }}">Корзина</a>
+                    </ul>
+                </nav>
 
                 <div class="user-data">
                     <h2 class="user-data__title title-form">Личные данные</h2>

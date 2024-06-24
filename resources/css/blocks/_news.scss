@@ -1,4 +1,4 @@
-.catalog-news__cards-wrapper {
+.cards-wrapper {
   display: grid;
   grid-template-columns: repeat(3, calc(100% / 3 - 20px / 3 * (3 - 1)));
   column-gap: 20px;

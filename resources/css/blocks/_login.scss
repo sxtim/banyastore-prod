@@ -1,0 +1,146 @@
+.login-section__title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-section__title {
+  font-weight: 600;
+  font-size: 32px;
+}
+
+.login-section__subtitle {
+  margin-top: 30px;
+  color: var(--text-color-dark);
+}
+
+
+.login-section__auth-form {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.user-data__form-container {
+  width: 100%;
+
+  @media (max-width: 998px) {
+    align-items: center;
+  }
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.label-box {
+  font-size: 14px;
+  color: #8A8A8A;
+  font-weight: 600;
+}
+
+.input-box {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 5px 5px 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.input-check-box input{
+  border-radius: 5px;
+}
+
+.auth-form__remember {
+  display: inline-block;
+  color: var(--text-color-dark);
+}
+
+.auth-form__remember label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.auth-form__remember-checkbox {
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.custom-checkbox {
+  position: relative;
+  display: inline-block;
+  float: left;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #c6c6c6;
+  border-radius: 4px;
+  vertical-align: sub;
+  margin-right: 10px;
+
+  &::before {
+    content: '';
+    display: block;
+    height: 10px;
+    width: 21px;
+    border-left: 2px solid #8c8c8c;
+    border-bottom: 2px solid #8c8c8c;
+    transform: rotate(-50deg) scale(0);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: -6px;
+    margin: auto;
+    transition: 0.5s;
+  }
+}
+
+.real-checkbox:checked + .custom-checkbox::before {
+  transform: rotate(-410deg) scale(1);
+}
+
+.auth-form__button {
+  margin: 20px 0;
+}
+
+.auth-form__forgot {
+  display: inline-block !important;
+  color: black;
+  border-bottom: 1px dashed #000;
+
+  transition: 0.1s;
+
+  &:hover {
+    color: var(--green);
+  }
+
+}
+
+.auth-form__reg-box {
+  margin-top: 20px;
+}
+
+
+.auth-form__reg-text {
+  color: var(--text-color-dark);
+  font-size: 14px;
+}
+
+.auth-form__button {
+  width: 100%;
+}
+
+.auth-form__reg-link {
+  text-transform: uppercase;
+  margin-top: 20px;
+}

@@ -17,7 +17,8 @@ class PersonalController extends Controller
     public function index(): View
     {
         $user = Auth::user();
-        return view('personal.index',compact('user'));
+        $activeMenu = 'personal';
+        return view('personal.index',compact('user','activeMenu'));
     }
 
     public function update(int $id, PersonalRequest $request): RedirectResponse

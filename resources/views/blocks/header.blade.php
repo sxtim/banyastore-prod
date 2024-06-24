@@ -71,7 +71,7 @@
                 <nav class="header__nav nav">
                     <ul class="nav__list">
                         <li><a href="{{ route('company.index') }}">О компании</a></li>
-                        <li><a href="#!">Акции</a></li>
+                        <li><a href="{{ route('actions.index') }}">Акции</a></li>
                         <li><a href="#!">3D проект</a></li>
                         <li>
                             <a href="{{ route('news.index') }}">

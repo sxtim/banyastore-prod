@@ -102,6 +102,11 @@ class Order extends Model
         return $this->hasMany(Delivery::class, 'order_id');
     }
 
+    public function lastDelivery(): ?Delivery
+    {
+        return $this->deliveries->last();
+    }
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(OrderStatus::class, 'status_id');

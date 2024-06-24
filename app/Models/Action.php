@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -49,4 +50,14 @@ class Action extends Model
         return 'slug';
     }
 
+
+    public function getPreviewImage(): ?string
+    {
+        return Storage::url($this->preview_img);
+    }
+
+    public function getMainImage(): ?string
+    {
+        return Storage::url($this->main_img);
+    }
 }
