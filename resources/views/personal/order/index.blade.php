@@ -3,7 +3,7 @@
 @section('pagetitle', 'Заказы | Banyastore')
 
 @section('content')
-    {{ Breadcrumbs::render('personal') }}
+    {{ Breadcrumbs::render('orders') }}
     <section class="lk section">
         <div class="container">
             <h1 class="lk__title title-s">Личный кабинет</h1>

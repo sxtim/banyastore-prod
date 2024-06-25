@@ -18,4 +18,14 @@ class NewsController extends Controller
             ->get();
         return view('news.index', compact('news'));
     }
+
+    public function detail(): View
+    {
+        $news = News::where('start_at', '<=', now())
+            ->where('end_at','>=', now())
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return view('news.detail', compact('news'));
+    }
 }

@@ -4,7 +4,7 @@
             <div class="order-card__top-info">
                 <a href="{{ route('personal.orders.detail', ['id' => $order->id]) }}" class="order-card__link">
                     <span class="order-card__title">
-                        ЗАКАЗ № {{ $order->id }} от 21.11.2023г.
+                        ЗАКАЗ № {{ $order->id }} от {{ $order->created_at->format('d.m.Y') }}г.
                     </span>
                 </a>
                 <div class="order-card__status">

@@ -139,4 +139,31 @@ class Order extends Model
         }
         return $result;
     }
+
+
+    public function totalDiscount(): float
+    {
+        $discount = 0;
+
+        $this->products->map(function ($product) use (&$discount){
+            if ($product->pivot->discount && $product->pivot->discount > 0) {
+                $discount += $product->pivot->discount;
+            }
+        });
+
+        return $discount;
+    }
+
+    public function totalBasePrice(): float
+    {
+        $price = 0;
+
+        $this->products->map(function ($product) use (&$price){
+            if ($product->pivot->base_price > 0) {
+                $price += $product->pivot->base_price;
+            }
+        });
+
+        return $price;
+    }
 }

@@ -32,3 +32,33 @@ Breadcrumbs::for('favorites', function ($trail) {
     $trail->push('Избранное', route('personal.favorites'));
 });
 
+Breadcrumbs::for('orders', function ($trail) {
+    $trail->parent('personal');
+    $trail->push('Заказы', route('personal.orders'));
+});
+
+Breadcrumbs::for('order-detail', function ($trail, $order) {
+    $trail->parent('orders');
+    $trail->push('Заказ №'.$order->id, route('personal.orders.detail', ['id' => $order->id]));
+});
+
+Breadcrumbs::for('actions', function ($trail) {
+    $trail->parent('feed');
+    $trail->push('Акции', route('actions.index'));
+});
+
+Breadcrumbs::for('action-detail', function ($trail, $action) {
+    $trail->parent('actions');
+    $trail->push($action->name, route('actions.detail', ['slug' => $action->slug]));
+});
+
+Breadcrumbs::for('news', function ($trail) {
+    $trail->parent('feed');
+    $trail->push('Новости', route('news.index'));
+});
+
+Breadcrumbs::for('news-detail', function ($trail, $news) {
+    $trail->parent('news');
+    $trail->push($news->name, route('news.detail', ['slug' => $news->slug]));
+});
+

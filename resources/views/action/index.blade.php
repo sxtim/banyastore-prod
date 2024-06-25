@@ -3,6 +3,8 @@
 @section('pagetitle', 'Акции | Banyastore')
 
 @section('content')
+    {{ Breadcrumbs::render('actions') }}
+
     <section class="promotions-page section">
         <div class="container">
             <h1 class="promotions-page__title title-s">Акции интернет-магазина Banyastore</h1>

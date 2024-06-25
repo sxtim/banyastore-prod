@@ -113,6 +113,7 @@ class OrderBuilder
 
         $products = [];
         $totalPrice = 0;
+
         /* @var BasketItem $basketItem */
         foreach ($this->basketProducts as $basketItem) {
             for ($i = 1; $i <= $basketItem->getQuantity(); $i++) {

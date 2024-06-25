@@ -55,4 +55,9 @@ class News extends Model
         return Storage::url($this->preview_img);
     }
 
+    public function getMainImage(): ?string
+    {
+        return Storage::url($this->main_img);
+    }
+
 }

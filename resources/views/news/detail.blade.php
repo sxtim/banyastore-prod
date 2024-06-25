@@ -1,24 +1,23 @@
 @extends('layouts.app')
 
-@section('pagetitle', $action->name.' | Banyastore')
+@section('pagetitle', $news->name.' | Banyastore')
 
 @section('content')
-    {{ Breadcrumbs::render('action-detail', $action) }}
-
-    <section class="promotion-detail section">
+    {{ Breadcrumbs::render('news-detail', $news) }}
+    <section class="news-detail section">
         <div class="container">
 
-            <h1 class="promotion-detail__title title-s">
-                {{ $action->name }}
+            <h1 class="news-detail__title title-s">
+                {{ $news->name }}
             </h1>
-            <div class="promotion-detail__wrapper">
-                <div class="promotion-detail__picture">
-                    <img src="{{ $action->getMainImage() }}" alt="{{ $action->name }}">
+            <div class="news-detail__wrapper">
+                <div class="news-detail__picture">
+                    <img src="{{ $news->getMainImage() }}" alt="{{ $news->name }}">
                 </div>
-                <div class="promotion-detail__desc">
-                    <div class="promotion-detail__txt">
-                        @if ($action->detail_text && isset($action->detail_text['blocks']))
-                            @foreach($action->detail_text['blocks'] as $block)
+                <div class="news-detail__desc">
+                    <div class="news-detail__txt">
+                        @if ($news->detail_text && isset($news->detail_text['blocks']))
+                            @foreach($news->detail_text['blocks'] as $block)
                                 @if ($block['type'] == 'header' && isset($block['data']['level']))
                                     <h{{ $block['data']['level'] }}  >
                                         {!! $block['data']['text'] !!}
@@ -57,8 +56,10 @@
                             @endforeach
                         @endif
                     </div>
-                    <!--          Каталог сортировка акционные товары-->
-{{--                    <a href="{{ route('') }}" class="promotion-detail__link btn btn-medium">Смотреть товары</a>--}}
+                    <time class="news-detail__date">
+                        {{ $news->created_at->format('d.m.Y') }}
+                    </time>
+                    <a href="{{ route('news.index') }}" class="news-detail__link btn btn-medium">Все новости</a>
                 </div>
             </div>
         </div>

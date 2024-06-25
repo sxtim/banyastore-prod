@@ -9,6 +9,7 @@ use App\Models\Order\Order;
 use App\Models\Shop\Product;
 use App\Models\User;
 use App\Services\Payment\PaymentService;
+use App\Services\Product\ProductService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -24,12 +25,17 @@ class OrderController extends Controller
         return view('personal.order.index',compact('user','orders', 'activeMenu'));
     }
 
-    public function detail(int $id): View
+    public function detail(
+        int $id,
+        ProductService $productService
+    ): View
     {
         $order = Order::findOrFail($id);
         $order->load(['products','user','deliveryVariant','paymentVariant','deliveries','status']);
+        $products = $productService->getProductsByOrderProducts($order->products);
+
         $activeMenu = 'orders';
-        return view('personal.order.detail', compact('order', 'activeMenu'));
+        return view('personal.order.detail', compact('order', 'activeMenu','products'));
     }
 
     public function pay(
