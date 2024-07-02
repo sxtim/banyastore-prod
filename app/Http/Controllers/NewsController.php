@@ -12,17 +12,30 @@ class NewsController extends Controller
 {
     public function index(): View
     {
-        $news = News::where('start_at', '<=', now())
-            ->where('end_at','>=', now())
+        $news = News::where(function($query) {
+                $query->where('start_at', '<=', now())
+                    ->orWhere('start_at', '=', null);
+            })
+            ->where(function($query) {
+                $query->where('end_at','>=', now())
+                    ->orWhere('end_at', '=', null);
+            })
             ->where('is_active', true)
+            ->orderBy('id', 'desc')
             ->get();
         return view('news.index', compact('news'));
     }
 
     public function detail(): View
     {
-        $news = News::where('start_at', '<=', now())
-            ->where('end_at','>=', now())
+        $news = News::where(function($query) {
+            $query->where('start_at', '<=', now())
+                ->orWhere('start_at', '=', null);
+        })
+            ->where(function($query) {
+                $query->where('end_at','>=', now())
+                    ->orWhere('end_at', '=', null);
+            })
             ->where('is_active', true)
             ->firstOrFail();
 

@@ -26,7 +26,7 @@
                                 @endif
 
                                 @if ($block['type'] == 'paragraph')
-                                    <p>
+                                    <p class="text-edit">
                                         {!! $block['data']['text'] !!}
                                     </p>
                                 @endif
@@ -57,8 +57,11 @@
                             @endforeach
                         @endif
                     </div>
-                    <!--          Каталог сортировка акционные товары-->
-{{--                    <a href="{{ route('') }}" class="promotion-detail__link btn btn-medium">Смотреть товары</a>--}}
+                    @if ($action->btn && $action->link_btn)
+                        <a class="promotion-detail__link btn btn-medium" href="{{ $action->link_btn }}">
+                            {{ $action->btn }}
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>

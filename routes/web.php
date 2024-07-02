@@ -161,8 +161,7 @@ Route::get('/order/success', [\App\Http\Controllers\OrderController::class, 'suc
 //Не успешный заказ
 Route::get('/order/error', [\App\Http\Controllers\OrderController::class, 'error'])->name('order.error');
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+
+Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('home');
 
 require __DIR__.'/auth.php';

@@ -11,12 +11,20 @@
         <input type="text" name="price" id="price" class="form-control" autocomplete="off"
                value="{{ old('price', ( isset($product) ? $product->price : '')) }}">
     </div>
-    <div class="col-4">
+    <div class="col-2">
         <label for="sort" class="main-label">Активность</label>
         <div>
             <span>Да?</span>
             <input type="checkbox" name="is_active" id="is_active" autocomplete="off"
                    {{ isset($product) && $product->is_active ? 'checked' : '' }}>
+        </div>
+    </div>
+    <div class="col-2">
+        <label for="sort" class="main-label">Популярный</label>
+        <div>
+            <span>Да?</span>
+            <input type="checkbox" name="is_popular" id="is_popular" autocomplete="off"
+                {{ isset($product) && $product->is_popular ? 'checked' : '' }}>
         </div>
     </div>
 </div>

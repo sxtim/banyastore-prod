@@ -73,6 +73,7 @@ class ProductController extends Controller
             'sort' => $request->input('sort'),
             'image' => $image ? self::DIR_PRODUCTS . $filename : '',
             'tag' => $request->input('tag'),
+            'is_popular' => $request->boolean('is_popular'),
             'is_active' => $request->boolean('is_active')
         ];
 
@@ -117,6 +118,7 @@ class ProductController extends Controller
             'price' => $request->input('price'),
             'sort' => $request->input('sort'),
             'tag' => $request->input('tag'),
+            'is_popular' => $request->boolean('is_popular'),
             'is_active' => $request->boolean('is_active')
         ];
 

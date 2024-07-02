@@ -22,7 +22,11 @@
                                 <h2 class="promotions-card__title">
                                     {{ $action->name }}
                                 </h2>
-                                <time class="promotions-card__date">1-31 декабря</time>
+                                @if($action->start_at && $action->end_at)
+                                    <time class="promotions-card__date">
+                                        {{ $action->start_at->format('d.m.y') }} - {{ $action->end_at->format('d.m.y') }}
+                                    </time>
+                                @endif
                             </div>
                         </a>
                     </article>

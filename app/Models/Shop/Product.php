@@ -65,10 +65,12 @@ class Product extends Model
 
     const HIT_TAG = 'hit';
     const NEW_TAG = 'new';
+    const ACTION_TAG = 'action';
 
     const LIST_TAG = [
         self::HIT_TAG => 'Хит',
         self::NEW_TAG => 'Новинка',
+        self::ACTION_TAG => 'Акция',
     ];
 
     protected $table = 'products';
@@ -85,7 +87,8 @@ class Product extends Model
         'slug',
         'discount_id',
         'preview_text',
-        'tag'
+        'tag',
+        'is_popular'
     ];
 
     protected $hidden = [
