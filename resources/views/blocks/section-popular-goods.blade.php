@@ -76,12 +76,13 @@
             </div>
         </div>
         <h2 class="popular-goods__title title-s">Популярные товары</h2>
-        <!--      @@include('card-product-slide.html')-->
         <div class="popular-goods__slider-container" id="catalog">
             <div id="popular-goods__slider" class="keen-slider">
-                @foreach($products as $product)
-                    @include('blocks/card-product-slide')
-                @endforeach
+                @if ($products)
+                    @foreach($products as $product)
+                        @include('blocks/card-product-slide')
+                    @endforeach
+                @endif
             </div>
         </div>
 {{--        <a href="./catalog.html" class="popular-goods__btn btn btn-medium">ВСЕ ТОВАРЫ</a>--}}
