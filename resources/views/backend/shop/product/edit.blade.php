@@ -206,5 +206,8 @@
         }
         initEditorPreview({!! $contentPreview !!} );
 
+        $('#del-additional-image').click(function(){
+            console.log(1)
+        });
     </script>
 @endsection

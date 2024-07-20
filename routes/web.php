@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::patch('/edit/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'update'])->name('update');
                 Route::post('/add-image', [\App\Http\Controllers\Backend\ProductController::class, 'addImage'])->name('add-image');
                 Route::post('/delete-image', [\App\Http\Controllers\Backend\ProductController::class, 'deleteImage'])->name('delete-image');
+                Route::post('/delete-additional-image', [\App\Http\Controllers\Backend\ProductController::class, 'deleteImage'])->name('delete-image');
             });
 
             //Категории
