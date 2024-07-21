@@ -45,6 +45,7 @@
     <div class="main-box d-flex justify-content-between">
         <div class="links flex-wrap">
             <a href="{{ route('backend.index') }}" class="@yield('aside_index')">Информация</a>
+            <a href="{{ route('backend.banner.index') }}" class="@yield('aside_banner')">Баннеры</a>
             <a href="{{ route('backend.order.index') }}" class="@yield('aside_orders')">Заказы</a>
             <a href="{{ route('backend.shop.index') }}" class="@yield('aside_shop')">Интернет-магазин</a>
             <a href="{{ route('backend.actions.index') }}" class="@yield('aside_actions')">Акции</a>

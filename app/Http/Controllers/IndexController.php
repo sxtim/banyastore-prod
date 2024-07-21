@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\News;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
@@ -26,6 +27,10 @@ class IndexController extends Controller
             ->where('is_active', true)
             ->get();
 
-        return view('index', compact('news','products'));
+        $banners = Banner::where('is_active', true)
+            ->orderBy('sort', 'desc')
+            ->get();
+
+        return view('index', compact('news','products','banners'));
     }
 }

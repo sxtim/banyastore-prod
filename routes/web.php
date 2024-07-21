@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::patch('/edit/{product}', [\App\Http\Controllers\Backend\ProductController::class, 'update'])->name('update');
                 Route::post('/add-image', [\App\Http\Controllers\Backend\ProductController::class, 'addImage'])->name('add-image');
                 Route::post('/delete-image', [\App\Http\Controllers\Backend\ProductController::class, 'deleteImage'])->name('delete-image');
-                Route::post('/delete-additional-image', [\App\Http\Controllers\Backend\ProductController::class, 'deleteImage'])->name('delete-image');
+                Route::post('/delete-additional-image', [\App\Http\Controllers\Backend\ProductController::class, 'deleteAdditionalImage'])->name('delete-additional-image');
             });
 
             //Категории
@@ -75,6 +75,15 @@ Route::middleware(['auth'])->group(function () {
                 Route::patch('/edit/{actionId}', [\App\Http\Controllers\Backend\ActionController::class, 'update'])->name('update');
                 Route::post('/add-image', [\App\Http\Controllers\Backend\ActionController::class, 'addImage'])->name('add-image');
                 Route::post('/delete-image', [\App\Http\Controllers\Backend\ActionController::class, 'deleteImage'])->name('delete-image');
+            });
+
+            //Баннеры
+            Route::prefix('banner')->name('banner.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\BannerController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\Backend\BannerController::class, 'create'])->name('create');
+                Route::post('/create', [\App\Http\Controllers\Backend\BannerController::class, 'store'])->name('store');
+                Route::get('/edit/{bannerId}', [\App\Http\Controllers\Backend\BannerController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{bannerId}', [\App\Http\Controllers\Backend\BannerController::class, 'update'])->name('update');
             });
 
             //Новости
