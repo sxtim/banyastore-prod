@@ -143,6 +143,9 @@ Route::get('/company/', [\App\Http\Controllers\CompanyController::class, 'index'
 Route::get('/actions', [\App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
 Route::get('/actions/{slug}', [\App\Http\Controllers\ActionController::class, 'detail'])->name('actions.detail');
 
+
+Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
+
 //Аякс
 Route::prefix('ajax')->name('ajax.')->group(function () {
 
