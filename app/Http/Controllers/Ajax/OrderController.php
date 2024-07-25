@@ -38,7 +38,7 @@ class OrderController extends Controller
 
         try {
             $order = $orderService->createOrder($newOrderDto);
-            $myMailer->sendEmail('opt@feringermsk.ru','Новый заказ','На сайте banyastore.ru новый заказ №'. $order->id);
+            $myMailer->sendEmail('stanislavkorobkin@mail.ru','Новый заказ','На сайте banyastore.ru новый заказ №'. $order->id);
 
             return response()->json([
                 'status' => 'success',
