@@ -26,7 +26,7 @@ class NewsController extends Controller
         return view('news.index', compact('news'));
     }
 
-    public function detail(): View
+    public function detail(string $slug): View
     {
         $news = News::where(function($query) {
             $query->where('start_at', '<=', now())
@@ -37,6 +37,7 @@ class NewsController extends Controller
                     ->orWhere('end_at', '=', null);
             })
             ->where('is_active', true)
+            ->where('slug',$slug)
             ->firstOrFail();
 
         return view('news.detail', compact('news'));
