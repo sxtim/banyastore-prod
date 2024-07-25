@@ -6,6 +6,7 @@ use App\DTO\Delivery\DeliveryDto;
 use App\DTO\Order\NewOrderDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\OrderRequest;
+use App\Mail\MyMailer;
 use Illuminate\Support\Facades\Log;
 use App\Services\Order\OrderService;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +19,8 @@ class OrderController extends Controller
      */
     public function store(
         OrderRequest $request,
-        OrderService $orderService
+        OrderService $orderService,
+        MyMailer $myMailer
     ): JsonResponse
     {
         $deliveryDto = new DeliveryDto();
@@ -36,6 +38,7 @@ class OrderController extends Controller
 
         try {
             $order = $orderService->createOrder($newOrderDto);
+            $myMailer->sendEmail('opt@feringermsk.ru','Новый заказ','На сайте banyastore.ru новый заказ №'. $order->id);
 
             return response()->json([
                 'status' => 'success',
