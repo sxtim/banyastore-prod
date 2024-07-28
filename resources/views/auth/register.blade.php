@@ -17,41 +17,19 @@
                         <input id="user-name" type="text" name="user-name" placeholder="" minlength="3" axlength="20" required/>
                     </div>
                     <div class="label-box">
-                        <label for="user-s-name">Фамилия</label>
-                    </div>
-                    <div class="input-box">
-                        <input id="user-s-name" type="text" name="user-s-name" placeholder="" minlength="3" axlength="20" required/>
-                    </div>
-                    <div class="label-box">
                         <label for="user-tel">Телефон</label>
                     </div>
                     <div class="input-box">
                         <input class="form-phone" id="user-tel" type="tel" name="tel" id="user-tel" axlength="12" required/>
                     </div>
                     <div class="label-box">
-                        <label for="user-email">Электронная почта (логин)</label>
+                        <label for="user-email">Электронная почта</label>
                     </div>
                     <div class="input-box">
                         <input id="user-email" type="email" name="email" placeholder="" required/>
-                        <span class="input-box__msg">Пользователь с таким именем уже существует</span>
-                    </div>
-                    <div class="label-box">
-                        <label for="input-pass">Пароль</label>
-                    </div>
-                    <div class="input-box">
-                        <input id="input-pass" type="password" name="user-password" placeholder="" minlength="8" required />
-                        <!--                   pattern=(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*-->
-
-                        <a id="pass-show-toggle"></a>
-                    </div>
-                    <div class="label-box">
-                        <label for="input-pass-confirm">Подтверждение пароля</label>
-                    </div>
-                    <div class="input-box">
-                        <input id="input-pass-confirm" type="password" name="user-password-confirm" placeholder="" required/>
-                        <span id="inp-msg" class="input-box__msg"></span>
                     </div>
                     <button class="reg-form__btn-reg btn" >Зарегистироваться</button>
+                    <span class="input-box__msg">Пользователь с таким телефоном уже зарегистрирован</span>
                     <p class="registration-form__text">Нажимая кнопку «Зарегистрироваться», я даю свое согласие на обработку моих
                         персональных данных, в соответствии с Федеральным законом от 27.07.2006 года №152-ФЗ «О персональных данных»,
                         на условиях и для целей, определенных в Согласии на обработку персональных данных</p>

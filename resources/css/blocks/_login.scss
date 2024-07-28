@@ -161,6 +161,10 @@ label {
 .auth-form__reg-text {
     color: var(--text-color-dark);
     font-size: 14px;
+    a {
+        color: var(--green-dark);
+    }
+
 }
 
 .auth-form__button {
