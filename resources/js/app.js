@@ -1,5 +1,7 @@
 import $ from 'jquery';
 require('./bootstrap');
+import mobileNav from './modules/mobile-nav';
+mobileNav();
 import  './modules/sliders';
 import  './modules/product-detail-tabs';
 import store from "./blocks/vue/store/store";
