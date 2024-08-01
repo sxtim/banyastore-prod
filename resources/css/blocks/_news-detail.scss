@@ -13,6 +13,19 @@
 .news-detail__txt p {
   color: var(--text-color-dark);
   text-align: justify;
+    line-height: 130%;
+margin-bottom: 10px;
+}
+
+.news-detail__txt p a {
+    color: var(--green-dark);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: .3s;
+
+    &:hover {
+        color: var(--green);
+    }
 }
 
 .news-detail__date {
