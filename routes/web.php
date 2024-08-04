@@ -165,6 +165,10 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
     //Избранное
     Route::post('/favorite/get-data', [\App\Http\Controllers\Ajax\FavoriteController::class, 'getData'])->name('favorite.get-data');
     Route::post('/favorite/product', [\App\Http\Controllers\Ajax\FavoriteController::class, 'product'])->name('favorite.product');
+
+    //Отправка номера телефона
+    Route::post('/send-phone', [\App\Http\Controllers\SmsController::class, 'sendPhone'])->name('send.phone');
+
 });
 
 

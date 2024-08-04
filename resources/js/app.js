@@ -14,6 +14,7 @@ import BtnAddBasketComponent from "./blocks/vue/Button/BtnAddBasketComponent";
 import BtnDetailAddBasketComponent from "./blocks/vue/Button/BtnDetailAddBasketComponent";
 import BtnFavoriteProductComponent from "./blocks/vue/Button/BtnFavoriteProductComponent";
 import BtnDetailFavoriteProductComponent from "./blocks/vue/Button/BtnDetailFavoriteProductComponent";
+import LoginComponent from "./blocks/vue/Auth/LoginComponent";
 
 //
 if (document.getElementById('header')) {
@@ -45,4 +46,13 @@ if (document.getElementById('catalog')) {
         }
     }).use(store)
         .mount("#catalog")
+}
+
+if (document.getElementById('login-form')) {
+    createApp({
+        components: {
+            LoginComponent
+        }
+    }).use(store)
+        .mount("#login-form")
 }
