@@ -7,7 +7,8 @@
                     <a href="./pechi-dlya-bani.html" class="plate__link-btn btn btn-medium">ВЫБРАТЬ ПЕЧЬ</a>
                     <a href="./pechi-dlya-bani.html" class="plate__link-arrow">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path id="arrow-green" d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
+                            <path id="arrow-green"
+                                  d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
                                   fill="#111111"/>
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M37 29C37 29.5523 36.5523 30 36 30L22 30C21.4477 30 21 29.5523 21 29C21 28.4477 21.4477 28 22 28H36C36.5523 28 37 28.4477 37 29Z"
@@ -25,7 +26,8 @@
                     <h3 class="plate__title">Специальные <br> дымоходы</h3>
                     <a href="./specialnye-dymohody.html" class="plate__link-arrow">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path id="arrow-green" d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
+                            <path id="arrow-green"
+                                  d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
                                   fill="#111111"/>
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M37 29C37 29.5523 36.5523 30 36 30L22 30C21.4477 30 21 29.5523 21 29C21 28.4477 21.4477 28 22 28H36C36.5523 28 37 28.4477 37 29Z"
@@ -43,7 +45,8 @@
                     <h3 class="plate__title">Для отделки бани </h3>
                     <a href="#!" class="plate__link-arrow">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path id="arrow-green" d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
+                            <path id="arrow-green"
+                                  d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
                                   fill="#111111"/>
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M37 29C37 29.5523 36.5523 30 36 30L22 30C21.4477 30 21 29.5523 21 29C21 28.4477 21.4477 28 22 28H36C36.5523 28 37 28.4477 37 29Z"
@@ -61,7 +64,8 @@
                     <h3 class="plate__title">Аксессуары </h3>
                     <a href="#!" class="plate__link-arrow">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path id="arrow-green" d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
+                            <path id="arrow-green"
+                                  d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
                                   fill="#111111"/>
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M37 29C37 29.5523 36.5523 30 36 30L22 30C21.4477 30 21 29.5523 21 29C21 28.4477 21.4477 28 22 28H36C36.5523 28 37 28.4477 37 29Z"
@@ -77,14 +81,16 @@
         </div>
         <h2 class="popular-goods__title title-s">Популярные товары</h2>
         <div class="popular-goods__slider-container" id="catalog">
+
             <div id="popular-goods__slider" class="keen-slider">
+
                 @if ($products)
                     @foreach($products as $product)
                         @include('blocks/card-product-slide')
                     @endforeach
                 @endif
+
             </div>
+            {{--        <a href="./catalog.html" class="popular-goods__btn btn btn-medium">ВСЕ ТОВАРЫ</a>--}}
         </div>
-{{--        <a href="./catalog.html" class="popular-goods__btn btn btn-medium">ВСЕ ТОВАРЫ</a>--}}
-    </div>
 </section>

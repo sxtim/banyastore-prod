@@ -5,6 +5,7 @@ mobileNav();
 import  './modules/sliders';
 import  './modules/product-detail-tabs';
 import store from "./blocks/vue/store/store";
+
 //
 import {createApp} from 'vue';
 import BasketIconComponent from "./blocks/vue/Header/BasketIconComponent";

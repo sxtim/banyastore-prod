@@ -65,7 +65,7 @@
                     <a href="signup.html" class="shop-menu__links">Регистрация</a>
                 </div>
             </div>
-            <button class="mobile-nav-btn header__mobile-nav-btn">
+            <button id="mobile-nav-btn" class="mobile-nav-btn header__mobile-nav-btn">
                 <div class="nav-icon"></div>
             </button>
         </div>
