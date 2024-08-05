@@ -282,56 +282,60 @@ function ThumbnailPlugin(main) {
 
 
 
+if(document.getElementById('keen-slider-top')) {
+    var slider1 = new KeenSlider("#keen-slider-top", {
+        loop: true,
 
-var slider1 = new KeenSlider("#keen-slider-top", {
-    loop: true,
+    }, [navigation])
 
-}, [navigation])
+}
 
-
-var slider2 = new KeenSlider("#popular-goods__slider", {
-    slides: {
-        perView: 4,
-        spacing: 15,
-    },
-    breakpoints: {
-        '(max-width: 1200px)': {
-            slides: {
-                perView: 3,
-                spacing: 15,
-            },
-        },
-        '(max-width: 650px)': {
-            slides: {
-                perView: 2.3,
-                spacing: 0,
-            },
-        },
-    },
-    loop: true,
-}, [navigationPop] );
-
-var slider3 = new KeenSlider("#product-detail-keen-slider")
-var thumbnails = new KeenSlider(
-    "#product-detail-thumbnails",
-    {
-        initial: 0,
+if(document.getElementById('popular-goods__slider')) {
+    var slider2 = new KeenSlider("#popular-goods__slider", {
         slides: {
             perView: 4,
-            spacing: 10,
+            spacing: 15,
         },
         breakpoints: {
-            '(max-width: 768px)': {
+            '(max-width: 1200px)': {
                 slides: {
                     perView: 3,
-                    spacing: 5,
+                    spacing: 15,
+                },
+            },
+            '(max-width: 650px)': {
+                slides: {
+                    perView: 2.3,
+                    spacing: 0,
                 },
             },
         },
-    },
-    [ThumbnailPlugin(slider3)]
-)
+        loop: true,
+    }, [navigationPop]);
+}
 
+if(document.getElementById('product-detail-keen-slider')) {
+    var slider3 = new KeenSlider("#product-detail-keen-slider")
+    var thumbnails = new KeenSlider(
+        "#product-detail-thumbnails",
+        {
+            initial: 0,
+            slides: {
+                perView: 4,
+                spacing: 10,
+            },
+            breakpoints: {
+                '(max-width: 768px)': {
+                    slides: {
+                        perView: 3,
+                        spacing: 5,
+                    },
+                },
+            },
+        },
+        [ThumbnailPlugin(slider3)]
+    )
+}
 
 
 
