@@ -1,13 +1,27 @@
-.cards-wrapper {
+.catalog-news__cards-wrapper {
   display: grid;
   grid-template-columns: repeat(3, calc(100% / 3 - 20px / 3 * (3 - 1)));
   column-gap: 20px;
   row-gap: 40px;
   place-content: center;
+    //align-items: center;
+    justify-items: center;
 
-  @media (max-width: 768px) {
+
+  @media (max-width: 998px) {
     grid-column-gap: 8px;
-    grid-template-columns: repeat(2, calc(100% / 2 - 8px / 2 * (2 - 1)));
+    grid-template-columns: repeat(2, calc(100% / 2 - 8px ));
     row-gap: 24px;
+
   }
+
+    @media (max-width: 768px) {
+        grid-column-gap: 8px;
+        grid-template-columns: repeat(1, calc(100% / 1 - 8px ));
+        row-gap: 24px;
+    }
+}
+
+.card-news {
+    max-width: 418px;
 }

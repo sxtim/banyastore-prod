@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Services\SmsExolveService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +22,14 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         return view('auth.login');
+    }
+
+    /**
+     * Display the login view.
+     */
+    public function oldLogin(): View
+    {
+        return view('auth.old');
     }
 
     /**
@@ -54,5 +65,25 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function authBySms(
+        Request $request,
+        SmsExolveService $smsExolveService
+    ): JsonResponse
+    {
+        $check = $smsExolveService->checkSmsCode($request->input('phone'), $request->input('sms'));
+        if ($check === true) {
+            $user = User::where('phone','=', $request->input('phone'))->first();
+            if ($user) {
+                Auth::login($user);
+                return response()->json([
+                    'status' => 'success'
+                ]);
+            }
+        }
+        return response()->json([
+            'status' => 'error'
+        ]);
     }
 }
