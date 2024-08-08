@@ -142,6 +142,8 @@ Route::get('/search/', [\App\Http\Controllers\Shop\ProductController::class, 'se
 Route::get('/company/', [\App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
 Route::get('/actions', [\App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
 Route::get('/actions/{slug}', [\App\Http\Controllers\ActionController::class, 'detail'])->name('actions.detail');
+Route::get('/three-d-projects', [\App\Http\Controllers\ThreeDProjectController::class, 'index'])->name('three-d-projects');
+Route::get('/feedback', [\App\Http\Controllers\FeedBackController::class, 'index'])->name('feedback-form');
 
 
 Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');

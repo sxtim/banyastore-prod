@@ -25,6 +25,14 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Display the login view.
+     */
+    public function oldLogin(): View
+    {
+        return view('auth.old');
+    }
+
+    /**
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse

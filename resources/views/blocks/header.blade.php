@@ -80,7 +80,7 @@
                     <ul class="nav__list">
                         <li><a href="{{ route('company.index') }}">О компании</a></li>
                         <li><a href="{{ route('actions.index') }}">Акции</a></li>
-                        <li><a href="#!">3D проект</a></li>
+                        <li><a href="{{ route('three-d-projects') }}">3D проект</a></li>
                         <li>
                             <a href="{{ route('news.index') }}">
                                 Новости
