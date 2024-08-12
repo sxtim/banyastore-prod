@@ -337,5 +337,32 @@ if(document.getElementById('product-detail-keen-slider')) {
     )
 }
 
+//3D PROJECTS SLIDER
+if (document.getElementById("projects-page__slider")) {
+
+    var slider4 = new KeenSlider("#projects-page__slider", {
+        slides: {
+            perView: 3,
+            spacing: 15,
+        },
+        breakpoints: {
+            '(max-width: 1200px)': {
+                slides: {
+                    perView: 3,
+                    spacing: 15,
+                },
+            },
+            '(max-width: 650px)': {
+                slides: {
+                    perView: 2.3,
+                    spacing: 10,
+                },
+            },
+        },
+        loop: true,
+    }, [navigationPop]);
+
+}
+
 
 

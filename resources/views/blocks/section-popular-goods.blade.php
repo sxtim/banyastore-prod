@@ -93,4 +93,5 @@
             </div>
             {{--        <a href="./catalog.html" class="popular-goods__btn btn btn-medium">ВСЕ ТОВАРЫ</a>--}}
         </div>
+    </div>
 </section>
