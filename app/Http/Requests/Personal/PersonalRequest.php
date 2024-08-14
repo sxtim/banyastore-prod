@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Personal;
 
+use App\Rules\Phone;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PersonalRequest extends FormRequest
@@ -26,7 +27,7 @@ class PersonalRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:3'],
-            'phone' => ['required', 'numeric', 'unique:users,phone,'.$this->route('id')],
+            'phone' => ['required', 'numeric', 'unique:users,phone,'.$this->route('id'), new Phone()],
             'email' => ['required', 'email', 'unique:users,email,'.$this->route('id')],
         ];
     }

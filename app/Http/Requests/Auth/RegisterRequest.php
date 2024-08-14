@@ -1,39 +1,29 @@
 <?php
 
-namespace App\Http\Requests\Backend;
+namespace App\Http\Requests\Auth;
 
 use App\Rules\Phone;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class OrderRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+
     public function rules(): array
     {
         return [
             'name' => ['required', 'min:3'],
-            'phone' => ['required', new Phone()],
-            'mail' => ['required', 'email'],
-            'city_name' => 'required',
-            'street' => ['required'],
-            'house' => 'required'
+            'sms' => ['required', 'min:3'],
+            'surname' => ['required', 'min:3'],
+            'phone' => ['required', 'numeric', new Phone(),'unique:users,phone'],
+            'email' => ['required', 'email', 'unique:users,email'],
         ];
     }
 
@@ -42,12 +32,15 @@ class OrderRequest extends FormRequest
         return [
             'name.required' => 'Необходимо указать имя',
             'name.min' => 'Минимальное количество символов в имени: 3',
+            'surname.required' => 'Необходимо указать фамилию',
+            'surname.min' => 'Минимальное количество символов в фамилии: 3',
+            'sms.required' => 'Неверный код',
+            'sms.min' => 'Неверный код',
             'phone.required' => 'Необходимо указать телефон',
-            'mail.required' => 'Необходимо указать почту',
-            'mail.email' => 'Неверно указана почта',
-            'city_name.required' => 'Необходимо указать город',
-            'street.required' => 'Необходимо указать улицу',
-            'house.required' => 'Необходимо указать Строение/Дом'
+            'phone.unique' => 'Нверно указан телефон',
+            'email.required' => 'Необходимо указать почту',
+            'email.email' => 'Неверно указана почта',
+            'email.unique' => 'Неверно указана почта',
         ];
     }
 
