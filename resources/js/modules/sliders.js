@@ -123,7 +123,8 @@ function navigation(slider) {
 
 
 
-function navigationPop(slider) {
+//MAIN PAGE POPULAR GOODS SLIDER
+function navigationPopularGoods(slider) {
     let wrapper, dots, arrowLeft, arrowRight
     // let timeout
     // let mouseOver = false
@@ -161,6 +162,7 @@ function navigationPop(slider) {
     function removeElement(elment) {
         elment.parentNode.removeChild(elment)
     }
+
     function createDiv(className) {
         var div = document.createElement("div")
         var classNames = className.split(" ")
@@ -311,7 +313,7 @@ if(document.getElementById('popular-goods__slider')) {
             },
         },
         loop: true,
-    }, [navigationPop]);
+    }, [navigationPopularGoods]);
 }
 
 if(document.getElementById('product-detail-keen-slider')) {
@@ -360,7 +362,7 @@ if (document.getElementById("projects-page__slider")) {
             },
         },
         loop: true,
-    }, [navigationPop]);
+    }, [navigationPopularGoods]);
 
 }
 

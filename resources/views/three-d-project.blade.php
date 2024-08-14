@@ -96,7 +96,81 @@
                 <h2 class="projects-page__carousel-title title">Наши проекты 3D</h2>
                 <div class="projects-page__slider-container">
                     <div id="projects-page__slider" class="keen-slider">
-                        @@loop('./blocks/card-project-slide.html','./data/card-project.json')
+{{--                        @@loop('./blocks/card-project-slide.html','./data/card-project.json')--}}
+                        <div class="keen-slider__slide">
+
+                            <article class="card-project">
+                                <a href="#!" class="card-project__link">
+                                    <div class="card-project__picture">
+                                        <img src="/images/3d-projects/card-project/card-project01.jpg" alt="cat01">
+                                    </div>
+                                    <div class="card-project__title-container">
+                                        <h3 class="card-project__title ">3D проект</h3>
+                                        <p class="card-project__subtitle">Парная: 16КВ</p>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        <div class="keen-slider__slide">
+
+                            <article class="card-project">
+                                <a href="#!" class="card-project__link">
+                                    <div class="card-project__picture">
+                                        <img src="/images/3d-projects/card-project/card-project02.jpg" alt="cat01">
+                                    </div>
+                                    <div class="card-project__title-container">
+                                        <h3 class="card-project__title ">3D проект</h3>
+                                        <p class="card-project__subtitle">Парная: 12КВ</p>
+                                    </div>
+                                </a>
+                            </article>
+
+                        </div>
+                        <div class="keen-slider__slide">
+
+                            <article class="card-project">
+                                <a href="#!" class="card-project__link">
+                                    <div class="card-project__picture">
+                                        <img src="/images/3d-projects/card-project/card-project03.jpg" alt="cat01">
+                                    </div>
+                                    <div class="card-project__title-container">
+                                        <h3 class="card-project__title ">3D проект</h3>
+                                        <p class="card-project__subtitle">Парная: 14КВ</p>
+                                    </div>
+                                </a>
+                            </article>
+
+                        </div>
+                        <div class="keen-slider__slide">
+
+                            <article class="card-project">
+                                <a href="#!" class="card-project__link">
+                                    <div class="card-project__picture">
+                                        <img src="/images/3d-projects/card-project/card-project03.jpg" alt="cat01">
+                                    </div>
+                                    <div class="card-project__title-container">
+                                        <h3 class="card-project__title ">3D проект</h3>
+                                        <p class="card-project__subtitle">Парная: 14КВ</p>
+                                    </div>
+                                </a>
+                            </article>
+
+                        </div>
+                        <div class="keen-slider__slide">
+
+                            <article class="card-project">
+                                <a href="#!" class="card-project__link">
+                                    <div class="card-project__picture">
+                                        <img src="/images/3d-projects/card-project/card-project03.jpg" alt="cat01">
+                                    </div>
+                                    <div class="card-project__title-container">
+                                        <h3 class="card-project__title ">3D проект</h3>
+                                        <p class="card-project__subtitle">Парная: 14КВ</p>
+                                    </div>
+                                </a>
+                            </article>
+
+                        </div>
                     </div>
                 </div>
             </div>
