@@ -24,7 +24,8 @@
                                 </h2>
                                 @if($action->start_at && $action->end_at)
                                     <time class="promotions-card__date">
-                                        {{ $action->start_at->format('d.m.y') }} - {{ $action->end_at->format('d.m.y') }}
+                                        {{ $action->start_at->format('d.m.y') }}
+                                        - {{ $action->end_at->format('d.m.y') }}
                                     </time>
                                 @endif
                             </div>
