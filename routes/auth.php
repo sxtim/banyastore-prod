@@ -15,7 +15,13 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
+    Route::get('old-login', [AuthenticatedSessionController::class, 'oldLogin'])
+        ->name('old-login');
+
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::post('ajax/send-sms', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'authBySms'])
+        ->name('ajax.send-sms');
 
 //    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
 //                ->name('password.request');
