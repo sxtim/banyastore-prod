@@ -6,11 +6,22 @@
   max-width: 990px;
 }
 
+
 .promotion-detail__txt p{
+    line-height: 130%;
   color: var(--text-color-dark);
   text-align: justify;
+    margin-bottom: 10px;
 }
 .text-edit a {
-    color: #007bff;
+    color: var(--green-dark);
+    font-weight: 600;
     text-decoration: underline;
+}
+
+
+.promotion-detail__link {
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 }
