@@ -1,0 +1,107 @@
+.registration__title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registration__title {
+    margin-bottom: 30px;
+}
+
+.reg__form-wrapper {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.input-box__msg {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--red);
+}
+
+.reg-form__btn-reg {
+    width: 100%;
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
+    //text-transform: uppercase;
+    //margin: 3px auto;
+    //font-size: 16px;
+    //font-weight: 500;
+    //cursor: default;
+    //border: none;
+    //background: #f9f9f9;
+    //color: var(--black);
+    //padding: 10px 15px;
+    //border-radius: 3px;
+    //transition: 0.1s;
+    //
+    //@media (max-width: 998px) {
+    //  font-size: 16px;
+    //}
+    //
+    //@media (max-width: 768px) {
+    //  font-size: 14px;
+    //}
+
+}
+
+#input-pass {
+    position: relative;
+}
+
+
+.registration-form__btn-reg--active {
+    color: var(--text-color);
+    background: var(--green-dark);
+    box-shadow: 0 3px 5px #777777, inset 0 0 0px #777777;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--green);
+    }
+
+    @media (max-width: 998px) {
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+
+}
+
+.registration-form__btn-reg--active:focus {
+    outline: none;
+}
+
+.registration-form__btn-reg--active:active {
+    background: var(--green-dark);
+    box-shadow: 0 0px 0px #777777, inset 0 0 10px #777777;
+    transition: .1s;
+    //transition: 1ms;
+    //transform: translateY(20px);
+    transform: scale(0.998);
+}
+
+.registration-form__text {
+    color: var(--black);
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 20px;
+    text-align: justify;
+}
+
+.registration-form__log-link {
+    margin-top: 20px;
+    max-width: 200px;
+}
+
+.label-box small {
+    color: #e74c3c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+}

@@ -16,6 +16,7 @@ import BtnDetailAddBasketComponent from "./blocks/vue/Button/BtnDetailAddBasketC
 import BtnFavoriteProductComponent from "./blocks/vue/Button/BtnFavoriteProductComponent";
 import BtnDetailFavoriteProductComponent from "./blocks/vue/Button/BtnDetailFavoriteProductComponent";
 import LoginComponent from "./blocks/vue/Auth/LoginComponent";
+import RegisterComponent from "./blocks/vue/Auth/RegisterComponent";
 
 //
 if (document.getElementById('header')) {
@@ -57,3 +58,13 @@ if (document.getElementById('login-form')) {
     }).use(store)
         .mount("#login-form")
 }
+
+if (document.getElementById('register-form')) {
+    createApp({
+        components: {
+            RegisterComponent
+        }
+    }).use(store)
+        .mount("#register-form")
+}
+
