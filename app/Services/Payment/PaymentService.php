@@ -22,7 +22,7 @@ class PaymentService
         try {
             $paymentResponseDto = $this->paymentFactoryService
                 ->getService($order->paymentVariant->slug)
-                ->orderRegister($order->price, $order->id);
+                ->orderRegister($order->price, $order);
 
             Payment::create([
                 'order_id' => $order->id,

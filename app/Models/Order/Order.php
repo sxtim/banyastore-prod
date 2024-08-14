@@ -127,6 +127,7 @@ class Order extends Model
                 });
             } else {
                 $result->push([
+                    'order_product_id' => $product->pivot->id,
                     'product_id' => $product->id,
                     'name' => $product->name,
                     'totalPrice' => $product->pivot->price,
