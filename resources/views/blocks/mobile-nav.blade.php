@@ -4,11 +4,15 @@
     <!--    <input type="search" class="search-form-txt" placeholder="Поиск по каталогу">-->
     <!--  </form>-->
     <ul class="mobile-nav__list">
-        <li><a class="active" href="catalog.html">Каталог</a></li>
-        <li><a href="about-company.html">О компании</a></li>
-        <li><a href="promotions.html">Акции</a></li>
-        <li><a href="3d-projects.html">3D проект</a></li>
-        <li><a href="news.html">Новости</a></li>
+        <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="{{ route('company.index') }}">О компании</a></li>
+        <li><a href="{{ route('actions.index') }}">Акции</a></li>
+        <li><a href="{{ route('three-d-projects') }}">3D проект</a></li>
+        <li>
+            <a href="{{ route('news.index') }}">
+                Новости
+            </a>
+        </li>
 
         <div class="mobile-nav-menu-wrapper">
             <ul class="header__shop-menu shop-menu">
