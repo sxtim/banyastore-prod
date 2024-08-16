@@ -133,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 //Публичная часть
+Route::get('/categories', [\App\Http\Controllers\Shop\CategoryController::class, 'index'])->name('category.list');
 Route::get('/category/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'byCategory'])->name('products.by-category');
 Route::get('/product/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'detail'])->name('products.detail');
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');

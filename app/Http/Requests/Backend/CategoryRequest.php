@@ -26,7 +26,8 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'sort' => 'numeric'
+            'sort' => 'numeric',
+            'image' => 'image|max:1000'
         ];
     }
 
@@ -35,6 +36,8 @@ class CategoryRequest extends FormRequest
         return [
             'name.required' => 'Необходимо ввести название категории',
             'sort.numeric' => 'Укажите сортировку числом',
+            'image.image' => 'Изображение: ожидается файл форматов jpg, png или gif',
+            'image.max' => 'Изображение: максимальный размер файла 1Мб'
         ];
     }
 }

@@ -6,6 +6,10 @@ Breadcrumbs::for('feed', function ($trail) {
     $trail->push('Главная страница', route('home'));
 });
 
+Breadcrumbs::for('category-list', function ($trail) {
+    $trail->parent('feed');
+    $trail->push('Категории', route('category.list'));
+});
 
 Breadcrumbs::for('category', function ($trail, $category) {
     $trail->parent('feed');

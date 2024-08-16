@@ -4,6 +4,7 @@ namespace App\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -15,6 +16,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
         'is_active',
         'sort',
         'slug',
@@ -59,4 +61,13 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id', 'id')->with(['subcategory']);
     }
 
+
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
+
+        return '';
+    }
 }

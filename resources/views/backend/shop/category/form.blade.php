@@ -25,8 +25,19 @@
             <input type="number" name="sort" id="sort" class="form-control" autocomplete="off"
                    value="{{ old('sort', ( isset($category) ? $category->sort : '')) }}" required>
         </div>
-
+        <div class="col-4">
+            <div>
+                <label for="image" class="main-label">Изображение категории</label>
+                <input type="file" name="image" id="image" class="form-control-file" autocomplete="off">
+            </div>
+            @if (isset($category) && $category->image)
+                <div>
+                    <img src="{{ $category->getImageUrlAttribute() }}" style="max-width:150px;" />
+                </div>
+            @endif
+        </div>
     </div>
+
 
     <div class="row justify-content-end">
         <div class="form-group col-md-6 btn-wrap">

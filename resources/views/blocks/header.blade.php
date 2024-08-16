@@ -59,11 +59,14 @@
                             </div>
                         </a>
                     </li>
-                </ul><div class="shop-menu__links-container">
-                    <a href="signin.html" class="shop-menu__links">Вход</a>
+                </ul>
+                @guest
+                <div class="shop-menu__links-container">
+                    <a href="{{ route('login') }}" class="shop-menu__links">Вход</a>
                     <span class="slash">/</span>
-                    <a href="signup.html" class="shop-menu__links">Регистрация</a>
+                    <a href="{{ route('register') }}" class="shop-menu__links">Регистрация</a>
                 </div>
+                @endguest
             </div>
             <button id="mobile-nav-btn" class="mobile-nav-btn header__mobile-nav-btn">
                 <div class="nav-icon"></div>
