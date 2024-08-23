@@ -62,10 +62,6 @@ class AlfaService implements PaymentInterface
         $dto->setIsSuccess(false);
         $dto->setRequest($data);
 
-        $response = Http::post(
-            $this->url.'/payment/rest/register.do?'.http_build_query($data),
-        )->collect()->toArray();
-
         try {
             $response = Http::post(
                 $this->url.'/payment/rest/register.do?'.http_build_query($data),
