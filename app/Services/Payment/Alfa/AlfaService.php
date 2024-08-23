@@ -27,7 +27,7 @@ class AlfaService implements PaymentInterface
                 'name' => $productList['name'],
                 'quantity' => [
                     'value' => $productList['quantity'],
-                    'measure' => 'штук'
+                    'measure' => 0
                 ],
                 'itemCode' => 'N'.$productList['product_id'],
                 'tax' => [
@@ -65,7 +65,7 @@ class AlfaService implements PaymentInterface
         $response = Http::post(
             $this->url.'/payment/rest/register.do?'.http_build_query($data),
         )->collect()->toArray();
-        dd($data, $response);
+
         try {
             $response = Http::post(
                 $this->url.'/payment/rest/register.do?'.http_build_query($data),
