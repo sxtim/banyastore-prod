@@ -240,19 +240,20 @@
                          aria-labelledby="tab4"
                          tabindex="0"
                          aria-hidden="true">
+                        Раздел в разработке
 
-                        @include('blocks/card-comment')
-                        @include('blocks/card-comment')
-                        @include('blocks/card-comment')
-                        <article class="card-comment">
-                            <div class="card-comment__desc">
-                                <div class="card-comment__name">Федор Лейкин </div>
-                                <time class="card-comment__date">08.11.2023</time>
-                                <div class="card-comment__message">Печь просто бомба. Паримся всей семьей, отличный режим русской бани. А еще она красивая и не обжигает за счет облицовки камнем.</div>
+{{--                        @include('blocks/card-comment')--}}
+{{--                        @include('blocks/card-comment')--}}
+{{--                        @include('blocks/card-comment')--}}
+{{--                        <article class="card-comment">--}}
+{{--                            <div class="card-comment__desc">--}}
+{{--                                <div class="card-comment__name">Федор Лейкин </div>--}}
+{{--                                <time class="card-comment__date">08.11.2023</time>--}}
+{{--                                <div class="card-comment__message">Печь просто бомба. Паримся всей семьей, отличный режим русской бани. А еще она красивая и не обжигает за счет облицовки камнем.</div>--}}
 
-                            </div>
-                            <a href="#!" class="card-comment__link">ещё</a>
-                        </article>
+{{--                            </div>--}}
+{{--                            <a href="#!" class="card-comment__link">ещё</a>--}}
+{{--                        </article>--}}
                     </div>
                 </div>
             </div>

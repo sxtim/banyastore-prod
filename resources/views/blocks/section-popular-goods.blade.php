@@ -80,7 +80,7 @@
             </div>
         </div>
         <h2 class="popular-goods__title title-s">Популярные товары</h2>
-        <div class="popular-goods__slider-container" id="catalog">
+        <div class="popular-goods__slider-container" {{-- id="catalog"--}}>
 
             <div id="popular-goods__slider" class="keen-slider">
 
