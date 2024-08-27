@@ -52,7 +52,7 @@ class AlfaService implements PaymentInterface
             'orderNumber' => 'T'.$order->id,
             'amount' => (int) $amount * 100,
             'returnUrl' => route('order.success'),
-            'dynamicCallbackUrl' => '',
+            'dynamicCallbackUrl' => route('callback.alfa.pay'),
             'orderBundle' => json_encode($orderBundle, JSON_UNESCAPED_UNICODE),
             'taxSystem' => 2
         ];

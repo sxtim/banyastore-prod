@@ -175,6 +175,11 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
 });
 
 
+Route::prefix('callback')->name('callback.')->group(function () {
+    Route::get('/alfa-pay', [\App\Http\Controllers\Callback\AlfaController::class, 'callback'])->name('alfa.pay');
+});
+
+
 //Успешный заказ
 Route::get('/order/success', [\App\Http\Controllers\OrderController::class, 'success'])->name('order.success');
 
