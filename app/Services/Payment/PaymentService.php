@@ -24,12 +24,14 @@ class PaymentService
                 ->getService($order->paymentVariant->slug)
                 ->orderRegister($order->price, $order);
 
-            Payment::create([
-                'order_id' => $order->id,
-                'amount' => $order->price,
-                'payment_url' => $paymentResponseDto->getUrl(),
-                'order_number_payment_system' => $paymentResponseDto->getOrderNumberPaymentSystem()
-            ]);
+            if ($paymentResponseDto->getIsSuccess() === true) {
+                Payment::create([
+                    'order_id' => $order->id,
+                    'amount' => $order->price,
+                    'payment_url' => $paymentResponseDto->getUrl(),
+                    'order_number_payment_system' => $paymentResponseDto->getOrderNumberPaymentSystem()
+                ]);
+            }
 
         } catch (\Exception $e) {
             $paymentResponseDto = new PaymentResponseDto();
