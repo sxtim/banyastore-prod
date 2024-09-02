@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
 use App\Models\Order\OrderStatus\OrderStatus;
 use App\Models\User;
+use App\Services\Order\OrderService;
 use App\Services\Order\OrderStatusChangeService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -45,6 +46,26 @@ class OrderController extends Controller
     {
         try{
             $service->setStatus($id, $request->input('status_id'));
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function updatePrice(int $id, Request $request, OrderService $orderService): JsonResponse
+    {
+        try{
+            $orderService->updatePrice(
+                orderId: $id,
+                productId: $request->input('product_id'),
+                price: $request->input('price')
+            );
+
             return response()->json([
                 'status' => 'success'
             ]);

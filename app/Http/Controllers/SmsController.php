@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\SmsExolveService;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +19,7 @@ class SmsController extends Controller
             return response()->json([
                 'status' => 'success'
             ]);
-        } catch (\Exception $e) {dd($e->getMessage());
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error'

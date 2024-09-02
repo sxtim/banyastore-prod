@@ -88,41 +88,10 @@
         </div>
 
         <div class="col-6">
-            <table class="table table-wh table-hover table-bordered">
-                <tr>
-                    <td class="text-center" colspan="4">Продукты</td>
-                </tr>
-                <tr>
-                    <td>
-                        Название
-                    </td>
-                    <td>
-                        Кол-во
-                    </td>
-                    <td>
-                        Цена за шутку
-                    </td>
-                    <td>
-                        Цена всего
-                    </td>
-                </tr>
-                @foreach($order->listProducts() as $product)
-                    <tr>
-                        <td>
-                            {{ $product['name'] }}
-                        </td>
-                        <td>
-                            {{ $product['quantity'] }}
-                        </td>
-                        <td>
-                            {{ $product['price'] }}
-                        </td>
-                        <td>
-                            {{ $product['totalPrice'] }}
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
+            <update-price-order-component
+                :positions='@json($order->listProducts())'
+                :link="'{{ route('backend.order.update-price', ['id' => $order->id]) }}'"
+            ></update-price-order-component>
         </div>
     </div>
 @endsection

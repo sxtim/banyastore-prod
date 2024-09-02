@@ -12,12 +12,14 @@ window.ImageBlockEditorJs = ImageBlockEditorJs
 import {createApp} from 'vue';
 import UpdateUserOrderComponent from "./blocks/vue/Order/UpdateUserOrderComponent";
 import UpdateStatusOrderComponent from "./blocks/vue/Order/UpdateStatusOrderComponent";
+import UpdatePriceOrderComponent from "./blocks/vue/Order/UpdatePriceOrderComponent";
 
 if (document.getElementById('backend-order')) {
     createApp({
         components: {
             UpdateUserOrderComponent,
-            UpdateStatusOrderComponent
+            UpdateStatusOrderComponent,
+            UpdatePriceOrderComponent
         }
     }).mount("#backend-order")
 }

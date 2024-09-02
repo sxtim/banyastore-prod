@@ -112,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/show/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('show');
                 Route::post('/update-user/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updateUser'])->name('update-user');
                 Route::post('/update-status/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updateStatus'])->name('update-status');
+                Route::post('/update-price/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updatePrice'])->name('update-price');
             });
         });
     });

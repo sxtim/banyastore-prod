@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\DTO\Order\NewOrderDto;
 use App\Models\Order\Order;
+use App\Models\Order\OrderProduct;
 use App\Services\Basket\BasketInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -47,6 +48,25 @@ class OrderService
             Log::error($e->getMessage());
             throw ($e);
         }
+    }
+
+    public function updatePrice(int $orderId, int $productId, float $price): void
+    {
+        OrderProduct::where('order_id', $orderId)
+            ->where('product_id', $productId)
+            ->update([
+                'price' => $price
+            ]);
+
+        $order = Order::where('id', $orderId)->with(['products'])->first();
+        $price = 0;
+        foreach ($order->products as $itemProduct)
+        {
+            $price += $itemProduct->pivot->price;
+        }
+        $order->update([
+            'price' => $price
+        ]);
     }
 }
 
