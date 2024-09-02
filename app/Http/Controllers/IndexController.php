@@ -28,7 +28,7 @@ class IndexController extends Controller
             ->get();
 
         $banners = Banner::where('is_active', true)
-            ->orderBy('sort', 'desc')
+            ->orderBy('sort', 'asc')
             ->get();
 
         return view('index', compact('news','products','banners'));
