@@ -9,20 +9,27 @@
             <h1 class="catalog__title title-s">
                 Категории
             </h1>
-            @foreach($categories as $category)
-                <div class="catalog__wrapper">
-                    <a href="{{ route('products.by-category', ['slug' => $category->slug]) }}" >
-                        @if ($category->getImageUrlAttribute())
-                            <div>
-                                <img src="{{ $category->getImageUrlAttribute() }}" />
+            <div class="catalog__wrapper">
+                <div class="catalog__cards-wrapper">
+                    @foreach($categories as $category)
+
+                        <article class="card-catalog">
+
+                            @if ($category->getImageUrlAttribute())
+                                <div class="card-catalog__picture">
+                                    <img src="{{ $category->getImageUrlAttribute() }}"/>
+                                </div>
+                            @endif
+                            <div class="card-catalog__title btn btn-medium">
+                                {{ $category->name }}
                             </div>
-                        @endif
-                        <div>
-                            {{ $category->name }}
-                        </div>
-                    </a>
+                            <a class="card-news__link"
+                               href="{{ route('products.by-category', ['slug' => $category->slug]) }}"> </a>
+                        </article>
+
+                    @endforeach
                 </div>
-            @endforeach
+            </div>
         </div>
     </section>
 @endsection
