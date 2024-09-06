@@ -27,6 +27,7 @@
   align-items: center;
   width: 100%;
   padding: 15px 8px 0 8px;
+    margin-bottom: 15px;
 
   @media(max-width: 768px) {
     padding: 3px 3px;
@@ -37,10 +38,11 @@
 .card__row-2 {
   display: flex;
   justify-content: space-between;
+    height: 35px;
   //align-items: center;
   width: 100%;
   padding-left: 8px;
-  padding-bottom: 2px;
+  padding-bottom: 6px;
 }
 
 .card__status {

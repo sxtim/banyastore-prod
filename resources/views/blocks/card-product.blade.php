@@ -29,8 +29,8 @@
                 @endif
 
                 <div class="card__in-stock">
-                    <!--          <div class="card__tick">&#10004</div>-->
-                    <!--          <div class="card__tick">&times</div>-->
+{{--                           <div class="card__tick">&#10004</div>--}}
+{{--                              <div class="card__tick">&times</div>--}}
 
                     {{--          <span>@@inStock</span>--}}
                 </div>
