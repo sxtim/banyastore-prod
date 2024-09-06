@@ -4,7 +4,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('product', $product) }}
-    <section class="product-detail section" >
+    <section class="product-detail section">
         <div class="container">
             <div class="product-detail__content">
                 <div class="product-detail__logo">
@@ -13,7 +13,7 @@
                 <div class="product-detail__slider-wrapper">
                     <div id="product-detail-keen-slider" class="keen-slider">
                         <div class="keen-slider__slide product-detail__slider-slide">
-                            <img src="{{ $product->getImageUrlAttribute() }}" alt="slide">
+                            <img class="product-detail__slider-img" src="{{ $product->getImageUrlAttribute() }}" alt="slide">
                         </div>
                         @foreach($product->additionalImages as $image)
                             <div class="keen-slider__slide product-detail__slider-slide">
@@ -40,7 +40,7 @@
                     @if ($product->preview_text && isset($product->preview_text['blocks']))
                         @foreach($product->preview_text['blocks'] as $block)
                             @if ($block['type'] == 'header' && isset($block['data']['level']))
-                                <h{{ $block['data']['level'] }}  >
+                                <h{{ $block['data']['level'] }} >
                                     {!! $block['data']['text'] !!}
                                 </h{{ $block['data']['level'] }}>
                             @endif
@@ -85,8 +85,10 @@
                             @endif
                         </div>
                         <div class="product-detail__btns-container" id="catalog">
-                            <btn-detail-add-basket-component :product-id="{{ $product->id }}"></btn-detail-add-basket-component>
-                            <btn-detail-favorite-product-component :product-id="{{ $product->id }}"></btn-detail-favorite-product-component>
+                            <btn-detail-add-basket-component
+                                :product-id="{{ $product->id }}"></btn-detail-add-basket-component>
+                            <btn-detail-favorite-product-component
+                                :product-id="{{ $product->id }}"></btn-detail-favorite-product-component>
                         </div>
                     </div>
                 </div>
@@ -132,7 +134,7 @@
                         @if ($product->description && isset($product->description['blocks']))
                             @foreach($product->description['blocks'] as $block)
                                 @if ($block['type'] == 'header' && isset($block['data']['level']))
-                                    <h{{ $block['data']['level'] }}  >
+                                    <h{{ $block['data']['level'] }} >
                                         {!! $block['data']['text'] !!}
                                     </h{{ $block['data']['level'] }}>
                                 @endif
@@ -184,7 +186,7 @@
                             @endphp
                             @if ($i === 1)
                                 <table class="product-params__table">
-                            @endif
+                                    @endif
 
                                     <tr class="product-params__row">
                                         <td class="product-params__cell-title">
@@ -197,16 +199,16 @@
                                         </td>
                                     </tr>
 
-                            @if ($i === 4)
-                                @php
-                                    $i = 0;
-                                @endphp
+                                    @if ($i === 4)
+                                        @php
+                                            $i = 0;
+                                        @endphp
                                 </table>
-                            @endif
-                        @endforeach
+                                @endif
+                                @endforeach
 
-                            @if ($i != 4)
-                                </table>
+                                @if ($i != 4)
+                                    </table>
                             @endif
                     </div>
 
@@ -215,21 +217,28 @@
                          aria-labelledby="tab3"
                          tabindex="0"
                          aria-hidden="true">
-                        <p>Возможные способы оплаты и доставки заказа определяются в зависимости от количества и наименований
-                            товаров в корзине, а также региона доставки. Стартовая цена доставки рассчитывается в момент оформления
-                            заказа и зависит от выбранного способа доставки и адреса доставки, а также от общей суммы заказа.
+                        <p>Возможные способы оплаты и доставки заказа определяются в зависимости от количества и
+                            наименований
+                            товаров в корзине, а также региона доставки. Стартовая цена доставки рассчитывается в момент
+                            оформления
+                            заказа и зависит от выбранного способа доставки и адреса доставки, а также от общей суммы
+                            заказа.
                         <p> </p>
                         <p>
-                        География поставок и развитая транспортная инфраструктура позволяет осуществить доставку товаров нашего
-                        интернет - магазина практически в любой регион РФ и страны СНГ.</p>
+                            География поставок и развитая транспортная инфраструктура позволяет осуществить доставку
+                            товаров нашего
+                            интернет - магазина практически в любой регион РФ и страны СНГ.</p>
                         <ul class="product-detail__delivery-list delivery-list">
-                            <li class="delivery-list__item"><img src="/images/product-detail/delivery-ic-01.svg" alt="ic">
+                            <li class="delivery-list__item"><img src="/images/product-detail/delivery-ic-01.svg"
+                                                                 alt="ic">
                                 <p>Самовывоз из пункта выдачи:
                                     <br> МО, г. Домодедово, мкр. Белые столбы, ул. Авенариуса С 6</p></li>
-                            <li class="delivery-list__item"><img src="/images/product-detail/delivery-ic-02.svg" alt="ic">
+                            <li class="delivery-list__item"><img src="/images/product-detail/delivery-ic-02.svg"
+                                                                 alt="ic">
                                 <p>Доставка ТК до терминала:
                                     <br> СДЭК, ПЭК, Байкал - сервис или Деловые линии.</p></li>
-                            <li class="delivery-list__item"><img src="/images/product-detail/delivery-ic-03.svg" alt="ic">
+                            <li class="delivery-list__item"><img src="/images/product-detail/delivery-ic-03.svg"
+                                                                 alt="ic">
                                 <p>Адресная доставка
                                     <br> транспортной компанией или курьером</p></li>
                         </ul>
@@ -242,18 +251,18 @@
                          aria-hidden="true">
                         Раздел в разработке
 
-{{--                        @include('blocks/card-comment')--}}
-{{--                        @include('blocks/card-comment')--}}
-{{--                        @include('blocks/card-comment')--}}
-{{--                        <article class="card-comment">--}}
-{{--                            <div class="card-comment__desc">--}}
-{{--                                <div class="card-comment__name">Федор Лейкин </div>--}}
-{{--                                <time class="card-comment__date">08.11.2023</time>--}}
-{{--                                <div class="card-comment__message">Печь просто бомба. Паримся всей семьей, отличный режим русской бани. А еще она красивая и не обжигает за счет облицовки камнем.</div>--}}
+                        {{--                        @include('blocks/card-comment')--}}
+                        {{--                        @include('blocks/card-comment')--}}
+                        {{--                        @include('blocks/card-comment')--}}
+                        {{--                        <article class="card-comment">--}}
+                        {{--                            <div class="card-comment__desc">--}}
+                        {{--                                <div class="card-comment__name">Федор Лейкин </div>--}}
+                        {{--                                <time class="card-comment__date">08.11.2023</time>--}}
+                        {{--                                <div class="card-comment__message">Печь просто бомба. Паримся всей семьей, отличный режим русской бани. А еще она красивая и не обжигает за счет облицовки камнем.</div>--}}
 
-{{--                            </div>--}}
-{{--                            <a href="#!" class="card-comment__link">ещё</a>--}}
-{{--                        </article>--}}
+                        {{--                            </div>--}}
+                        {{--                            <a href="#!" class="card-comment__link">ещё</a>--}}
+                        {{--                        </article>--}}
                     </div>
                 </div>
             </div>
