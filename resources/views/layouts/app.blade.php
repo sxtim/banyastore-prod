@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>BanyaStore</title>
+    <title>@yield('pagetitle')</title>
     <link rel="stylesheet" href="/css/main.css"/>
 
     <!-- Yandex.Metrika counter -->
@@ -24,6 +24,7 @@
         });
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/97923337" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <meta name="description" content="@yield('description')" />
     <!-- /Yandex.Metrika counter -->
 </head>
 <body>
