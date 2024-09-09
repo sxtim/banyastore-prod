@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('pagetitle', 'Главная | Banyastore')
+@section('pagetitle', 'Банясторе - эксперты в печной индустрии')
+@section('description', 'Интернет-магазин    товаров для бани оптом и в розницу в Домодедово')
 
 @section('content')
     @include('blocks/section-top')
