@@ -114,10 +114,14 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/update-status/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updateStatus'])->name('update-status');
                 Route::post('/update-price/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'updatePrice'])->name('update-price');
             });
+
+            //Обратная связь
+            Route::prefix('feedback')->name('feedback.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\FeedbackController::class, 'index'])->name('index');
+                Route::get('/show/{id}', [\App\Http\Controllers\Backend\FeedbackController::class, 'show'])->name('show');
+            });
         });
     });
-
-
 
     //Личный кабинет
     Route::prefix('personal')->name('personal.')->group(function () {
@@ -173,6 +177,8 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
     //Отправка номера телефона
     Route::post('/send-phone', [\App\Http\Controllers\SmsController::class, 'sendPhone'])->name('send.phone');
 
+    //Обратная связь
+    Route::post('/feedback', [\App\Http\Controllers\Ajax\FeedbackController::class, 'sendData'])->name('feedback.send');
 });
 
 

@@ -17,6 +17,7 @@ import BtnFavoriteProductComponent from "./blocks/vue/Button/BtnFavoriteProductC
 import BtnDetailFavoriteProductComponent from "./blocks/vue/Button/BtnDetailFavoriteProductComponent";
 import LoginComponent from "./blocks/vue/Auth/LoginComponent";
 import RegisterComponent from "./blocks/vue/Auth/RegisterComponent";
+import FeedbackPage from "./blocks/vue/FeedbackPage";
 
 //
 if (document.getElementById('header')) {
@@ -66,5 +67,14 @@ if (document.getElementById('register-form')) {
         }
     }).use(store)
         .mount("#register-form")
+}
+
+if (document.getElementById('feedback-form')) {
+    createApp({
+        components: {
+            FeedbackPage
+        }
+    }).use(store)
+        .mount("#feedback-form")
 }
 

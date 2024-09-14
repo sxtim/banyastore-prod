@@ -51,6 +51,7 @@
             <a href="{{ route('backend.actions.index') }}" class="@yield('aside_actions')">Акции</a>
             <a href="{{ route('backend.news.index') }}" class="@yield('aside_news')">Новости</a>
             <a href="{{ route('backend.users.index') }}" class="@yield('aside_users')">Пользователи</a>
+            <a href="{{ route('backend.feedback.index') }}" class="@yield('aside_feedback')">Обратная связь</a>
         </div>
 
     </div>
