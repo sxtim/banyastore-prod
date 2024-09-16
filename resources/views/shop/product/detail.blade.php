@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('pagetitle', $product->name. ' | Banyastore')
+@section('pagetitle', $seo->getTitle())
+@section('description', $seo->getDescription())
 
 @section('content')
     {{ Breadcrumbs::render('product', $product) }}

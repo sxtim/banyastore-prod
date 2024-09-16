@@ -120,6 +120,15 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/', [\App\Http\Controllers\Backend\FeedbackController::class, 'index'])->name('index');
                 Route::get('/show/{id}', [\App\Http\Controllers\Backend\FeedbackController::class, 'show'])->name('show');
             });
+
+            //Seo шаблоны
+            Route::prefix('seo')->name('seo.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\SeoController::class, 'index'])->name('index');
+                Route::get('/create', [\App\Http\Controllers\Backend\SeoController::class, 'create'])->name('create');
+                Route::post('/create', [\App\Http\Controllers\Backend\SeoController::class, 'store'])->name('store');
+                Route::get('/edit/{templateId}', [\App\Http\Controllers\Backend\SeoController::class, 'edit'])->name('edit');
+                Route::patch('/edit/{templateId}', [\App\Http\Controllers\Backend\SeoController::class, 'update'])->name('update');
+            });
         });
     });
 
