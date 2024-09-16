@@ -11,7 +11,7 @@
                 </li>
                 <li>Время работы:<br>9:00 - 18:00</li>
                 <li>
-                    <a class="header__phone phone" href="tel:+7 (499) 714-71-44">+7 (499) 714 71 44
+                    <a class="header__phone phone" href="{{ route('feedback-form') }}">+7 (499) 714 71 44
                         <span>Заказать звонок</span></a>
                 </li>
             </ul>
