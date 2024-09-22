@@ -162,7 +162,7 @@ Route::get('/feedback', [\App\Http\Controllers\FeedBackController::class, 'index
 Route::get('/agree-text', [\App\Http\Controllers\IndexController::class, 'agreeText'])->name('agree-text');
 
 
-//Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
+Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
 
 //Аякс
 Route::prefix('ajax')->name('ajax.')->group(function () {

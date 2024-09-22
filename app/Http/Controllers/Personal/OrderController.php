@@ -20,7 +20,10 @@ class OrderController extends Controller
     public function index(): View
     {
         $user = Auth::user();
-        $orders = Order::with(['deliveryVariant','paymentVariant','deliveries'])->where('user_id','=', $user->id)->get();
+        $orders = Order::with(['deliveryVariant','paymentVariant','deliveries'])
+            ->where('user_id','=', $user->id)
+            ->orderBy('id','desc')
+            ->get();
         $activeMenu = 'orders';
         return view('personal.order.index',compact('user','orders', 'activeMenu'));
     }

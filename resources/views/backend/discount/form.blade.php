@@ -36,7 +36,7 @@
                 Выберите товары к которым надо применить скидку
             </label>
             <div></div>
-            <select multiple="multiple" name="products[]" id="discount-products" class="form-control">
+            <select multiple="multiple" name="products[]" id="discount-products" class="form-control" style="height:700px;">
                 @foreach($products as $element)
                     <option @if(isset($discount) && $discount->products->where('id',$element->id)->first()) selected @endif
                     value="{{ $element->id }}">

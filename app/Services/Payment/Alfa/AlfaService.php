@@ -39,7 +39,7 @@ class AlfaService implements PaymentInterface
 
         $orderBundle = [
             'customerDetails' => [
-                'email' => 'skostait@gmail.com'
+                'email' => $order->mail
             ],
             'cartItems' => [
                 'items' => $items
@@ -49,7 +49,7 @@ class AlfaService implements PaymentInterface
         $data = [
             'userName' => $this->userName,
             'password' => $this->password,
-            'orderNumber' => 'T'.$order->id,
+            'orderNumber' => $order->id.'_'.date('dHis'),
             'amount' => (int) $amount * 100,
             'returnUrl' => route('order.success'),
             'dynamicCallbackUrl' => route('callback.alfa.pay'),
