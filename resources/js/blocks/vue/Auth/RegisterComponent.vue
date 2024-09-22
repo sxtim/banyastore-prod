@@ -27,15 +27,7 @@
                     <input id="user-email" type="email" name="email" placeholder="" v-model="email"/>
                 </div>
             </div>
-            <div v-if="isSendPhone === true">
-                <div class="label-box">
-                    <label for="input-sms-pass" >Код из СМС</label>
-                </div>
-                <div class="input-box">
-                    <input id="input-sms-pass" type="text" v-model="sms" name="user-password" placeholder="" minlength="8" />
-                </div>
-            </div>
-            <button class="reg-form__btn-reg btn" @click="registerBtn">Зарегистироваться</button>
+            <div class="reg-form__btn-reg btn" @click="sendForm">Зарегистироваться</div>
             <div v-if="errorText" style="color:red">
                 {{ errorText }}
             </div>
@@ -58,54 +50,27 @@ export default {
     name: "RegisterComponent",
     data() {
         return {
-            isSendPhone: false,
             name: '',
             surname: '',
             email: '',
             phone: '',
-            sms: '',
             errorText: ''
         }
     },
-    mounted() {
-    },
-    computed: {
-
-    },
 
     methods: {
-        registerBtn(e) {
-            this.isSendPhone === true ? this.registerBtn() : this.sendPhone(e)
-        },
-
-        sendPhone(e) {
+        sendForm() {
             this.errorText = ''
-            axios.post(window.location.origin + `/ajax/send-phone`, {
-                phone: this.phone
-            }).then(response => {
-                if (response.data.status === 'success') {
-                    this.isSendPhone = true
-                } else {
-                    this.errorText = 'Что-то пошло не так!'
-                }
-            })
-
-            e.preventDefault();
-        },
-
-        sendSms() {
-            this.errorText = ''
-            axios.post(window.location.origin + `/ajax/register-sms`, {
-                sms: this.sms,
+            axios.post(window.location.origin + `/ajax/register`, {
                 name: this.name,
                 surname: this.surname,
                 email: this.email,
                 phone: this.phone
             }).then(response => {
                 if (response.data.status === 'success') {
-                    location.href = '/'
+                    location.href = '/personal'
                 } else {
-                    this.errorText = 'Неправильный код!'
+                    this.errorText = 'Что-то пошло не так!'
                 }
             }).catch(error => {
                 for (let key in error.response.data.errors) {

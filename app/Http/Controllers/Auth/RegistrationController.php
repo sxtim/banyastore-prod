@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
-use App\Services\SmsExolveService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
 {
@@ -18,25 +19,22 @@ class RegistrationController extends Controller
         return view('auth.register');
     }
 
-    public function registerBySms(
-        RegisterRequest $request,
-        SmsExolveService $smsExolveService
+    public function register(
+        RegisterRequest $request
     ): JsonResponse
     {
-        $check = $smsExolveService->checkSmsCode($request->input('phone'), $request->input('sms'));
-        if ($check === true) {
-            $user = User::create([
-                'name' => $request->input('name'),
-                'surname' => $request->input('surname'),
-                'email' => $request->input('email'),
-                'phone' => $request->input('phone')
+        $user = User::create([
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'password' => Hash::make(Str::random(15))
+        ]);
+        if ($user) {
+            Auth::login($user);
+            return response()->json([
+                'status' => 'success'
             ]);
-            if ($user) {
-                Auth::login($user);
-                return response()->json([
-                    'status' => 'success'
-                ]);
-            }
         }
         return response()->json([
             'status' => 'error'

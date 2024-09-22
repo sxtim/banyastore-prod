@@ -72,7 +72,7 @@ export default {
                 } else {
                     commit('setErrors', ['Что-то пошло не так'])
                 }
-            }).catch(error => {console.log(error.response.data.errors)
+            }).catch(error => {
                 commit('setErrors', error.response.data.errors)
             });
 

@@ -1,25 +1,20 @@
 <template>
     <div class="auth-form__wrapper">
         <form class="auth-form form-container">
-            <div v-if="isSendPhone === false">
+            <div>
                 <div class="label-box">
                     <label for="user-tel">Телефон</label>
                 </div>
                 <div class="input-box auth-form__phone">
                     <input v-model="phone" class="form-phone" type="tel" name="tel" id="user-tel" axlength="12"/>
                 </div>
-                <div class="input-box">
-                    <button class="auth-form__btn-sms" @click="sendPhone">Получить код</button>
-                </div>
-            </div>
-            <div v-else>
                 <div class="label-box">
-                    <label for="input-sms-pass" >Код из СМС</label>
+                    <label for="password">Пароль</label>
                 </div>
-                <div class="input-box">
-                    <input id="input-sms-pass" type="text" v-model="sms" name="user-password" placeholder="" minlength="8" />
+                <div class="input-box auth-form__phone">
+                    <input v-model="password" class="form-phone" type="password" name="password"/>
                 </div>
-                <div class="auth-form__button btn">Войти</div>
+                <div class="auth-form__button btn" @click="sendForm">Войти</div>
             </div>
             <div v-if="errorText" style="color:red">
                 {{ errorText }}
@@ -37,57 +32,37 @@
 </template>
 
 <script>
-
-import {mapGetters} from "vuex";
 import axios from "axios";
-
 
 export default {
     name: "LoginComponent",
     data() {
         return {
-            isSendPhone: false,
             phone: '',
-            sms: '',
+            password: '',
             errorText: ''
         }
     },
-    mounted() {
-    },
-    computed: {
-
-    },
 
     methods: {
-        sendPhone(e) {
+        sendForm() {
             this.errorText = ''
-            axios.post(window.location.origin + `/ajax/send-phone`, {
+            axios.post(window.location.origin + `/login`, {
+                password: this.password,
                 phone: this.phone
             }).then(response => {
                 if (response.data.status === 'success') {
-                    this.isSendPhone = true
+                    location.href = '/personal'
                 } else {
-                    this.errorText = 'Что-то пошло не так!'
+                    this.errorText = 'Неправильный телефон или пароль'
                 }
-            })
-
-            e.preventDefault();
-        },
-
-        sendSms() {
-            this.errorText = ''
-            axios.post(window.location.origin + `/ajax/send-sms`, {
-                sms: this.sms,
-                phone: this.phone
-            }).then(response => {
-                if (response.data.status === 'success') {
-                    location.href = '/'
-                } else {
-                    this.errorText = 'Неправильный код!'
+            }).catch(error => {
+                for (let key in error.response.data.errors) {
+                    this.errorText += error.response.data.errors[key]+' '
                 }
-            })
+            });
         }
-    },
+    }
 }
 </script>
 

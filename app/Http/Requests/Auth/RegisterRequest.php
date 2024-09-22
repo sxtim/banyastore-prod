@@ -20,7 +20,6 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:3'],
-            'sms' => ['required', 'min:3'],
             'surname' => ['required', 'min:3'],
             'phone' => ['required', 'numeric', new Phone(),'unique:users,phone'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -30,17 +29,15 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Необходимо указать имя',
-            'name.min' => 'Минимальное количество символов в имени: 3',
-            'surname.required' => 'Необходимо указать фамилию',
-            'surname.min' => 'Минимальное количество символов в фамилии: 3',
-            'sms.required' => 'Неверный код',
-            'sms.min' => 'Неверный код',
-            'phone.required' => 'Необходимо указать телефон',
-            'phone.unique' => 'Нверно указан телефон',
-            'email.required' => 'Необходимо указать почту',
-            'email.email' => 'Неверно указана почта',
-            'email.unique' => 'Неверно указана почта',
+            'name.required' => 'Необходимо указать имя.',
+            'name.min' => 'Минимальное количество символов в имени: 3.',
+            'surname.required' => 'Необходимо указать фамилию.',
+            'surname.min' => 'Минимальное количество символов в фамилии: 3.',
+            'phone.required' => 'Необходимо указать телефон.',
+            'phone.unique' => 'Нверно указан телефон.',
+            'email.required' => 'Необходимо указать почту.',
+            'email.email' => 'Неверно указана почта.',
+            'email.unique' => 'Неверно указана почта.',
         ];
     }
 

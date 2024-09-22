@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Auth\Events\Lockout;
+use App\Rules\Phone;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LoginRequest extends FormRequest
 {
@@ -27,8 +25,33 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'phone' => ['required', new Phone()],
+            'password' => ['required'],
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'password.required' => 'Необходимо указать пароль.',
+            'phone.required' => 'Необходимо указать телефон.'
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors()->all(),
+            'status' => 422,
+        ], 422));
+    }
+
+    protected function prepareForValidation()
+    {
+        $phone = preg_replace('/[^0-9]/', '', $this->get('phone'));
+
+        $this->merge([
+            'phone' => $phone,
+        ]);
     }
 }
