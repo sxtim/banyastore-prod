@@ -159,9 +159,10 @@ Route::get('/actions', [\App\Http\Controllers\ActionController::class, 'index'])
 Route::get('/actions/{slug}', [\App\Http\Controllers\ActionController::class, 'detail'])->name('actions.detail');
 Route::get('/three-d-projects', [\App\Http\Controllers\ThreeDProjectController::class, 'index'])->name('three-d-projects');
 Route::get('/feedback', [\App\Http\Controllers\FeedBackController::class, 'index'])->name('feedback-form');
+Route::get('/agree-text', [\App\Http\Controllers\IndexController::class, 'agreeText'])->name('agree-text');
 
 
-Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
+//Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
 
 //Аякс
 Route::prefix('ajax')->name('ajax.')->group(function () {

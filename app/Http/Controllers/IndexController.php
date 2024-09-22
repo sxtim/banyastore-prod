@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\News;
-use App\Models\Shop\Category;
 use App\Models\Shop\Product;
 use Illuminate\Contracts\View\View;
 
@@ -32,5 +30,10 @@ class IndexController extends Controller
             ->get();
 
         return view('index', compact('news','products','banners'));
+    }
+
+    public function agreeText(): View
+    {
+        return view('agree-text');
     }
 }

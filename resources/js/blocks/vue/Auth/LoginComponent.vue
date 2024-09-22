@@ -21,7 +21,7 @@
             </div>
             <span class="auth-form__reg-text">Указывая номер телефона, вы принимаете условия
           <br>
-          <a href="#!">пользовательского соглашения</a></span>
+          <a href="/agree-text">пользовательского соглашения</a></span>
             <div class="auth-form__reg-box">
                 <p class="auth-form__reg-text">Если Вы впервые на сайте, заполните, пожалуйста, регистрационную форму.</p>
                 <a href="/register" class="auth-form__reg-link btn btn-white">Зарегистрироваться</a>
