@@ -1,0 +1,139 @@
+.catalog__filter-container {
+    //position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 35px;
+    z-index: 20;
+    margin-bottom: 30px;
+
+}
+
+
+.catalog__filter-details {
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #767676;
+    border-radius: 3px;
+    display: inline-flex;
+    flex-direction: column;
+    padding: 3px 6px;
+    color: var(--text-color-dark);
+}
+
+.catalog__filter-details[open] {
+}
+
+.catalog__filter-details summary::marker {
+    display: none;
+    font-size: 0;
+    color: var(--green-dark);
+}
+
+.catalog__filter-details summary::-webkit-details-marker {
+    display: none;
+    font-size: 0;
+}
+
+.catalog__filter-details summary::after {
+    content: "\25BC" / "";
+    color: var(--green-dark);
+    display: inline-block;
+    font-size: 0.6rem;
+    height: 1rem;
+    line-height: 1rem;
+    margin-left: 0.5rem;
+    position: relative;
+    transition: transform 0.25s;
+}
+
+.catalog__filter-details[open] summary {
+    margin-bottom: 1rem;
+}
+
+.catalog__filter-details[open] summary::after {
+    top: -0.15rem;
+    transform: rotate(180deg);
+}
+
+
+.second-list {
+    border: 1px solid #767676;
+    border-radius: 3px;
+    display: inline-flex;
+    flex-direction: column;
+    padding: 3px 6px;
+}
+
+
+.second-list summary::marker {
+    display: none;
+    font-size: 0;
+}
+
+.second-list summary::-webkit-details-marker {
+    display: none;
+    font-size: 0;
+}
+
+.second-list summary::after {
+    content: "\25BC" / "";
+    display: inline-block;
+    font-size: 0.6rem;
+    height: 1rem;
+    line-height: 1rem;
+    margin-left: 0.5rem;
+    position: relative;
+    transition: transform 0.25s;
+}
+
+.second-list[open] summary {
+    margin-bottom: 1rem;
+}
+
+.second-list[open] summary::after {
+    top: -0.15rem;
+    transform: rotate(180deg);
+}
+
+
+.filter-el {
+    border: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.filter-el legend {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.filter-el ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.filter-el ul li {
+    border-radius: 3px;
+    margin: 0;
+    padding: 4px 2px;
+}
+
+.filter-el ul li:hover {
+    background: #eee;
+}
+
+.filter-el ul li label {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+}
