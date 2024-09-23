@@ -1,5 +1,5 @@
 .catalog__filter-container {
-    //position: absolute;
+    position: relative;
     width: 100%;
     display: flex;
     align-items: flex-start;
@@ -10,8 +10,15 @@
 
 }
 
+.filter-item {
+    max-width: 250px;
+    width: 100%;
+    position: relative;
+}
 
 .catalog__filter-details {
+    caret-color: transparent;
+    position: absolute;
     cursor: pointer;
     background-color: white;
     border: 1px solid #767676;
@@ -20,9 +27,11 @@
     flex-direction: column;
     padding: 3px 6px;
     color: var(--text-color-dark);
+
 }
 
 .catalog__filter-details[open] {
+    z-index: 15;
 }
 
 .catalog__filter-details summary::marker {
@@ -40,7 +49,7 @@
     content: "\25BC" / "";
     color: var(--green-dark);
     display: inline-block;
-    font-size: 0.6rem;
+    font-size: 1rem;
     height: 1rem;
     line-height: 1rem;
     margin-left: 0.5rem;
@@ -88,14 +97,14 @@
     transition: transform 0.25s;
 }
 
-.second-list[open] summary {
-    margin-bottom: 1rem;
-}
-
-.second-list[open] summary::after {
-    top: -0.15rem;
-    transform: rotate(180deg);
-}
+//.second-list[open] summary {
+//    margin-bottom: 1rem;
+//}
+//
+//.second-list[open] summary::after {
+//    top: -0.15rem;
+//    transform: rotate(180deg);
+//}
 
 
 .filter-el {
