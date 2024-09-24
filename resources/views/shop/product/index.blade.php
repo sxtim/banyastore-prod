@@ -13,27 +13,27 @@
             <div class="catalog__filter-container">
                 <div class="filter-item">
                     <details class="catalog__filter-details">
-                        <summary>Your favourite cars list</summary>
+                        <summary>Бренд</summary>
                         <form>
                             <fieldset class="filter-el">
-                                <legend>Cars</legend>
+                                <legend>Бренд</legend>
                                 <ul>
                                     <li>
-                                        <label for="bmw">BMW<input type="checkbox" id="bmw" name="bmw"
-                                                                   value="bmw"></label>
+                                        <label for="1">1<input type="checkbox" id="1" name="1"
+                                                                   value="1"></label>
                                     </li>
                                     <li>
-                                        <label for="citroen">Citroen
-                                            <input type="checkbox" id="citroen" name="citroen"
-                                                   value="citroen"></label>
+                                        <label for="2">2
+                                            <input type="checkbox" id="2" name="2"
+                                                   value="2"></label>
                                     </li>
                                     <li>
-                                        <label for="skoda">Skoda
-                                            <input type="checkbox" id="skoda" name="skoda" value="skoda"></label>
+                                        <label for="3">3
+                                            <input type="checkbox" id="3" name="3" value="3"></label>
                                     </li>
                                     <li>
-                                        <label for="volvo">Volvo
-                                            <input type="checkbox" id="volvo" name="volvo" value="volvo"></label>
+                                        <label for="4">4
+                                            <input type="checkbox" id="4" name="4" value="4"></label>
                                     </li>
                                 </ul>
                             </fieldset>
@@ -42,27 +42,27 @@
                 </div>
                 <div class="filter-item">
                     <details class="catalog__filter-details">
-                        <summary>Your favourite cars list</summary>
+                        <summary>Объем парной</summary>
                         <form>
                             <fieldset class="filter-el">
-                                <legend>Cars</legend>
+                                <legend>Объем парной</legend>
                                 <ul>
                                     <li>
-                                        <label for="bmw">BMW<input type="checkbox" id="bmw" name="bmw"
-                                                                   value="bmw"></label>
+                                        <label for="11">11<input type="checkbox" id="11" name="11"
+                                                                   value="11"></label>
                                     </li>
                                     <li>
-                                        <label for="citroen">Citroen
-                                            <input type="checkbox" id="citroen" name="citroen"
+                                        <label for="22">Citroen
+                                            <input type="checkbox" id="22" name="22"
                                                    value="citroen"></label>
                                     </li>
                                     <li>
-                                        <label for="skoda">Skoda
-                                            <input type="checkbox" id="skoda" name="skoda" value="skoda"></label>
+                                        <label for="33">Skoda
+                                            <input type="checkbox" id="33" name="33" value="33"></label>
                                     </li>
                                     <li>
-                                        <label for="volvo">Volvo
-                                            <input type="checkbox" id="volvo" name="volvo" value="volvo"></label>
+                                        <label for="44">Volvo
+                                            <input type="checkbox" id="44" name="44" value="44"></label>
                                     </li>
                                 </ul>
                             </fieldset>
@@ -71,38 +71,54 @@
                 </div>
                 <div class="filter-item">
                     <details class="catalog__filter-details">
-                        <summary>Your favourite cars list</summary>
+                        <summary>Тип печи</summary>
                         <form>
                             <fieldset class="filter-el">
                                 <legend>Cars</legend>
                                 <ul>
                                     <li>
-                                        <label for="bmw">BMW<input type="checkbox" id="bmw" name="bmw"
-                                                                   value="bmw"></label>
+                                        <label for="111">111<input type="checkbox" id="111" name="111"
+                                                                   value="111"></label>
                                     </li>
                                     <li>
-                                        <label for="citroen">Citroen
-                                            <input type="checkbox" id="citroen" name="citroen" value="citroen"></label>
+                                        <label for="222">222
+                                            <input type="checkbox" id="222" name="222" value="222"></label>
                                     </li>
                                     <li>
-                                        <label for="skoda">Skoda
-                                            <input type="checkbox" id="skoda" name="skoda" value="skoda"></label>
+                                        <label for="333">333
+                                            <input type="checkbox" id="333" name="333" value="333"></label>
                                     </li>
                                     <li>
-                                        <label for="volvo">Volvo
-                                            <input type="checkbox" id="volvo" name="volvo" value="volvo"></label>
+                                        <label for="444">444
+                                            <input type="checkbox" id="444" name="444" value="444"></label>
+                                    </li>
+                                </ul>
+                            </fieldset>
+                        </form>
+                    </details>
+                </div>
+                <div class="filter-item">
+                    <details class="catalog__filter-details">
+                        <summary>Материал топки</summary>
+                        <form>
+                            <fieldset class="filter-el">
+                                <legend>Материал топки</legend>
+                                <ul>
+                                    <li>
+                                        <label for="111">BMW<input type="checkbox" id="111" name="111"
+                                                                   value="111"></label>
                                     </li>
                                     <li>
-                                        <label for="volvo">Volvo
-                                            <input type="checkbox" id="volvo" name="volvo" value="volvo"></label>
+                                        <label for="222">Citroen
+                                            <input type="checkbox" id="222" name="222" value="222"></label>
                                     </li>
                                     <li>
-                                        <label for="volvo">Volvo
-                                            <input type="checkbox" id="volvo" name="volvo" value="volvo"></label>
+                                        <label for="333">Skoda
+                                            <input type="checkbox" id="333" name="333" value="333"></label>
                                     </li>
                                     <li>
-                                        <label for="volvo">Volvo
-                                            <input type="checkbox" id="volvo" name="volvo" value="volvo"></label>
+                                        <label for="444">Volvo
+                                            <input type="checkbox" id="444" name="444" value="444"></label>
                                     </li>
                                 </ul>
                             </fieldset>
