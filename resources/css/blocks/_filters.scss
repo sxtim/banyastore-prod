@@ -1,19 +1,23 @@
+.catalog__filter-wrapper {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
 .catalog__filter-container {
     //position: relative;
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    justify-content:  space-between;
     flex-wrap: wrap;
-    z-index: 20;
-    margin-bottom: 30px;
-
+    gap: 20px;
+    padding: 0 15px;
 }
 
 .filter-item {
     width: 250px;
+    height: 30px;
     position: relative;
-    margin: 20px 30px;
-    display: inline-block;
 }
 
 .catalog__filter-details {
@@ -157,4 +161,18 @@
     display: flex;
     flex-grow: 1;
     justify-content: space-between;
+}
+
+.catalog__filer-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.catalog__filer-btn {
+    width: 250px;
+    height: 22px;
+    font-size: 14px;
 }
