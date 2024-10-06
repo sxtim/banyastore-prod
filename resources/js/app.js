@@ -18,6 +18,7 @@ import BtnDetailFavoriteProductComponent from "./blocks/vue/Button/BtnDetailFavo
 import LoginComponent from "./blocks/vue/Auth/LoginComponent";
 import RegisterComponent from "./blocks/vue/Auth/RegisterComponent";
 import FeedbackPage from "./blocks/vue/FeedbackPage";
+import UpdatePasswordComponent from "./blocks/vue/Auth/UpdatePasswordComponent";
 
 //
 if (document.getElementById('header')) {
@@ -54,7 +55,8 @@ if (document.getElementById('catalog')) {
 if (document.getElementById('login-form')) {
     createApp({
         components: {
-            LoginComponent
+            LoginComponent,
+            UpdatePasswordComponent
         }
     }).use(store)
         .mount("#login-form")

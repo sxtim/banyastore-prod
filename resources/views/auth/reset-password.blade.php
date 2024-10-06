@@ -7,7 +7,7 @@
     <section class="login-section section">
         <div class="container">
             <div id="login-form">
-                <login-component></login-component>
+                <update-password-component :token="'{{ $token }}'"></update-password-component>
             </div>
         </div>
     </section>
