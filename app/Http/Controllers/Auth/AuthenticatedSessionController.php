@@ -94,7 +94,7 @@ class AuthenticatedSessionController extends Controller
         );
 
         return response()->json([
-            'status' => $status === Password::RESET_LINK_SENT ? 'success' : 'error',
+            'status' => $status === Password::PASSWORD_RESET ? 'success' : 'error',
             'd' =>  __($status)
         ]);
     }

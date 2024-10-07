@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Mail\MyMailer;
 use App\Models\Basket\Basket;
 use App\Notifications\ResetPassword;
 use App\Traits\HasPermissions;
@@ -108,6 +109,13 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPassword($token));
+    //    $this->notify(new ResetPassword($token));
+        (new MyMailer())
+            ->sendEmail(
+                $this->email,
+                'Сброс пароля',
+                'Для восстановления пароля перейдите по
+                <a href="'.route('password.reset', ['token' => $token]).'">ссылке </a>'
+            );
     }
 }

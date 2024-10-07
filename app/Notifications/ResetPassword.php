@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Mail\MyMailer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -29,21 +28,18 @@ class ResetPassword extends Notification
      */
     public function via(object $notifiable): array
     {
-        return [];
+        return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): void
+    public function toMail(object $notifiable)
     {
-        (new MyMailer())
-            ->sendEmail(
-                $notifiable->email,
-                'Сброс пароля',
-                'Для восстановления пароля перейдите по
-                <a href="'.route('password.reset', ['token' => $this->token]).'">ссылке </a>'
-            );
+        return (new MailMessage)
+            ->line('You are receiving this email because we received a password reset request for your account.') // Here are the lines you can safely override
+            ->action('Reset Password', url('password/reset', $this->token))
+            ->line('If you did not request a password reset, no further action is required.');
     }
 
     /**
