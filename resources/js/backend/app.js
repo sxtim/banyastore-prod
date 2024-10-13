@@ -1,9 +1,10 @@
 import $ from "jquery";
 require('.././bootstrap');
 
-import EditorJS from "@editorjs/editorjs";
+import EditorJS from "@editorjs/editorjs"
 import HeaderEditorJs from "@editorjs/header"
 import ImageBlockEditorJs from "./blocks/editorjs/ImageBlock"
+import ProductSlideImageComponent from "./blocks/vue/Product/ProductSlideImageComponent"
 
 window.EditorJS = EditorJS
 window.HeaderEditorJs = HeaderEditorJs
@@ -30,4 +31,12 @@ if (document.getElementById('seo-template')) {
             SeoTemplateComponent
         }
     }).mount("#seo-template")
+}
+
+if (document.getElementById('backend-slide-img-product')) {
+    createApp({
+        components: {
+            ProductSlideImageComponent
+        }
+    }).mount("#backend-slide-img-product")
 }

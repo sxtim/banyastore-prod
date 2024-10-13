@@ -76,13 +76,14 @@
             <img src="{{ $product->getImageUrlAttribute() }}" alt="" class="img-fluid" style="max-width:150px;">
         </div>
         @if ($product->additionalImages)
-            <div class="col-4">
+            <div class="col-4" id="backend-slide-img-product">
                 @foreach($product->additionalImages as $image)
                     <span style="display: inline-block;position: relative">
-                        <img src="{{ $image->getImageUrlAttribute() }}" alt="" class="img-fluid" style="max-width:150px;">
-                        <span style="text-decoration: underline; cursor:pointer; color: #03a2ff" id="del-additional-image" param="{{ $image->id }}">
-                            Удалить
-                        </span>
+                        <product-slide-image-component
+                            :id="{{  $image->id }}"
+                            :img-src="'{{ $image->getImageUrlAttribute() }}'"
+                            :link="'{{ route('backend.product.delete-additional-image') }}'"
+                        ></product-slide-image-component>
                     </span>
                 @endforeach
             </div>

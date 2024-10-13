@@ -185,8 +185,13 @@ class ProductController extends Controller
         Storage::delete($request->input('file'));
     }
 
-    public function deleteAdditionalImage(ImageRequest $request): void
+    public function deleteAdditionalImage(ImageRequest $request): JsonResponse
     {
-        Storage::delete($request->input('file'));
-    }//
+        $productFile = ProductFile::findOrFail($request->input('id'));
+        Storage::delete($productFile->file_path);
+        $productFile->delete();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 }

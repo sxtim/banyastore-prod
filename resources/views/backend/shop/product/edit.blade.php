@@ -195,7 +195,7 @@
             document.getElementById('product_form').addEventListener('submit', function () {
 
                 editor.save().then((outputData) => {
-                    console.log(JSON.stringify(outputData));
+                    //console.log(JSON.stringify(outputData));
 
                     document.getElementById('preview_text').value = JSON.stringify(outputData);
                     //    $('#blog_description', this).val(JSON.stringify(outputData));
@@ -205,9 +205,5 @@
             });
         }
         initEditorPreview({!! $contentPreview !!} );
-
-        $('#del-additional-image').click(function(){
-            console.log(1)
-        });
     </script>
 @endsection
