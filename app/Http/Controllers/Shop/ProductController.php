@@ -6,22 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
 use App\Services\Seo\SeoTemplateService;
+use App\Services\ShopService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function byCategory(string $slug, SeoTemplateService $seoTemplateService): View
+    public function byCategory(
+        string $slug,
+        SeoTemplateService $seoTemplateService,
+        ShopService $shopService
+    ): View
     {
         $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::with(['discount'])
+        $products = Product::with(['discount','propertiesValues','propertiesValues.property'])
             ->where('category_id', $category->id)
             ->where('is_active', true)
             ->get();
 
+        $properties = $shopService->getPropertiesForFilter($products);
+
         $seo = $seoTemplateService->getTemplateCategory($category);
 
-        return view('shop.product.index', compact('products','category','seo'));
+        return view('shop.product.index', compact('products','category','seo','properties'));
     }
 
     public function detail(string $slug, SeoTemplateService $seoTemplateService): View
