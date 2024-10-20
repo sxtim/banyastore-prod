@@ -60,6 +60,16 @@
                         </a>
                     </li>
                 </ul>
+                @auth
+                    <div class="shop-menu__links-container">
+                        <span class="shop-menu__links">{{ Auth::user()->getFullName() }}</span>
+                        <span class="slash">/</span>
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            <button type="submit" class="shop-menu__links">Выйти</button>
+                        </form>
+                    </div>
+                @endauth
                 @guest
                 <div class="shop-menu__links-container">
                     <a href="{{ route('login') }}" class="shop-menu__links">Вход</a>

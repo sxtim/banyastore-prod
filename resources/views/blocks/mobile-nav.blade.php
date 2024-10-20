@@ -76,8 +76,17 @@
         </div>
     </ul>
     <li class="mobile-nav__user">
-        <span class="mobile-nav__user-info">manager@banyastore.ru</span>
-        <button type="submit" class="user-exit mobile-nav__user-exit">Выйти</button>
+        @auth
+            <span class="mobile-nav__user-info">{{ Auth::user()->getFullName() }}</span>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="user-exit mobile-nav__user-exit">Выйти</button>
+            </form>
+        @endauth
+            @guest
+                <a href="{{ route('login') }}" class="mobile-nav__user-info">Вход</a>
+                <a href="{{ route('register') }}" class="mobile-nav__user-info">Регистрация</a>
+            @endguest
     </li>
     @include('blocks/social-icon')
 </div>
