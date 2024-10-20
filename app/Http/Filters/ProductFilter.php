@@ -24,7 +24,7 @@ class ProductFilter extends QueryFilter
         foreach ($properties as $value) {
             $this->builder->whereHas('propertiesValues', function (Builder $query) use ($value) {
                 $query->where(function($query) use ($value) {
-                    $query->whereAnd('id', '=', $value);
+                    $query->where('id', '=', $value);
                 });
             });
         }
