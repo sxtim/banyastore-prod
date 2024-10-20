@@ -7,6 +7,7 @@ use App\DTO\Order\NewOrderDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\OrderRequest;
 use App\Mail\MyMailer;
+use App\Services\Basket\BasketInterface;
 use Illuminate\Support\Facades\Log;
 use App\Services\Order\OrderService;
 use Illuminate\Http\JsonResponse;
@@ -20,6 +21,7 @@ class OrderController extends Controller
     public function store(
         OrderRequest $request,
         OrderService $orderService,
+        BasketInterface $basket,
         MyMailer $myMailer
     ): JsonResponse
     {
@@ -38,6 +40,7 @@ class OrderController extends Controller
 
         try {
             $order = $orderService->createOrder($newOrderDto);
+            $basket->destroy();
             $myMailer->sendEmail('opt@feringermsk.ru','Новый заказ','На сайте banyastore.ru новый заказ №'. $order->id);
             $myMailer->sendEmail('yaf123@mail.ru','Новый заказ','На сайте banyastore.ru новый заказ №'. $order->id);
             $myMailer->sendEmail($request->input('mail'),'Заказ №'.$order->id,'Спасибо за заказ на сайте banyastore.ru. Ваш заказ №'. $order->id. '. В ближайшее время мы с Вами свяжемся');
