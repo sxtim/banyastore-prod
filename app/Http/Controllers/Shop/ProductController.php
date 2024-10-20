@@ -21,7 +21,7 @@ class ProductController extends Controller
     ): View
     {
         $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::filter($filter)->with(['discount'])
+        $products = Product::filter($filter)->with(['discount','propertiesValues','propertiesValues.property'])
             ->where('category_id', $category->id)
             ->where('is_active', true)
             ->get();

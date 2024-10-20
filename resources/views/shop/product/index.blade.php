@@ -26,7 +26,7 @@
                                                     <input class="real-checkbox"
                                                            type="checkbox"
                                                            id="{{ $value['id'] }}"
-                                                           name="properties[]"
+                                                           name="properties[{{ $property['id'] }}][]"
                                                            value="{{ $value['id'] }}"
                                                            {{ isset($filters) && isset($filters['properties']) && in_array($value['id'], $filters['properties']) ? 'checked' : '' }}
                                                     >

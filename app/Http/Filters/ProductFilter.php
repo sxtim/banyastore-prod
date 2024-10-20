@@ -21,10 +21,14 @@ class ProductFilter extends QueryFilter
 
     public function properties($properties)
     {
-        foreach ($properties as $value) {
-            $this->builder->whereHas('propertiesValues', function (Builder $query) use ($value) {
-                $query->where(function($query) use ($value) {
-                    $query->where('id', '=', $value);
+        foreach ($properties as $values) {
+            $this->builder->whereHas('propertiesValues', function (Builder $query) use ($values) {
+                $query->where(function($q) use ($values) {
+                    foreach ($values as $value) {
+                        if (is_numeric($value)) {
+                            $q->orWhere('id', '=', $value);
+                        }
+                    }
                 });
             });
         }
