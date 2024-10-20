@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\ProductFilter;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
 use App\Services\Seo\SeoTemplateService;
@@ -15,20 +16,23 @@ class ProductController extends Controller
     public function byCategory(
         string $slug,
         SeoTemplateService $seoTemplateService,
-        ShopService $shopService
+        ShopService $shopService,
+        ProductFilter $filter
     ): View
     {
         $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::with(['discount','propertiesValues','propertiesValues.property'])
+        $products = Product::filter($filter)->with(['discount'])
             ->where('category_id', $category->id)
             ->where('is_active', true)
             ->get();
 
-        $properties = $shopService->getPropertiesForFilter($products);
+        $properties = $shopService->getPropertiesForFilter($category->id);
 
         $seo = $seoTemplateService->getTemplateCategory($category);
 
-        return view('shop.product.index', compact('products','category','seo','properties'));
+        $filters = $filter->filters();
+
+        return view('shop.product.index', compact('products','category','seo','properties','filters'));
     }
 
     public function detail(string $slug, SeoTemplateService $seoTemplateService): View

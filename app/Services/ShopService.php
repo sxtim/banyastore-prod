@@ -2,12 +2,17 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Shop\Product;
 
 class ShopService
 {
-    public function getPropertiesForFilter(Collection $products): array
+    public function getPropertiesForFilter(int $categoryId): array
     {
+        $products = Product::with(['propertiesValues','propertiesValues.property'])
+            ->where('category_id', '=', $categoryId)
+            ->where('is_active', true)
+            ->get();
+
         $properties = [];
         foreach ($products as $product) {
             foreach ($product->propertiesValues as $propertyValue) {
