@@ -1,4 +1,4 @@
-<div class="mobile-nav">
+<div class="mobile-nav" id="mob-nav-js">
     <!--  <form action="" class="header__search-form search-form">-->
     <!--    <button type="submit" class="search__form-btn"></button>-->
     <!--    <input type="search" class="search-form-txt" placeholder="Поиск по каталогу">-->
@@ -28,7 +28,7 @@
                 <!--          </a>-->
                 <!--        </li>-->
                 <li class="shop-menu__item">
-                    <form action="./lk-main.html">
+                    <a href="{{ route('personal.index') }}">
                         <button class="shop-menu__profile-btn">
                             <div class="shop-menu__item">
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,35 +40,19 @@
                                 </svg>
                             </div>
                         </button>
-                    </form>
+                    </a>
                 </li>
                 <li class="shop-menu__item">
-                    <a href="./favorites.html" class="shop-menu__favorites-link">
+                    <a href="{{ route('personal.favorites') }}" class="shop-menu__favorites-link">
                         <div class="shop-menu__item">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M27.7881 6.14666C27.1071 5.46533 26.2985 4.92485 25.4086 4.5561C24.5187 4.18735 23.5648 3.99756 22.6015 3.99756C21.6381 3.99756 20.6843 4.18735 19.7943 4.5561C18.9044 4.92485 18.0958 5.46533 17.4148 6.14666L16.0015 7.55999L14.5881 6.14666C13.2125 4.77107 11.3468 3.99827 9.40146 3.99827C7.45608 3.99827 5.59038 4.77107 4.21479 6.14666C2.8392 7.52225 2.06641 9.38795 2.06641 11.3333C2.06641 13.2787 2.8392 15.1444 4.21479 16.52L5.62813 17.9333L16.0015 28.3067L26.3748 17.9333L27.7881 16.52C28.4695 15.839 29.0099 15.0304 29.3787 14.1405C29.7474 13.2505 29.9372 12.2966 29.9372 11.3333C29.9372 10.37 29.7474 9.41613 29.3787 8.52619C29.0099 7.63624 28.4695 6.82767 27.7881 6.14666V6.14666Z"
-                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span class="shop-info__favorites-quantity quantity">12</span>
+                            <favorite-icon-component></favorite-icon-component>
                         </div>
                     </a>
                 </li>
                 <li class="shop-menu__item">
-                    <a href="./cart.html" class="shop-menu__cart-link">
+                    <a href="{{ route('basket.index') }}" class="shop-menu__cart-link">
                         <div class="shop-menu__item">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M13 31C13.5523 31 14 30.5523 14 30C14 29.4477 13.5523 29 13 29C12.4477 29 12 29.4477 12 30C12 30.5523 12.4477 31 13 31Z"
-                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path
-                                    d="M25 31C25.5523 31 26 30.5523 26 30C26 29.4477 25.5523 29 25 29C24.4477 29 24 29.4477 24 30C24 30.5523 24.4477 31 25 31Z"
-                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path
-                                    d="M3 4H7.72727L10.8945 20.9603C11.0026 21.5434 11.2986 22.0672 11.7307 22.4401C12.1629 22.8129 12.7036 23.0109 13.2582 22.9995H24.7455C25.3001 23.0109 25.8408 22.8129 26.2729 22.4401C26.705 22.0672 27.001 21.5434 27.1091 20.9603L29 10.3332H8.90909"
-                                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span class="shop-info__cart-quantity quantity">15</span>
+                            <basket-icon-component></basket-icon-component>
                         </div>
                     </a>
                 </li>

@@ -30,6 +30,15 @@ if (document.getElementById('header')) {
     }).use(store)
         .mount("#header")
 }
+if (document.getElementById('mob-nav-js')) {
+    createApp({
+        components: {
+            BasketIconComponent,
+            FavoriteIconComponent
+        }
+    }).use(store)
+        .mount("#mob-nav-js")
+}
 
 if (document.getElementById('basket-page')) {
     createApp({
