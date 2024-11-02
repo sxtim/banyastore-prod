@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pagetitle', 'Банясторе - эксперты в печной индустрии')
+@section('pagetitle', 'Банястор - эксперты в печной индустрии')
 @section('description', 'Интернет-магазин    товаров для бани оптом и в розницу в Домодедово')
 
 @section('content')

@@ -26,7 +26,7 @@ export default {
                 }
 
                 if (response.data.status === 'no auth') {
-                 //   location.href = '/'
+                    location.href = '/personal'
                 }
 
             });
