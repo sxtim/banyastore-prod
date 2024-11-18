@@ -34,6 +34,15 @@
           <li><a href="{{ route('company.index') }}">Реквизиты</a></li>
           <li class="footer__cr"><a href="#!">2024 © Banyastore</a></li>
         </ul>
+          <iframe
+              src="https://yandex.ru/sprav/widget/rating-badge/216236942469?type=rating&theme=dark"
+              width="150"
+              height="50"
+              frameborder="0"
+              sandbox="allow-scripts allow-same-origin allow-popups"
+              referrerpolicy="no-referrer"
+          >
+          </iframe>
       </div>
     </div>
   </div>
