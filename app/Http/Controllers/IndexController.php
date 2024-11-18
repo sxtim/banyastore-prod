@@ -16,7 +16,7 @@ class IndexController extends Controller
             ->where('end_at','>=', now())
             ->orWhere('end_at', '=', null)
             ->where('is_active', true)
-            ->orderBy('id', 'desc')
+            ->orderBy('sort', 'asc')
             ->limit(5)
             ->get();
 

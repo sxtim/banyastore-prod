@@ -21,7 +21,7 @@ class NewsController extends Controller
                     ->orWhere('end_at', '=', null);
             })
             ->where('is_active', true)
-            ->orderBy('id', 'desc')
+            ->orderBy('sort', 'asc')
             ->get();
         return view('news.index', compact('news'));
     }
