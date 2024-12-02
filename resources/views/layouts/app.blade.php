@@ -26,6 +26,7 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/97923337" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <meta name="description" content="@yield('description')" />
     <!-- /Yandex.Metrika counter -->
+    <link rel="canonical" href="{{ url()->current() }}" />
 </head>
 <body>
 

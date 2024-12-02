@@ -3,7 +3,7 @@
     <div class="col-6">
         <label for="category" class="main-label">Категория</label>
         <select class="form-control" name="category">
-            <option>
+            <option value="">
                 Не выбрано
             </option>
             @foreach($categories as $category)

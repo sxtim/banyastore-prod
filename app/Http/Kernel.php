@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role'  =>  \App\Http\Middleware\RoleMiddleware::class,
         'perm' => \App\Http\Middleware\CheckUserPermission::class,
+        'remove.trailing.slash' => \App\Http\Middleware\RemoveTrailingSlash::class,
     ];
 }

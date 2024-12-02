@@ -64,7 +64,7 @@
                             {{ $item->getTypeMaterial() }}
                         </td>
                         <td>
-                            {{ $item->category->name }}
+                            {{ $item->category ? $item->category->name : '' }}
                         </td>
                         <td>
                             {{ $item->type_template }}

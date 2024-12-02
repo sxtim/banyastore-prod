@@ -2,7 +2,7 @@
   <div class="container">
     <div class="footer__wrapper">
       <div class="footer__col">
-        <h2>Контакты</h2>
+        <div>Контакты</div>
         <ul>
           <li><a href="#!">г. Домодедово, <br> Белые Столбы, <br> ул Авенариуса, стр 6</a></li>
           <li><a class="footer__list-text" href="mailto:opt@feringermsk.ru">opt@feringermsk.ru</a></li>
@@ -12,7 +12,7 @@
         </ul>
       </div>
       <div class="footer__col">
-        <h2 class="footer__title">Каталог товаров</h2>
+        <div class="footer__title">Каталог товаров</div>
         <ul>
             @foreach($menu as $itemMenu)
                 @if ($itemMenu->parent_id === null)
@@ -26,7 +26,7 @@
         </ul>
       </div>
       <div class="footer__col">
-        <h2>Информация</h2>
+        <div>Информация</div>
         <ul>
           <li><a href="{{ route('company.index') }}">О компании</a></li>
           <li><a href="#!">Доставка</a></li>

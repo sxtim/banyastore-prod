@@ -102,28 +102,28 @@
                                 aria-selected="true"
                                 aria-controls="tab1-content"
                                 id="tab1">
-                            <h3>Описание</h3>
+                            <h2>Описание</h2>
                         </button>
 
                         <button role="tab"
                                 aria-selected="false"
                                 aria-controls="tab2-content"
                                 id="tab2">
-                            <h3>Характеристики</h3>
+                            <h2>Характеристики</h2>
                         </button>
 
                         <button role="tab"
                                 aria-selected="false"
                                 aria-controls="tab3-content"
                                 id="tab3">
-                            <h3>Доставка</h3>
+                            <h2>Доставка</h2>
                         </button>
 
                         <button role="tab"
                                 aria-selected="false"
                                 aria-controls="tab4-content"
                                 id="tab4">
-                            <h3>Отзывы</h3>
+                            <h2>Отзывы</h2>
                         </button>
                     </div>
 

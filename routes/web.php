@@ -147,20 +147,21 @@ Route::middleware(['auth'])->group(function () {
 
 
 //Публичная часть
-Route::get('/categories', [\App\Http\Controllers\Shop\CategoryController::class, 'index'])->name('category.list');
-Route::get('/category/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'byCategory'])->name('products.by-category');
-Route::get('/product/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'detail'])->name('products.detail');
-Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'detail'])->name('news.detail');
-Route::get('/basket', [\App\Http\Controllers\BasketController::class, 'index'])->name('basket.index');
-Route::get('/search/', [\App\Http\Controllers\Shop\ProductController::class, 'search'])->name('products.search');
-Route::get('/company/', [\App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
-Route::get('/actions', [\App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
-Route::get('/actions/{slug}', [\App\Http\Controllers\ActionController::class, 'detail'])->name('actions.detail');
-Route::get('/three-d-projects', [\App\Http\Controllers\ThreeDProjectController::class, 'index'])->name('three-d-projects');
-Route::get('/feedback', [\App\Http\Controllers\FeedBackController::class, 'index'])->name('feedback-form');
-Route::get('/agree-text', [\App\Http\Controllers\IndexController::class, 'agreeText'])->name('agree-text');
-
+Route::middleware('remove.trailing.slash')->group(function () {
+    Route::get('/categories', [\App\Http\Controllers\Shop\CategoryController::class, 'index'])->name('category.list');
+    Route::get('/category/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'byCategory'])->name('products.by-category');
+    Route::get('/product/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'detail'])->name('products.detail');
+    Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'detail'])->name('news.detail');
+    Route::get('/basket', [\App\Http\Controllers\BasketController::class, 'index'])->name('basket.index');
+    Route::get('/search', [\App\Http\Controllers\Shop\ProductController::class, 'search'])->name('products.search');
+    Route::get('/company', [\App\Http\Controllers\CompanyController::class, 'index'])->name('company.index');
+    Route::get('/actions', [\App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
+    Route::get('/actions/{slug}', [\App\Http\Controllers\ActionController::class, 'detail'])->name('actions.detail');
+    Route::get('/three-d-projects', [\App\Http\Controllers\ThreeDProjectController::class, 'index'])->name('three-d-projects');
+    Route::get('/feedback', [\App\Http\Controllers\FeedBackController::class, 'index'])->name('feedback-form');
+    Route::get('/agree-text', [\App\Http\Controllers\IndexController::class, 'agreeText'])->name('agree-text');
+});
 
 Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
 
