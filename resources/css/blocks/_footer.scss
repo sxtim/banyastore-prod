@@ -1,66 +1,70 @@
 .footer {
-	background-color: var(--black-dark);
+    background-color: var(--black-dark);
 }
 
 .footer__wrapper {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  //align-items: center;
-  justify-content: space-around;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    //align-items: center;
+    justify-content: space-around;
 
-  @media (max-width: 635px) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+    @media (max-width: 635px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .footer__col {
-  max-width: 185px;
+    max-width: 185px;
 
-  h2 {
+    ul {
+        li {
+            margin-bottom: 6px;
+
+            a {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 125%;
+                color: var(--white);
+                transition: .1s;
+
+                &:hover {
+                    color: var(--green);
+                    transition: .1s;
+                }
+
+            }
+        }
+
+    }
+
+    @media (max-width: 635px) {
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+.footer__title {
+
     font-weight: 600;
     font-size: 20px;
     line-height: 100%;
     color: var(--white);
     margin-bottom: 5px;
-  }
-  ul {
-    li {
-      margin-bottom: 6px;
-      a {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 125%;
-        color: var(--white);
-        transition: .1s;
 
-        &:hover {
-          color: var(--green);
-          transition: .1s;
-        }
-
-      }
-    }
-
-  }
-
-  @media (max-width: 635px) {
-    text-align: center;
-    margin: 0 auto;
-  }
 }
 
 .footer__cr {
-  margin-top: 40px;
+    margin-top: 40px;
 }
 
 .footer__social {
-  margin: 20px auto 0 auto;
-  @media (max-width: 635px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    margin: 20px auto 0 auto;
+    @media (max-width: 635px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

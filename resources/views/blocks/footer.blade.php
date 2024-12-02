@@ -2,7 +2,7 @@
   <div class="container">
     <div class="footer__wrapper">
       <div class="footer__col">
-        <div>Контакты</div>
+        <div class="footer__title">Контакты</div>
         <ul>
           <li><a href="#!">г. Домодедово, <br> Белые Столбы, <br> ул Авенариуса, стр 6</a></li>
           <li><a class="footer__list-text" href="mailto:opt@feringermsk.ru">opt@feringermsk.ru</a></li>
@@ -26,7 +26,7 @@
         </ul>
       </div>
       <div class="footer__col">
-        <div>Информация</div>
+        <div class="footer__title">Информация</div>
         <ul>
           <li><a href="{{ route('company.index') }}">О компании</a></li>
           <li><a href="#!">Доставка</a></li>
