@@ -161,6 +161,7 @@ Route::middleware('remove.trailing.slash')->group(function () {
     Route::get('/three-d-projects', [\App\Http\Controllers\ThreeDProjectController::class, 'index'])->name('three-d-projects');
     Route::get('/feedback', [\App\Http\Controllers\FeedBackController::class, 'index'])->name('feedback-form');
     Route::get('/agree-text', [\App\Http\Controllers\IndexController::class, 'agreeText'])->name('agree-text');
+    Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 });
 
 Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name('mail.send');
