@@ -32,6 +32,18 @@
         </url>
     @endforeach
     <url>
+        <loc>https://banyastore.ru/actions</loc>
+        <lastmod>{{ $date }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://banyastore.ru/news</loc>
+        <lastmod>{{ $date }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
         <loc>https://banyastore.ru/company</loc>
         <lastmod>{{ $date }}</lastmod>
         <changefreq>daily</changefreq>
