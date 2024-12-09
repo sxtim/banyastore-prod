@@ -18,7 +18,7 @@
             <div class="header__shop-menu-wrapper">
                 <ul class="header__shop-menu shop-menu">
                     <li class="shop-menu__item shop-menu__item-phone">
-                        <a class="shop-menu__phone" href="#!">
+                        <a class="shop-menu__phone" href="{{ route('feedback-form') }}">
                             <div class="shop-menu__item shop-menu__item-phone">
                                 <svg width="28" height="30" viewBox="0 0 28 30" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">

@@ -13,7 +13,9 @@
                     <ul class="lk__nav-item">
                         <a class="btn-lk-nav btn btn-lk-nav-active" href="{{ route('personal.index') }}">Личные данные</a>
                     </ul>
-                    <ul class="lk__nav-item"><a class="btn-lk-nav btn" href="#!">Заказы</a></ul>
+                    <ul class="lk__nav-item">
+                        <a class="btn-lk-nav btn" href="{{ route('personal.orders') }}">Заказы</a>
+                    </ul>
                     <ul class="lk__nav-item">
                         <a class="btn-lk-nav btn" href="{{ route('personal.favorites') }}">Избранное</a>
                     </ul>

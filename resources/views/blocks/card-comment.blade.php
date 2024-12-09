@@ -5,5 +5,5 @@
     <div class="card-comment__message">Печь просто бомба. Паримся всей семьей, отличный режим русской бани. А еще она красивая и не обжигает за счет облицовки камнем.</div>
 
   </div>
-  <a href="#!" class="card-comment__link">Далее</a>
+  <a href="/" class="card-comment__link">Далее</a>
 </article>
