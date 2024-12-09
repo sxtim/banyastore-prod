@@ -12,8 +12,13 @@ class SeoTemplateService
     public function getTemplateProduct(Product $product): SeoDto
     {
         $seoDto = new SeoDto();
-        $seoDto->setTitle($product->name);
-        $seoDto->setDescription($product->name. ' по привлекательной цене!');
+        $titleDefault = 'Купить - '.$product->name.' - цена - '.$product->getCurrentPrice().'  в Banyastore.
+        Ежедневная доставка по Москве и России';
+        $seoDto->setTitle($titleDefault);
+
+        $descriptionDefault = 'Заказывайте '.$product->name.' в интернет-магазине Banyastore (Ферингер опт). Большой выбор, доставка, помощь в выборе.
+        Поможем подобрать '.$product->name.' под ваш запрос быстро и четко';
+        $seoDto->setDescription($descriptionDefault);
 
         $seoTitle = $this->replaceDataProduct($product, SeoTemplate::TYPE_TEMPLATE_TITLE);
         if ($seoTitle) {
@@ -55,8 +60,12 @@ class SeoTemplateService
     public function getTemplateCategory(Category $category): SeoDto
     {
         $seoDto = new SeoDto();
-        $seoDto->setTitle($category->name);
-        $seoDto->setDescription($category->name. ' большой выбор товаров!');
+        $titleDefault = 'Купить - '.$category->name.' -  в Banyastore. Ежедневная доставка по Москве и России';
+        $seoDto->setTitle($titleDefault);
+
+        $descriptionDefault = 'Заказывайте '.$category->name.' в интернет-магазине Banyastore (Ферингер опт). Большой выбор, доставка, помощь в выборе.
+        Поможем подобрать '.$category->name.' под ваш запрос быстро и четко';
+        $seoDto->setDescription($descriptionDefault);
 
         $seoTitle = $this->replaceDataCategory($category, SeoTemplate::TYPE_TEMPLATE_TITLE);
         if ($seoTitle) {
