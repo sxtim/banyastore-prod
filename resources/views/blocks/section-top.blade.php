@@ -3,9 +3,9 @@
         <div class="top__slider">
             <div id="keen-slider-top" class="keen-slider">
                 @foreach($banners as $banner)
-                    <div class="keen-slider__slide">
+                    <a class="keen-slider__slide" href="{{ $banner->link }}">
                         <img src="{{ $banner->getUrlImage() }}" alt="{{ $banner->name }}">
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
