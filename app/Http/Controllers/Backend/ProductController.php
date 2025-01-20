@@ -22,16 +22,25 @@ class ProductController extends Controller
     const DIR_PRODUCTS = 'public/products/';
     const DIR_OTHER_IMAGES_PRODUCTS = 'public/products/other/';
 
-    public function index(ProductFilter $filter): View
+    public function index(ProductFilter $filter)
     {
         $products = Product::filter($filter)->with(['category'])->paginate(15);
         $categories = Category::all();
         $filters = $filter->filters();
-        return view('backend.shop.product.index', compact(
-            'products',
-            'filters',
-            'categories'
-        ));
+
+        if ($filters) {
+            return response(view('backend.shop.index',
+                compact('products',
+                    'filters',
+                    'categories')
+            ))->withCookie('productsFilterBackend',http_build_query($filters));
+        }
+
+        return response(view('backend.shop.index',
+            compact('products',
+                'filters',
+                'categories')
+        ))->withoutCookie('productsFilterBackend');
     }
 
     public function create(): View
@@ -162,7 +171,12 @@ class ProductController extends Controller
             }
         });
 
-        return redirect()->route('backend.product.index')->with('success', 'Данные обновлены');
+        $paramsUrl = '';
+        if ($request->cookie('productsFilterBackend')) {
+            $paramsUrl = '?'.$request->cookie('productsFilterBackend');
+        }
+
+        return redirect()->route('backend.product.index', $paramsUrl)->with('success', 'Данные обновлены');
     }
 
     public function addImage(ImageRequest $request): JsonResponse
