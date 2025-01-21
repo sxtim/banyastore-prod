@@ -13,9 +13,6 @@
                 </div>
                 <div class="product-detail__slider-wrapper">
                     <div id="product-detail-keen-slider" class="keen-slider">
-                        <div class="keen-slider__slide product-detail__slider-slide">
-                            <img class="product-detail__slider-img" src="{{ $product->getImageUrlAttribute() }}" alt="slide">
-                        </div>
                         @foreach($product->additionalImages as $image)
                             <div class="keen-slider__slide product-detail__slider-slide">
                                 <img src="{{ $image->getImageUrlAttribute() }}" alt="slide">
