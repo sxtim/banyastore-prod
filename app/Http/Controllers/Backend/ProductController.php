@@ -29,14 +29,14 @@ class ProductController extends Controller
         $filters = $filter->filters();
 
         if ($filters) {
-            return response(view('backend.shop.index',
+            return response(view('backend.shop.product.index',
                 compact('products',
                     'filters',
                     'categories')
             ))->withCookie('productsFilterBackend',http_build_query($filters));
         }
 
-        return response(view('backend.shop.index',
+        return response(view('backend.shop.product.index',
             compact('products',
                 'filters',
                 'categories')
