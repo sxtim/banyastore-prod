@@ -111,5 +111,22 @@
             </div>
         </div>
     </div>
+    <div class="share-container">
+        <ul class="share-link">
+            <li>
+                Как вам удобнее с нами связаться
+            </li>
+            <li>
+                <img src="https://i.postimg.cc/hPLWJ4J8/mic.png" alt="mic" />Radio
+            </li>
+            <li>
+                <img src="https://i.postimg.cc/nr78Gp3J/mail.png" alt="mail" />New Email
+            </li>
+        </ul>
+        <div class="social-link">
+            <img class="send" src="https://i.postimg.cc/CMfVgsSQ/send.png" alt="send" />
+            <img class="close" src="https://i.postimg.cc/LsCMHyJr/close.png" alt="close" />
+        </div>
+    </div>
 </header>
 @include('blocks/mobile-nav')
