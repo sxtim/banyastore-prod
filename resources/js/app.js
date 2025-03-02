@@ -91,10 +91,21 @@ if (document.getElementById('feedback-form')) {
 
 
 //BUTTON CONTACT US
-const socialLink = document.querySelector('.social-link');
-const shareLink = document.querySelector('.share-link');
+const btnContactUs = document.querySelector('.btn-contact-us__btn');
+const btnContactUsList = document.querySelector('.btn-contact-us__list');
 
-socialLink.addEventListener('click', function(){
-    socialLink.classList.toggle('active');
-    shareLink.classList.toggle('active');
+btnContactUs.addEventListener('click', function(){
+    btnContactUs.classList.toggle('active');
+    btnContactUsList.classList.toggle('active');
+})
+
+document.addEventListener('click', (e) => {
+    const clickBtnContactUs = e.composedPath().includes(btnContactUs)
+    const clickBtnContactUsList = e.composedPath().includes(btnContactUsList)
+    
+    if (!clickBtnContactUs && !clickBtnContactUsList) {
+        btnContactUsList.classList.remove('active');
+        btnContactUs.classList.remove('active');
+    }
+    
 })
