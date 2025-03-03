@@ -20,7 +20,7 @@
                          alt="ic">
                 </label>
             </div>
-            <div class="cart__payment-method-item">
+            <div class="cart__payment-method-item" v-if="delivery === 1">
                 <input id="radio-6" type="radio" name="radio1" value="3" v-model="pay">
                 <label for="radio-6">
                     <p>При получении</p>
@@ -54,11 +54,20 @@ export default {
                 this.$store.commit('basket/setPay', value)
             }
         },
+        delivery: {
+            get() {
+                return this.$store.state.basket.delivery
+            }
+        }
     },
 
-    methods: {
-
-    },
+    watch: {
+        delivery(val) {
+            if (val !== 1 && this.pay === 3) {
+                this.pay = 1
+            }
+        }
+    }
 }
 </script>
 
