@@ -20,7 +20,6 @@
                          alt="ic">
                 </label>
             </div>
-            {{ delivery }}
             <div class="cart__payment-method-item" v-if="delivery == 1">
                 <input id="radio-6" type="radio" name="radio1" value="3" v-model="pay">
                 <label for="radio-6">
@@ -64,7 +63,6 @@ export default {
 
     watch: {
         delivery(val) {
-            console.log('change '+val)
             if (val !== 1 && this.pay == 3) {
                 this.pay = 1
             }
