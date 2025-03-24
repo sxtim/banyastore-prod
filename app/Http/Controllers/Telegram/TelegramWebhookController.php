@@ -17,7 +17,7 @@ class TelegramWebhookController extends Controller
     ): Response
     {
         $data = $request->all();
-        Log::info('Telegram webhook received:', $data);
+    //    Log::info('Telegram webhook received:', $data);
         $service->webhook($data);
         return response('', 200);
     }

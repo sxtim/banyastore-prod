@@ -10,6 +10,8 @@ use Spatie\Sluggable\SlugOptions;
 
 class TelegramChat extends Model
 {
+    protected $table = "telegram_chat";
+
     protected $fillable = [
         'chat_id',
         'name',
