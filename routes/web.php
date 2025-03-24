@@ -206,7 +206,7 @@ Route::get('/order/success', [\App\Http\Controllers\OrderController::class, 'suc
 Route::get('/order/error', [\App\Http\Controllers\OrderController::class, 'error'])->name('order.error');
 
 //Вебхук телеграм
-Route::get('/telegram-webhook', [\App\Http\Controllers\Telegram\TelegramWebhookController::class, 'index'])->name('telegram.webhook.index');
+Route::post('/telegram-webhook', [\App\Http\Controllers\Telegram\TelegramWebhookController::class, 'index'])->name('telegram.webhook.index');
 Route::get('/telegram-webhook-new', [\App\Http\Controllers\Telegram\TelegramWebhookController::class, 'newWebhook'])->name('telegram.webhook.new');
 Route::get('/telegram-webhook-get', [\App\Http\Controllers\Telegram\TelegramWebhookController::class, 'getWebhook'])->name('telegram.webhook.get');
 
