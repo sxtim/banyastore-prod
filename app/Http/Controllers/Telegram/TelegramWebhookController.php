@@ -23,7 +23,8 @@ class TelegramWebhookController extends Controller
         TelegramService $service
     ): Response
     {
-        $service->setWebhookUrl('https://banyastore.ru/telegram-webhook');
+        $d = $service->setWebhookUrl('https://banyastore.ru/telegram-webhook');
+        dd($d);
         return response('', 200);
     }
 }
