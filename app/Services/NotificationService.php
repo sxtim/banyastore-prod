@@ -12,7 +12,8 @@ class NotificationService
      * Список айди чатов в которые отправить уведомление о новом заказе
      */
     const TELEGRAM_CHATS = [
-        246607398
+        246607398,
+        857880259
     ];
 
     public function __construct(
