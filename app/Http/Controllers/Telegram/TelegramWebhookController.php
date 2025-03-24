@@ -7,6 +7,7 @@ use App\Services\Telegram\TelegramBotService;
 use App\Services\Telegram\TelegramService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class TelegramWebhookController extends Controller
 {
@@ -15,7 +16,9 @@ class TelegramWebhookController extends Controller
         TelegramBotService $service
     ): Response
     {
-        $service->webhook($request->all());
+        $data = $request->all();
+        Log::info('Telegram webhook received:', $data);
+        $service->webhook($data);
         return response('', 200);
     }
 
@@ -24,6 +27,15 @@ class TelegramWebhookController extends Controller
     ): Response
     {
         $d = $service->setWebhookUrl('https://banyastore.ru/telegram-webhook');
+        dd($d);
+        return response('', 200);
+    }
+
+    public function getWebhook(
+        TelegramService $service
+    ): Response
+    {
+        $d = $service->getWebhookUrl();
         dd($d);
         return response('', 200);
     }
