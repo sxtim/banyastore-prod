@@ -172,6 +172,7 @@ return [
         App\Providers\BasketServiceProvider::class,
         App\Providers\AlfaServiceProvider::class,
         App\Providers\SmsExolveServiceProvider::class,
+        App\Providers\TelegramServiceProvider::class,
     ])->toArray(),
 
     /*
