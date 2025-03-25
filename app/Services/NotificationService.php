@@ -55,9 +55,9 @@ class NotificationService
     {
         $text = 'Новое сообщение по обратной связи:';
         $text .= " \n";
-        $text .= 'Имя:' . $name . " \n";
-        $text .= 'Телефон:' . $phone . " \n";
-        $text .= 'Сообщение:' . $message;
+        $text .= 'Имя: ' . $name . " \n";
+        $text .= 'Телефон: ' . $phone . " \n";
+        $text .= 'Сообщение: ' . $message;
 
         foreach (self::TELEGRAM_CHATS as $chatId) {
             $this->telegramService->sendMessage($chatId,$text);
