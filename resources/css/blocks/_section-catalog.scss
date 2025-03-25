@@ -42,7 +42,17 @@
   justify-content: center;
   align-items: center;
 }
-
+.sort-block {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px 15px;
+}
+.sort-block a {
+    color: var(--green-dark);
+    text-decoration: underline;
+}
 //.rectangle-limiter {
 //  width: 970px;
 //  height: 55px;

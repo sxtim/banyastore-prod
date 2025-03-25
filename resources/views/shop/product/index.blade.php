@@ -42,6 +42,29 @@
                     <button class="catalog__filer-btn btn btn-medium">ПОИСК</button>
                 </div>
             </form>
+            @php
+                $queryParams = request()->except(['sort', 'sortDesk']);
+            @endphp
+            <div class="sort-block">
+                <a href="{{ url()->current() }}?{{ http_build_query(array_merge($queryParams, ['sort' => 'price'])) }}">
+                    Дешевле
+                </a>
+                <a href="{{ url()->current() }}?{{ http_build_query(array_merge($queryParams, ['sortDesk' => 'price'])) }}">
+                    Дороже
+                </a>
+                <a href="{{ url()->current() }}?{{ http_build_query(array_merge($queryParams, ['sort' => 'action'])) }}">
+                    Акция
+                </a>
+                <a href="{{ url()->current() }}?{{ http_build_query(array_merge($queryParams, ['sort' => 'new'])) }}">
+                    Новинка
+                </a>
+                <a href="{{ url()->current() }}?{{ http_build_query(array_merge($queryParams, ['sort' => 'hit'])) }}">
+                    Хит
+                </a>
+                <a href="{{ url()->current() }}?{{ http_build_query(array_merge($queryParams, ['sort' => 'popular'])) }}">
+                    Популярное
+                </a>
+            </div>
             <div class="catalog__wrapper">
                 <div class="catalog__cards-wrapper">
                     @foreach($products as $product)

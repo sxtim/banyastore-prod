@@ -34,4 +34,35 @@ class ProductFilter extends QueryFilter
         }
     }
 
+    public function sort($column): Builder
+    {
+        switch ($column) {
+            case 'price':
+                return $this->builder->orderBy('price');
+            case 'action':
+                return $this->builder
+                    ->orderByRaw("CASE WHEN tag LIKE '%action%' THEN 1 ELSE 2 END")
+                    ->orderBy('sort');
+            case 'hit':
+                return $this->builder
+                    ->orderByRaw("CASE WHEN tag LIKE '%hit%' THEN 1 ELSE 2 END")
+                    ->orderBy('sort');
+            case 'new':
+                return $this->builder
+                    ->orderByRaw("CASE WHEN tag LIKE '%new%' THEN 1 ELSE 2 END")
+                    ->orderBy('sort');
+            case 'popular':
+                return $this->builder->orderBy('is_popular');
+        }
+        return $this->builder->orderBy('sort');
+    }
+
+    public function sortDesk($column): Builder
+    {
+        switch ($column) {
+            case 'price':
+                return $this->builder->orderBy('price','desc');
+        }
+        return $this->builder->orderBy('sort','desc');
+    }
 }

@@ -16,7 +16,9 @@ class OrderController extends Controller
 {
     public function index(): View
     {
-        $orders = Order::with(['status','user','deliveryVariant','paymentVariant','status'])->paginate(15);
+        $orders = Order::with(['status','user','deliveryVariant','paymentVariant','status'])
+            ->orderBy('id','desc')
+            ->paginate(15);
         return view('backend.order.index', compact('orders'));
     }
 
