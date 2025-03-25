@@ -27,15 +27,18 @@ class NotificationService
      */
     public function newOrder(Order $order): void
     {
-        $text = 'Новый заказ №' . $order->id . '</br></br>';
-        $text .= 'Состав заказа:</br>';
+        $text = 'Новый заказ №' . $order->id . "\n\n";
+        $text .= 'Состав заказа:';
+        $text .= " \n";
         foreach ($order->listProducts() as $product) {
-            $text .= $product['name'] . ' - ' . $product['quantity'] . 'шт.</br>';
+            $text .= $product['name'] . ' - ' . $product['quantity'] . 'шт.' . " \n";
         }
-        $text .= '</br>Сумма заказа: ' . $order->price .'р.</br></br>';
-        $text .= 'Информация о клиенте:</br>';
-        $text .= 'Имя: ' . $order->name . '</br>';
-        $text .= 'Телефон: ' . $order->phone . '</br>';
+        $text .= " \n";
+        $text .= 'Сумма заказа: ' . $order->price .'р.' . " \n\n";
+        $text .= 'Информация о клиенте:';
+        $text .= " \n";
+        $text .= 'Имя: ' . $order->name . " \n";
+        $text .= 'Телефон: ' . $order->phone . " \n";
         foreach (self::TELEGRAM_CHATS as $chatId) {
             $this->telegramService->sendMessage($chatId,$text);
         }
@@ -50,9 +53,10 @@ class NotificationService
         string $message
     ): void
     {
-        $text = 'Новое сообщение по обратной связи:</br>';
-        $text .= 'Имя:' . $name . '</br>';
-        $text .= 'Телефон:' . $phone . '</br>';
+        $text = 'Новое сообщение по обратной связи:';
+        $text .= " \n";
+        $text .= 'Имя:' . $name . " \n";
+        $text .= 'Телефон:' . $phone . " \n";
         $text .= 'Сообщение:' . $message;
 
         foreach (self::TELEGRAM_CHATS as $chatId) {
