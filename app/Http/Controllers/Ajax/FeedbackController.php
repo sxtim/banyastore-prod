@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ajax\FeedbackRequest;
 use App\Mail\MyMailer;
 use App\Models\Feedback;
+use App\Services\NotificationService;
 use Illuminate\Http\JsonResponse;
 
 class FeedbackController extends Controller
 {
     public function sendData(
         FeedbackRequest $request,
-        MyMailer $myMailer
+        NotificationService $notificationService
     ): JsonResponse
     {
         Feedback::create([
@@ -21,9 +22,7 @@ class FeedbackController extends Controller
             'mess' => $request->input('mess')
         ]);
 
-
-        $mailText = 'На сайте banyastore.ru новое сообщение от пользователя '.$request->input('name') . ' с телефоном '.$request->input('phone');
-        $myMailer->sendEmail('opt@feringermsk.ru','Обратная связь',$mailText);
+        $notificationService->newFeedback($request->input('name'), $request->input('phone'), $request->input('mess'));
 
         return response()->json([
             'status' => 'success',
