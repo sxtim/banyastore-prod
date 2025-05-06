@@ -15,9 +15,9 @@ class TelegramBotService
     public function webhook(array $params): void
     {
         if (isset($params['message']['text']) && isset($params['message']['from'])) {
-            $userName = isset($params['message']['from']['username']) ?? 'Ник скрыт';
-            $firstName = isset($params['message']['from']['first_name']) ?? 'Имя скрыто';
-            $lastName = isset($params['message']['from']['last_name']) ?? 'Фамилия скрыта';
+            $userName = $params['message']['from']['username'] ?? 'Ник скрыт';
+            $firstName = $params['message']['from']['first_name'] ?? 'Имя скрыто';
+            $lastName = $params['message']['from']['last_name'] ?? 'Фамилия скрыта';
             $fullName = $lastName . ' ' . $firstName;
 
             TelegramChat::create([
