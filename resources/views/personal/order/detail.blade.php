@@ -53,11 +53,13 @@
                                     <td class="order-detail-total__cell-value">{{ number_format($order->price, 2, '.', ' ') }} ₽</td>
                                 </tr>
                             </table>
-                            <a class="btn-medium btn order-detail-total__btn"
-                               href="{{ route('personal.orders.pay', ['id' => $order->id]) }}"
-                            >
-                                Оплатить
-                            </a>
+                            @if ($order->status->value_status === 30)
+                                <a class="btn-medium btn order-detail-total__btn"
+                                   href="{{ route('personal.orders.pay', ['id' => $order->id]) }}"
+                                >
+                                    Оплатить
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
