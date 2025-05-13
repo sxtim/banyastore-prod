@@ -13,7 +13,8 @@ class NotificationService
      */
     const TELEGRAM_CHATS = [
         246607398,
-        857880259
+        857880259,
+        706297418
     ];
 
     public function __construct(
