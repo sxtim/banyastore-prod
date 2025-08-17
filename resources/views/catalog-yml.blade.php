@@ -22,14 +22,6 @@
                            @endforeach
                         </description>
                     @endif
-                    @foreach($product->propertiesValues as $value)
-                        @if($value->property->name === 'Вес')
-                            <weight>{{ $value->name }}</weight>
-                        @endif
-                        @if($value->property->name === 'ДхШхВ')
-                            <dimensions>{{ $value->name }}</dimensions>
-                        @endif
-                    @endforeach
                     <url>{{ route('products.detail', ['slug' => $product->slug]) }}</url>
                     <picture>{{ Request::getSchemeAndHttpHost() }}{{ Storage::url($product->image) }}</picture>
                     <price>{{ $product->getCurrentPrice() }}</price>
