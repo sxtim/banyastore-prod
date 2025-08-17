@@ -205,6 +205,9 @@ Route::get('/order/success', [\App\Http\Controllers\OrderController::class, 'suc
 //Не успешный заказ
 Route::get('/order/error', [\App\Http\Controllers\OrderController::class, 'error'])->name('order.error');
 
+//yml для яндекса
+Route::get('/yml.xml', [\App\Http\Controllers\YmlController::class, 'catalog'])->name('catalog');
+
 //Вебхук телеграм
 Route::post('/telegram-webhook', [\App\Http\Controllers\Telegram\TelegramWebhookController::class, 'index'])->name('telegram.webhook.index');
 //Route::get('/telegram-webhook-new', [\App\Http\Controllers\Telegram\TelegramWebhookController::class, 'newWebhook'])->name('telegram.webhook.new');
