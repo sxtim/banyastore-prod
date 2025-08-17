@@ -18,11 +18,11 @@
                         <description>
                             @foreach($product->description['blocks'] as $block)
                                 @if ($block['type'] == 'header' && isset($block['data']['level']))
-                                    {!! $block['data']['text'] !!}
+                                    {!! str_replace('&nbsp;', ' ', $block['data']['text']) !!}
                                 @endif
 
                                 @if ($block['type'] == 'paragraph')
-                                        {!! $block['data']['text'] !!}
+                                        {!! str_replace('&nbsp;', ' ', $block['data']['text']) !!}
                                 @endif
                            @endforeach
                         </description>
