@@ -1,8 +1,5 @@
 <yml_catalog date="{{ $dateFile }}">
     <shop>
-        <currencies>
-            <currency id="RUB" rate="1"/>
-        </currencies>
         <categories>
             @foreach($categories as $category)
                 <category id="{{ $category->id }}" @if ($category->parent_id) parentId="{{ $category->parent_id }}"  @endif>{{ $category->name }}</category>
@@ -25,10 +22,21 @@
                            @endforeach
                         </description>
                     @endif
+                    @foreach($product->propertiesValues as $value)
+                        @if($value->property->name === 'Вес')
+                            <weight>{{ $value->name }}</weight>
+                        @endif
+                        @if($value->property->name === 'ДхШхВ')
+                            <dimensions>{{ $value->name }}</dimensions>
+                        @endif
+                    @endforeach
                     <url>{{ route('products.detail', ['slug' => $product->slug]) }}</url>
                     <picture>{{ Request::getSchemeAndHttpHost() }}{{ Storage::url($product->image) }}</picture>
                     <price>{{ $product->getCurrentPrice() }}</price>
-                    <currencyId>RUB</currencyId>
+                    @if ($product->price > $product->getCurrentPrice())
+                        <oldprice>{{ $product->price }}</oldprice>
+                    @endif
+                    <currencyId>RUR</currencyId>
                     <categoryId>{{ $product->category_id }}</categoryId>
                     @foreach($product->propertiesValues as $value)
                         <param name="{{ $value->property->name }}">{{ $value->name }}</param>
