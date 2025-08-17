@@ -10,45 +10,28 @@
         </categories>
         <offers>
             @foreach($products as $product)
-                <offer id="{{ $product->id }}" available="true">
-                    <name>
-                        {{ $product->name }}
-                    </name>
+                <offer id="{{ $product->id }}">
+                    <name>{{ $product->name }}</name>
                     @if ($product->description && isset($product->description['blocks']))
                         <description>
                             @foreach($product->description['blocks'] as $block)
                                 @if ($block['type'] == 'header' && isset($block['data']['level']))
-                                    {!! str_replace('&nbsp;', ' ', $block['data']['text']) !!}
+                                    {!! str_replace('&nbsp;', ' ', strip_tags($block['data']['text'])) !!}
                                 @endif
 
                                 @if ($block['type'] == 'paragraph')
-                                        {!! str_replace('&nbsp;', ' ', $block['data']['text']) !!}
+                                        {!! str_replace('&nbsp;', ' ', strip_tags($block['data']['text'])) !!}
                                 @endif
                            @endforeach
                         </description>
                     @endif
-                    <url>
-                        {{ route('products.detail', ['slug' => $product->slug]) }}
-                    </url>
-                    <picture>
-                        {{ Request::getSchemeAndHttpHost() }}{{ Storage::url($product->image) }}
-                    </picture>
-                    <price>
-                        {{ $product->getCurrentPrice() }}
-                    </price>
-                    <currencyId>
-                        RUB
-                    </currencyId>
-                    <categoryId>
-                        {{ $product->category_id }}
-                    </categoryId>
-                    <country_of_origin>
-                        Россия
-                    </country_of_origin>
+                    <url>{{ route('products.detail', ['slug' => $product->slug]) }}</url>
+                    <picture>{{ Request::getSchemeAndHttpHost() }}{{ Storage::url($product->image) }}</picture>
+                    <price>{{ $product->getCurrentPrice() }}</price>
+                    <currencyId>RUB</currencyId>
+                    <categoryId>{{ $product->category_id }}</categoryId>
                     @foreach($product->propertiesValues as $value)
-                        <param name="{{ $value->property->name }}">
-                            {{ $value->name }}
-                        </param>
+                        <param name="{{ $value->property->name }}">{{ $value->name }}</param>
                     @endforeach
                 </offer>
             @endforeach
