@@ -15,13 +15,10 @@ class YmlController extends Controller
             ->get();
 
         $products = Product::query()
-            ->where('active', '=', 1)
-            ->where('is_verified','=',1)
+            ->where('is_active', '=', 1)
             ->with(['category', 'propertiesValues'])->get();
 
-
         $dateFile = date('Y-m-d H:i:s');
-
 
         return response()
             ->view('catalog-yml', compact(
