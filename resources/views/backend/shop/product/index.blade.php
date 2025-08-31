@@ -54,6 +54,9 @@
             Найдено продуктов: {{ $products->total() }}
         </div>
         <div class="top-row-btn">
+            <a href="{{ route('backend.product.download') }}" class="btn btn-outline-primary">Скачать в csv</a>
+        </div>
+        <div class="top-row-btn">
             <a href="{{ route('backend.product.create') }}" class="btn btn-outline-primary">Добавить продукт</a>
         </div>
     </div>

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Response;
 
 class ProductController extends Controller
 {
@@ -207,5 +208,42 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success'
         ]);
+    }
+
+    public function downloadProducts()
+    {
+        $products = Product::with(['discount'])
+            ->get();
+
+        $headers = [
+            "Content-type"        => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=users.csv",
+        ];
+
+        $callback = function () use ($products) {
+            $file = fopen('php://output', 'w');
+
+            // заголовки берем из ключей массива
+            $columns = [
+                'ID',
+                'Название',
+                'Цена',
+                'Цена без скидки'
+            ];
+            fputcsv($file, array_keys($products[0]));
+
+            foreach ($products as $product) {
+                fputcsv($file, [
+                    $product->id,
+                    $product->name,
+                    $product->getCurrentPrice(),
+                    $product->price
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, $headers);
     }
 }
