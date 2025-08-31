@@ -217,7 +217,7 @@ class ProductController extends Controller
 
         $headers = [
             "Content-type"        => "text/csv; charset=UTF-8",
-            "Content-Disposition" => "attachment; filename=users.csv",
+            "Content-Disposition" => "attachment; filename=products.csv",
         ];
 
         $callback = function () use ($products) {
