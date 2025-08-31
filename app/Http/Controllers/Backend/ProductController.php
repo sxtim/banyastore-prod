@@ -230,7 +230,7 @@ class ProductController extends Controller
                 'Цена',
                 'Цена без скидки'
             ];
-            fputcsv($file, array_keys($products[0]));
+            fputcsv($file, $columns);
 
             foreach ($products as $product) {
                 fputcsv($file, [
