@@ -212,17 +212,19 @@ class ProductController extends Controller
 
     public function downloadProducts()
     {
-        $products = Product::with(['discount'])
+        $products = Product::with(['discount','propertiesValues'])
             ->get();
+
+        $properties = Property::all();
 
         $headers = [
             "Content-type"        => "text/csv; charset=UTF-8",
             "Content-Disposition" => "attachment; filename=products.csv",
         ];
 
-        $callback = function () use ($products) {
+        $callback = function () use ($products, $properties) {
             $file = fopen('php://output', 'w');
-
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
             // заголовки берем из ключей массива
             $columns = [
                 'ID',
@@ -230,15 +232,25 @@ class ProductController extends Controller
                 'Цена',
                 'Цена без скидки'
             ];
+            foreach ($properties as $property) {
+                $columns[] = $property->name;
+            }
+
             fputcsv($file, $columns);
 
             foreach ($products as $product) {
-                fputcsv($file, [
+                $stringData = [
                     $product->id,
                     $product->name,
                     $product->getCurrentPrice(),
                     $product->price
-                ]);
+                ];
+
+                foreach ($properties as $property) {
+                    $value = $product->propertiesValues()->where('property_id', $property->id)->first();
+                    $stringData[] = $value ? $value->name : '';
+                }
+                fputcsv($file, $stringData);
             }
 
             fclose($file);
