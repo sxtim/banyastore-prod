@@ -61,6 +61,13 @@ class OrderRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        if (!auth()->check()) {
+            throw new HttpResponseException(response()->json([
+                'status' => 'success',
+                'link' => route('login'),
+            ], 200));
+        }
+
         $phone = preg_replace('/[^0-9]/', '', $this->get('phone'));
 
         $this->merge([
