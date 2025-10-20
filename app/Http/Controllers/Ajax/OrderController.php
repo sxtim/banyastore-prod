@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\OrderRequest;
 use App\Services\Basket\BasketInterface;
 use App\Services\NotificationService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Services\Order\OrderService;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +26,15 @@ class OrderController extends Controller
         NotificationService $notificationService
     ): JsonResponse
     {
+        $user = Auth::getUser();
+        if (!$user) {
+            return response()->json([
+                'status' => 'success',
+                'link' => route('login'),
+            ]);
+        }
+
+
         $deliveryDto = new DeliveryDto();
         $deliveryDto->setCityName($request->input('city_name'));
         $deliveryDto->setStreet($request->input('street'));
