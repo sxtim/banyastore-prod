@@ -36,6 +36,10 @@
     @yield('content')
 </div>
 
+<div id="cookie-block">
+    <cookie-component></cookie-component>
+</div>
+
 @include('blocks/footer')
 
 <script src="{{ mix('js/manifest.js') }}"></script>

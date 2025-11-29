@@ -19,6 +19,7 @@ import LoginComponent from "./blocks/vue/Auth/LoginComponent";
 import RegisterComponent from "./blocks/vue/Auth/RegisterComponent";
 import FeedbackPage from "./blocks/vue/FeedbackPage";
 import UpdatePasswordComponent from "./blocks/vue/Auth/UpdatePasswordComponent";
+import CookieComponent from "./blocks/vue/Cookie/CookieComponent.vue";
 
 //
 if (document.getElementById('header')) {
@@ -89,6 +90,15 @@ if (document.getElementById('feedback-form')) {
         .mount("#feedback-form")
 }
 
+if (document.getElementById('cookie-block')) {
+    createApp({
+        components: {
+            CookieComponent
+        }
+    }).use(store)
+        .mount("#cookie-block")
+}
+
 
 //BUTTON CONTACT US
 const btnContactUs = document.querySelector('.btn-contact-us__btn');
@@ -102,10 +112,10 @@ btnContactUs.addEventListener('click', function(){
 document.addEventListener('click', (e) => {
     const clickBtnContactUs = e.composedPath().includes(btnContactUs)
     const clickBtnContactUsList = e.composedPath().includes(btnContactUsList)
-    
+
     if (!clickBtnContactUs && !clickBtnContactUsList) {
         btnContactUsList.classList.remove('active');
         btnContactUs.classList.remove('active');
     }
-    
+
 })
