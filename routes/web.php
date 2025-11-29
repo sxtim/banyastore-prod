@@ -192,6 +192,9 @@ Route::prefix('ajax')->name('ajax.')->group(function () {
 
     //Обратная связь
     Route::post('/feedback', [\App\Http\Controllers\Ajax\FeedbackController::class, 'sendData'])->name('feedback.send');
+
+    //Проверка данных пользователя
+    Route::get('/check-user', [\App\Http\Controllers\Ajax\CheckAuthController::class, 'check'])->name('check-user');
 });
 
 

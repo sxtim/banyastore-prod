@@ -63,6 +63,7 @@
 <script>
 
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
     name: "ContactDataComponent",
@@ -73,7 +74,13 @@ export default {
         }
     },
     mounted() {
-
+        axios.get(window.location.origin + `/ajax/check-user`).then(response => {
+            if (response.data.status === true) {
+                this.name = response.data.name
+                this.phone = response.data.phone
+                this.mail = response.data.email
+            }
+        })
     },
     computed: {
         name: {
