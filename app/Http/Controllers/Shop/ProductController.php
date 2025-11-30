@@ -40,7 +40,7 @@ class ProductController extends Controller
         /**
          * @var Product $product
          */
-        $product = Product::with(['category','discount','propertiesValues'])
+        $product = Product::with(['category','discount','propertiesValues','relatedProducts','boughtTogether'])
             ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();

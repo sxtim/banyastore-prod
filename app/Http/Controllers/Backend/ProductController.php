@@ -25,7 +25,9 @@ class ProductController extends Controller
 
     public function index(ProductFilter $filter)
     {
-        $products = Product::filter($filter)->with(['category'])->paginate(15);
+        $products = Product::filter($filter)
+            ->with(['category','relatedProducts','boughtTogether'])
+            ->paginate(15);
         $categories = Category::all();
         $filters = $filter->filters();
 
@@ -46,20 +48,22 @@ class ProductController extends Controller
 
     public function create(): View
     {
+        $products = Product::with(['category','relatedProducts','boughtTogether'])->get();
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
         $tags = Product::LIST_TAG;
-        return view('backend.shop.product.create', compact('categories','properties','tags'));
+        return view('backend.shop.product.create', compact('categories','properties','tags','products'));
     }
 
     public function edit(Product $product): View
     {
-        $product->load(['propertiesValues','discount','additionalImages']);
+        $products = Product::with(['category','relatedProducts','boughtTogether'])->get();
+        $product->load(['propertiesValues','discount','additionalImages','relatedProducts','boughtTogether']);
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
         $tags = Product::LIST_TAG;
         return view('backend.shop.product.edit',
-            compact('categories', 'product','properties','tags')
+            compact('categories', 'product','properties','tags', 'products')
         );
     }
 
@@ -94,10 +98,27 @@ class ProductController extends Controller
             }
         }
 
-        DB::transaction(function () use ($data, $valueProperties, $additionalImages) {
+        $relatedProducts = [];
+        if ($request->has('products_related')) {
+            $relatedProducts = $request->input('products_related');
+        }
+
+        $boughtTogether = [];
+        if ($request->has('bought_together')) {
+            $boughtTogether = $request->input('bought_together');
+        }
+
+        DB::transaction(function () use ($data, $valueProperties, $additionalImages, $relatedProducts, $boughtTogether) {
             $product = Product::create($data);
             if ($valueProperties) {
                 $product->propertiesValues()->attach($valueProperties);
+            }
+
+            if (!empty($relatedProducts)) {
+                $product->relatedProducts()->sync($relatedProducts);
+            }
+            if (!empty($boughtTogether)) {
+                $product->boughtTogether()->sync($boughtTogether);
             }
 
             //добавление дополнительных изображений
@@ -150,12 +171,32 @@ class ProductController extends Controller
 
         $additionalImages = $request->file('additional-images');
 
-        DB::transaction(function () use ($product, $data, $valueProperties, $additionalImages) {
+        $relatedProducts = [];
+        if ($request->has('products_related')) {
+            $relatedProducts = $request->input('products_related');
+        }
+
+        $boughtTogether = [];
+        if ($request->has('bought_together')) {
+            $boughtTogether = $request->input('bought_together');
+        }
+
+        DB::transaction(function () use (
+            $product,
+            $data,
+            $valueProperties,
+            $additionalImages,
+            $relatedProducts,
+            $boughtTogether
+        ) {
             $product->update($data);
             if ($valueProperties) {
                 $product->propertiesValues()->detach();
                 $product->propertiesValues()->attach($valueProperties);
             }
+
+            $product->boughtTogether()->sync($boughtTogether);
+            $product->relatedProducts()->sync($relatedProducts);
 
             //добавление дополнительных изображений
             if ($additionalImages) {

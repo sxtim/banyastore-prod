@@ -261,6 +261,30 @@
                     </div>
                 </div>
             </div>
+            @if ($product->relatedProducts->first())
+                <div class="other-products">
+                    <div class="popular-goods__title title-s">Похожие товары</div>
+                    <div class="popular-goods__slider-container">
+                        <div id="popular-goods__slider" class="keen-slider">
+                            @foreach($product->relatedProducts as $element)
+                                @include('blocks/card-product-slide')
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if ($product->boughtTogether->first())
+                <div class="other-products">
+                    <div class="popular-goods__title title-s">С этим товаром покупают</div>
+                    <div class="popular-goods__slider-container">
+                        <div id="bought-together-goods__slider" class="keen-slider">
+                            @foreach($product->boughtTogether as $element)
+                                @include('blocks/card-product-slide')
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 @endsection

@@ -85,7 +85,7 @@
             <div id="popular-goods__slider" class="keen-slider">
 
                 @if ($products)
-                    @foreach($products as $product)
+                    @foreach($products as $element)
                         @include('blocks/card-product-slide')
                     @endforeach
                 @endif

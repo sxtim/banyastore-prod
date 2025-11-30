@@ -316,6 +316,30 @@ if(document.getElementById('popular-goods__slider')) {
     }, [navigationPopularGoods]);
 }
 
+if(document.getElementById('bought-together-goods__slider')) {
+    var slider2 = new KeenSlider("#bought-together-goods__slider", {
+        slides: {
+            perView: 4,
+            spacing: 15,
+        },
+        breakpoints: {
+            '(max-width: 1200px)': {
+                slides: {
+                    perView: 3,
+                    spacing: 15,
+                },
+            },
+            '(max-width: 650px)': {
+                slides: {
+                    perView: 2.3,
+                    spacing: 0,
+                },
+            },
+        },
+        loop: true,
+    }, [navigationPopularGoods]);
+}
+
 if(document.getElementById('product-detail-keen-slider')) {
     var slider3 = new KeenSlider("#product-detail-keen-slider")
     var thumbnails = new KeenSlider(

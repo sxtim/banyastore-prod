@@ -191,7 +191,12 @@
   margin-left: 35px;
   color: var(--text-color-dark)
 }
-
+.other-products {
+    margin-top: 20px;
+}
+.other-products .popular-goods__title {
+    margin-left: 0;
+}
 .popular-goods__slider-container {
   margin: 45px 0 50px 0;
 

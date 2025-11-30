@@ -70,6 +70,37 @@
 </div>
 
 
+<div class="row mt-4">
+    <div class="col-6">
+        <label for="discount-products">
+            Выберите похожие товары
+        </label>
+        <div></div>
+        <select multiple="multiple" name="products_related[]" id="products-related" class="form-control" style="height:700px;">
+            @foreach($products as $element)
+                <option @if(isset($product) && $product->relatedProducts->where('id',$element->id)->first()) selected @endif
+                value="{{ $element->id }}">
+                    {{ $element->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="discount-products">
+            Выберите товары которые покупают вместе с этим
+        </label>
+        <div></div>
+        <select multiple="multiple" name="bought_together[]" id="bought-together" class="form-control" style="height:700px;">
+            @foreach($products as $element)
+                <option @if(isset($product) && $product->boughtTogether->where('id',$element->id)->first()) selected @endif
+                value="{{ $element->id }}">
+                    {{ $element->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
 @isset($product)
     <div class="row mt-3">
         <div class="col-4">

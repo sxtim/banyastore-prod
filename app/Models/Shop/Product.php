@@ -183,4 +183,24 @@ class Product extends Model
     {
         return $this->hasMany(ProductFavorite::class, 'product_id');
     }
+
+    public function relatedProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'product_related_products',
+            'product_id',
+            'related_product_id'
+        );
+    }
+
+    public function boughtTogether(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'product_bought_together',
+            'product_id',
+            'related_product_id'
+        );
+    }
 }
