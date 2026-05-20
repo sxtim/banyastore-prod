@@ -32,7 +32,7 @@
           <li><a href="/">Доставка</a></li>
           <li><a href="/">Гарантия</a></li>
           <li><a href="{{ route('company.index') }}">Реквизиты</a></li>
-          <li class="footer__cr"><a href="/">2024 © Banyastore</a></li>
+          <li class="footer__cr"><a href="/">2025 © Banyastore</a></li>
         </ul>
           <iframe
               src="https://yandex.ru/sprav/widget/rating-badge/216236942469?type=rating&theme=dark"
