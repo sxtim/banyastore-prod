@@ -43,3 +43,5 @@ yarn-error.log
 
 #swagger
 storage/api-docs/api-docs.json
+
+sync_config.jsonc
