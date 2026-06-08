@@ -28,15 +28,19 @@ module.exports = {
 //     })
 //     .mergeManifest()
 
-mix.js('resources/js/app.js', 'public/js')
+mix.sass('resources/css/main.scss', 'public/css')
+    .js('resources/js/app.js', 'public/js')
     .copyDirectory('resources/fonts', 'public/css/fonts')
     .copyDirectory('resources/images', 'public/images')
-    .sourceMaps()
     .extract()
     .vue({
         version: 3
     })
     .mergeManifest()
+
+if (!mix.inProduction()) {
+    mix.sourceMaps();
+}
 
 if (mix.inProduction()) {
     mix.version();
@@ -45,4 +49,3 @@ if (mix.inProduction()) {
 mix.browserSync({
     proxy: 'http://127.0.0.1:8000',
 });
-

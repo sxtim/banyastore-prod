@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@yield('pagetitle')</title>
-    <link rel="stylesheet" href="/css/main.css?{{ date('YmdHis') }}"/>
+    <link rel="stylesheet" href="{{ mix('css/main.css') }}"/>
     <link rel="icon" href="favicon.ico">
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
@@ -27,6 +27,7 @@
     <meta name="description" content="@yield('description')" />
     <!-- /Yandex.Metrika counter -->
     <link rel="canonical" href="{{ url()->current() }}" />
+    @yield('head')
 </head>
 <body>
 

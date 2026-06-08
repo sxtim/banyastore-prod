@@ -25,12 +25,15 @@ if (['public', 'admin'].includes(process.env.npm_config_section)) {
     .js('resources/js/app.js', 'public/js')
     .copyDirectory('resources/fonts', 'public/css/fonts')
     .copyDirectory('resources/images', 'public/images')
-    .sourceMaps()
     .extract()
     .vue({
       version: 3
     })
     .mergeManifest()
+
+  if (!mix.inProduction()) {
+    mix.sourceMaps();
+  }
 
   if (mix.inProduction()) {
     mix.version();

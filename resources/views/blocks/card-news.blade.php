@@ -1,6 +1,6 @@
 <article class="card-news">
     <div class="card-news__picture">
-        <img src="{{ $itemNews->getPreviewImg() }}" alt="{{ $itemNews->name }}">
+        <img src="{{ $itemNews->getPreviewImg() }}" alt="{{ $itemNews->name }}" loading="lazy" decoding="async">
     </div>
     <div class="card-news__desc">
         <div class="card-news__title">

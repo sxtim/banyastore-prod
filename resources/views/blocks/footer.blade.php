@@ -38,6 +38,7 @@
               src="https://yandex.ru/sprav/widget/rating-badge/216236942469?type=rating&theme=dark"
               width="150"
               height="50"
+              loading="lazy"
               frameborder="0"
               sandbox="allow-scripts allow-same-origin allow-popups"
               referrerpolicy="no-referrer"

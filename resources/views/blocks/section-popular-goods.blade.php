@@ -19,7 +19,7 @@
                         </svg>
                     </a>
                 </div>
-                <img src="/images/pop-goods/pop01.png" alt="">
+                <img src="/images/pop-goods/pop01.png" alt="" width="304" height="388" loading="lazy" decoding="async">
             </div>
             <div class="plate plate--tall">
                 <div class="plate__content">
@@ -38,7 +38,7 @@
                         </svg>
                     </a>
                 </div>
-                <img src="/images/pop-goods/pop02.jpg" alt="">
+                <img src="/images/pop-goods/pop02.jpg" alt="" width="316" height="488" loading="lazy" decoding="async">
             </div>
             <div class="plate plate--small1">
                 <div class="plate__content">
@@ -57,7 +57,7 @@
                         </svg>
                     </a>
                 </div>
-                <img src="/images/pop-goods/pop03.jpg" alt="">
+                <img src="/images/pop-goods/pop03.jpg" alt="" width="319" height="234" loading="lazy" decoding="async">
             </div>
             <div class="plate plate--small2">
                 <div class="plate__content">
@@ -76,7 +76,7 @@
                         </svg>
                     </a>
                 </div>
-                <img src="/images/pop-goods/pop04.jpg" alt="">
+                <img src="/images/pop-goods/pop04.jpg" alt="" width="319" height="234" loading="lazy" decoding="async">
             </div>
         </div>
         <h2 class="popular-goods__title title-s">Популярные товары</h2>

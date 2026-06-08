@@ -21,12 +21,15 @@ module.exports = {
 mix
     .sass('resources/css/backend/layouts/app.scss', 'public/css/backend')
     .js('resources/js/backend/app.js', 'public/js/backend')
-    .sourceMaps()
     .extract()
     .vue({
         version: 3
     })
     .mergeManifest()
+
+if (!mix.inProduction()) {
+    mix.sourceMaps();
+}
 
 if (mix.inProduction()) {
     mix.version();

@@ -7,18 +7,19 @@
   border-radius: 5px;
   overflow: hidden;
   margin-top: 5px;
+  aspect-ratio: 1296 / 697;
 }
 
-.keen-slider__slide {
+.top__slider .keen-slider__slide {
   display: flex;
   //align-items: center;
   justify-content: center;
   width: 100dvw;
-  height: auto;
+  aspect-ratio: 1296 / 697;
   img {
     position: relative;
-    //width: 100%;
-    //max-height: 700px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 
@@ -182,5 +183,3 @@
   }
 
 }
-
-

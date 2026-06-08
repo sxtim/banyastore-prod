@@ -20,7 +20,7 @@ export default {
         favoriteProduct({dispatch,commit}, productId) {
             axios.post(window.location.origin + `/ajax/favorite/product`, {
                 product_id: productId.productId
-            }).then(response => {console.log(response.data)
+            }).then(response => {
                 if (response.data.status === 'success') {
                     dispatch('initFavorite');
                 }

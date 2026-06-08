@@ -104,18 +104,20 @@ if (document.getElementById('cookie-block')) {
 const btnContactUs = document.querySelector('.btn-contact-us__btn');
 const btnContactUsList = document.querySelector('.btn-contact-us__list');
 
-btnContactUs.addEventListener('click', function(){
-    btnContactUs.classList.toggle('active');
-    btnContactUsList.classList.toggle('active');
-})
+if (btnContactUs && btnContactUsList) {
+    btnContactUs.addEventListener('click', function(){
+        btnContactUs.classList.toggle('active');
+        btnContactUsList.classList.toggle('active');
+    })
 
-document.addEventListener('click', (e) => {
-    const clickBtnContactUs = e.composedPath().includes(btnContactUs)
-    const clickBtnContactUsList = e.composedPath().includes(btnContactUsList)
+    document.addEventListener('click', (e) => {
+        const clickBtnContactUs = e.composedPath().includes(btnContactUs)
+        const clickBtnContactUsList = e.composedPath().includes(btnContactUsList)
 
-    if (!clickBtnContactUs && !clickBtnContactUsList) {
-        btnContactUsList.classList.remove('active');
-        btnContactUs.classList.remove('active');
-    }
+        if (!clickBtnContactUs && !clickBtnContactUsList) {
+            btnContactUsList.classList.remove('active');
+            btnContactUs.classList.remove('active');
+        }
 
-})
+    })
+}
