@@ -5,7 +5,14 @@
 
 @section('head')
     @if($banners->first())
-        <link rel="preload" as="image" href="{{ $banners->first()->getUrlImage() }}" fetchpriority="high">
+        @if($banners->first()->getUrlImageMobileWebp())
+            <link rel="preload" as="image" href="{{ $banners->first()->getUrlImageMobileWebp() }}" media="(max-width: 767px)" fetchpriority="high">
+        @endif
+        @if($banners->first()->getUrlImageDesktopWebp())
+            <link rel="preload" as="image" href="{{ $banners->first()->getUrlImageDesktopWebp() }}" media="(min-width: 768px)" fetchpriority="high">
+        @else
+            <link rel="preload" as="image" href="{{ $banners->first()->getUrlImage() }}" fetchpriority="high">
+        @endif
     @endif
 @endsection
 

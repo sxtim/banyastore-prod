@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\BannerImageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,6 +25,16 @@ class Banner extends Model
     public function getUrlImage(): ?string
     {
         return Storage::url($this->image);
+    }
+
+    public function getUrlImageMobileWebp(): ?string
+    {
+        return app(BannerImageService::class)->getVariantUrl($this->image, BannerImageService::VARIANT_MOBILE);
+    }
+
+    public function getUrlImageDesktopWebp(): ?string
+    {
+        return app(BannerImageService::class)->getVariantUrl($this->image, BannerImageService::VARIANT_DESKTOP);
     }
 
 }

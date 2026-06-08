@@ -7,6 +7,7 @@ use App\Http\Requests\Backend\ActionRequest;
 use App\Http\Requests\Backend\BannerRequest;
 use App\Models\Action;
 use App\Models\Banner;
+use App\Services\BannerImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,9 @@ class BannerController extends Controller
 {
     const DIR_BANNERS_MAIN = 'public/banners/main/';
 
+    public function __construct(private BannerImageService $bannerImageService)
+    {
+    }
 
     public function index(): View
     {
@@ -45,6 +49,7 @@ class BannerController extends Controller
             $extension = $image->getClientOriginalExtension();
             $filenameMainImg = uniqid() . '.' . $extension;
             Storage::put(self::DIR_BANNERS_MAIN . $filenameMainImg, File::get($image));
+            $this->bannerImageService->safelyGenerateResponsiveCopies(self::DIR_BANNERS_MAIN . $filenameMainImg);
         }
 
         Banner::create([
@@ -71,11 +76,13 @@ class BannerController extends Controller
 
         $image = $request->file('image');
         if ($image) {
+            $this->bannerImageService->deleteResponsiveCopies($banner->image);
             Storage::delete($banner->image);
             $extension = $image->getClientOriginalExtension();
             $filenameMainImg = uniqid() . '.' . $extension;
             Storage::put(self::DIR_BANNERS_MAIN . $filenameMainImg, File::get($image));
             $data['image'] = self::DIR_BANNERS_MAIN . $filenameMainImg;
+            $this->bannerImageService->safelyGenerateResponsiveCopies($data['image']);
         }
 
         $banner->update($data);
