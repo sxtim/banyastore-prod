@@ -1,6 +1,6 @@
 <ul class="social">
   <li>
-    <a href="/">
+    <a href="/" aria-label="Banyastore в Instagram">
       <svg width="38" height="37" viewBox="0 0 38 37" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="37.3627" height="36.2823" rx="18.1412" fill="white"/>
         <path
@@ -15,7 +15,7 @@
       </svg>
     </a>
   </li>
-  <li><a href="/">
+  <li><a href="/" aria-label="Banyastore во ВКонтакте">
     <svg width="38" height="37" viewBox="0 0 38 37" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="0.318695" width="37.3627" height="36.2823" rx="18.1412" fill="white"/>
       <path
@@ -23,7 +23,7 @@
         fill="#0B0B0B"/>
     </svg>
   </a></li>
-  <li><a href="/">
+  <li><a href="/" aria-label="Banyastore в Telegram">
     <svg width="38" height="37" viewBox="0 0 38 37" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="0.637451" width="37.3627" height="36.28" rx="18.14" fill="white"/>
       <g filter="url(#filter0_b_3573_4393)">

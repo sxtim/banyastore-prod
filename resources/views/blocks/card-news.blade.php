@@ -13,5 +13,5 @@
             {{ $itemNews->start_at->format('d.m.Y') }}
         </time>
     </div>
-    <a href="{{ route('news.detail', ['slug' => $itemNews->slug]) }}" class="card-news__link"></a>
+    <a href="{{ route('news.detail', ['slug' => $itemNews->slug]) }}" class="card-news__link" aria-label="Читать новость {{ $itemNews->name }}"></a>
 </article>

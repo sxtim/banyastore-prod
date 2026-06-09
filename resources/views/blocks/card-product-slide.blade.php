@@ -34,6 +34,6 @@
             </div>
             <btn-add-basket-component :product-id="{{ $element->id }}"></btn-add-basket-component>
         </div>
-        <a href="{{ route('products.detail', ['slug' => $element->slug]) }}" class="card__link"></a>
+        <a href="{{ route('products.detail', ['slug' => $element->slug]) }}" class="card__link" aria-label="Открыть товар {{ $element->name }}"></a>
     </article>
 </div>

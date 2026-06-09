@@ -36,6 +36,7 @@
         </ul>
           <iframe
               src="https://yandex.ru/sprav/widget/rating-badge/216236942469?type=rating&theme=dark"
+              title="Рейтинг Banyastore в Яндексе"
               width="150"
               height="50"
               loading="lazy"

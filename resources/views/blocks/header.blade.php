@@ -31,7 +31,7 @@
                     </li>
                     <li class="shop-menu__item">
                         <a href="{{ route('personal.index') }}">
-                            <button class="shop-menu__profile-btn">
+                            <button type="button" class="shop-menu__profile-btn" aria-label="Личный кабинет">
                                 <div class="shop-menu__item">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -46,14 +46,14 @@
                         </a>
                     </li>
                     <li class="shop-menu__item">
-                        <a href="{{ route('personal.favorites') }}" class="shop-menu__favorites-link">
+                        <a href="{{ route('personal.favorites') }}" class="shop-menu__favorites-link" aria-label="Избранное">
                             <div class="shop-menu__item">
                                 <favorite-icon-component></favorite-icon-component>
                             </div>
                         </a>
                     </li>
                     <li class="shop-menu__item">
-                        <a href="{{ route('basket.index') }}" class="shop-menu__cart-link">
+                        <a href="{{ route('basket.index') }}" class="shop-menu__cart-link" aria-label="Корзина">
                             <div class="shop-menu__item">
                                 <basket-icon-component></basket-icon-component>
                             </div>
@@ -78,7 +78,7 @@
                 </div>
                 @endguest
             </div>
-            <button id="mobile-nav-btn" class="mobile-nav-btn header__mobile-nav-btn">
+            <button type="button" id="mobile-nav-btn" class="mobile-nav-btn header__mobile-nav-btn" aria-label="Открыть меню" aria-controls="mob-nav-js" aria-expanded="false">
                 <div class="nav-icon"></div>
             </button>
         </div>
@@ -105,7 +105,7 @@
                 @include('blocks/social-icon')
 
                 <form class="header__search-form search-form" action="{{ route('products.search') }}">
-                    <button type="submit" class="search__form-btn"></button>
+                    <button type="submit" class="search__form-btn" aria-label="Найти"></button>
                     <input type="text" name="query" class="search-form-txt" placeholder="Поиск по каталогу">
                 </form>
             </div>

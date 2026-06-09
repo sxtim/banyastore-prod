@@ -5,7 +5,7 @@
                 <div class="plate__content">
                     <h3 class="plate__title">Печи для бани и сауны </h3>
                     <a href="/category/peci-dlia-bani-i-sauny" class="plate__link-btn btn btn-medium">ВЫБРАТЬ ПЕЧЬ</a>
-                    <a href="/category/peci-dlia-bani-i-sauny" class="plate__link-arrow">
+                    <a href="/category/peci-dlia-bani-i-sauny" class="plate__link-arrow" aria-label="Перейти в категорию Печи для бани и сауны">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="arrow-green"
                                   d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
@@ -24,7 +24,7 @@
             <div class="plate plate--tall">
                 <div class="plate__content">
                     <h3 class="plate__title">Специальные <br> дымоходы</h3>
-                    <a href="/category/specialnye-dymoxody" class="plate__link-arrow">
+                    <a href="/category/specialnye-dymoxody" class="plate__link-arrow" aria-label="Перейти в категорию Специальные дымоходы">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="arrow-green"
                                   d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
@@ -43,7 +43,7 @@
             <div class="plate plate--small1">
                 <div class="plate__content">
                     <h3 class="plate__title">Для отделки бани </h3>
-                    <a href="/category/plitka-dlia-otdelki" class="plate__link-arrow">
+                    <a href="/category/plitka-dlia-otdelki" class="plate__link-arrow" aria-label="Перейти в категорию Для отделки бани">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="arrow-green"
                                   d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"
@@ -62,7 +62,7 @@
             <div class="plate plate--small2">
                 <div class="plate__content">
                     <h3 class="plate__title">Аксессуары </h3>
-                    <a href="/category/aksessuary" class="plate__link-arrow">
+                    <a href="/category/aksessuary" class="plate__link-arrow" aria-label="Перейти в категорию Аксессуары">
                         <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path id="arrow-green"
                                   d="M0 0H53C55.7614 0 58 2.23858 58 5V58H5C2.23858 58 0 55.7614 0 53V0Z"

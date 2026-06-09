@@ -33,9 +33,9 @@
 
 @include('blocks/header')
 
-<div class="main">
+<main class="main">
     @yield('content')
-</div>
+</main>
 
 <div id="cookie-block">
     <cookie-component></cookie-component>
