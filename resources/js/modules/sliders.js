@@ -306,7 +306,7 @@ if(document.getElementById('popular-goods__slider')) {
             '(max-width: 650px)': {
                 slides: {
                     perView: 2.3,
-                    spacing: 0,
+                    spacing: 10,
                 },
             },
         },
@@ -387,5 +387,4 @@ if (document.getElementById("projects-page__slider")) {
     }, [navigationPopularGoods]);
 
 }
-
 

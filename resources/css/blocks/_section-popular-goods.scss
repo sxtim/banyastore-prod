@@ -125,7 +125,11 @@
     }
 
     @media (max-width: 670px) {
-      margin: 30px auto 0 auto;
+      display: block;
+      margin: 38px auto 0 auto;
+      max-width: 72%;
+      max-height: 230px;
+      object-fit: contain;
     }
 
   }
@@ -136,7 +140,8 @@
   }
 
   @media (max-width: 480px) {
-    max-height: 300px;
+    min-height: 300px;
+    max-height: none;
   }
 
 }
@@ -283,7 +288,6 @@
 .popular-goods__btn {
   margin: 0 auto;
 }
-
 
 
 
