@@ -39,9 +39,9 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
 fi
 
 if [ "$HAS_HEAD" = "1" ]; then
-    if ! git diff --quiet || ! git diff --cached --quiet; then
-        echo "Deploy stopped: working tree has local changes."
-        git status --short
+    if [ -n "$(git status --porcelain --untracked-files=normal)" ]; then
+        echo "Deploy stopped: working tree has local or untracked changes."
+        git status --short --untracked-files=normal
         exit 1
     fi
 elif [ "${FIRST_GIT_DEPLOY:-0}" != "1" ]; then

@@ -87,7 +87,7 @@ cd /var/www/html/banyastore
 Скрипт делает:
 
 - `git fetch --all --tags --prune`
-- проверку чистоты рабочего дерева
+- проверку чистоты рабочего дерева, включая незатреканные файлы
 - проверку, что target commit входит в `origin/main`
 - проверку `composer.lock`
 - проверку, что в target commit уже есть собранные frontend-ассеты
