@@ -36,7 +36,14 @@ main
 
 ## Первый scripted deploy
 
-Если `deploy.sh` и `db-backup.sh` еще не лежат на проде, их нужно сначала доставить в продовую папку проекта.
+Если `deploy.sh` и `db-backup.sh` еще не лежат на проде, сначала получить новые refs и запустить скрипты прямо из target commit:
+
+```bash
+cd /var/www/html/banyastore
+git fetch origin main
+git show origin/main:db-backup.sh | APP_DIR="$PWD" bash
+git show origin/main:deploy.sh | APP_DIR="$PWD" RUN_MIGRATIONS=1 bash -s -- <commit-hash>
+```
 
 После того как файлы появились на проде, дальнейшие деплои выполнять уже через `deploy.sh`.
 

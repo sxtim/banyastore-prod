@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="${APP_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]:-$PWD/db-backup.sh}")" && pwd)}"
 BACKUP_DIR="${BACKUP_DIR:-/var/www/backups/banyastore}"
 
 if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then

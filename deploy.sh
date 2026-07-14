@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+APP_DIR="${APP_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]:-$PWD/deploy.sh}")" && pwd)}"
 TARGET="${1:-${DEPLOY_REF:-}}"
 
 cd "$APP_DIR"
