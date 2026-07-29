@@ -16,6 +16,7 @@ class FeedProductImporter
         private readonly FeedPropertySynchronizer $propertySynchronizer,
         private readonly FeedImageManager $imageManager,
         private readonly ProductSnapshotService $snapshotService,
+        private readonly FeedPriceSynchronizer $priceSynchronizer,
     ) {}
 
     public function import(FeedImportItem $item): void
@@ -81,7 +82,7 @@ class FeedProductImporter
         try {
             DB::transaction(function () use ($item, $product, $payload, $snapshot, $photoPaths) {
                 $product = Product::query()->lockForUpdate()->findOrFail($product->id);
-                $changes = ['price' => $payload['price']];
+                $changes = [];
 
                 if (empty($product->description['blocks'] ?? [])) {
                     $description = $this->descriptionFactory->make(
@@ -104,8 +105,17 @@ class FeedProductImporter
                     }
                 }
 
-                $product->update($changes);
+                if ($changes !== []) {
+                    $product->update($changes);
+                }
+                $feedDiscount = $this->priceSynchronizer->sync(
+                    $product,
+                    $item->run->source,
+                    $item->offer_id,
+                    $payload
+                );
                 $this->propertySynchronizer->sync($product, $item->run->source, $payload['params']);
+                $snapshot['feed_discount'] = $feedDiscount;
 
                 $item->update([
                     'product_id' => $product->id,
@@ -177,7 +187,7 @@ class FeedProductImporter
                 $attributes = [
                     'name' => $payload['name'],
                     'category_id' => $category->id,
-                    'price' => $payload['price'],
+                    'price' => $payload['old_price'] ?? $payload['price'],
                     'image' => $photoPaths[0],
                     'description' => $description ?? ['blocks' => []],
                     'preview_text' => null,
@@ -203,11 +213,17 @@ class FeedProductImporter
                     ]);
                 }
 
+                $feedDiscount = $this->priceSynchronizer->sync(
+                    $product,
+                    $item->run->source,
+                    $item->offer_id,
+                    $payload
+                );
                 $this->propertySynchronizer->sync($product, $item->run->source, $payload['params']);
 
                 $item->update([
                     'product_id' => $product->id,
-                    'before_snapshot' => $this->snapshotService->created($product),
+                    'before_snapshot' => $this->snapshotService->created($product, $feedDiscount),
                 ]);
 
                 return $product;

@@ -225,6 +225,7 @@ class FeedPreviewService
             'feed_vendor' => $offer['vendor'] ?? null,
             'feed_group_id' => $offer['group_id'] ?? null,
             'feed_price' => $offer['price'],
+            'feed_old_price' => $offer['old_price'] ?? null,
             'feed_category' => $offer['category_name'],
             'target_category' => $category?->name,
             'feed_properties' => $offer['params'],
@@ -244,12 +245,17 @@ class FeedPreviewService
             return $base;
         }
 
+        $feedBasePrice = $offer['old_price'] ?? $offer['price'];
+        $productCurrentPrice = $product->getCurrentPrice();
+
         return $base + [
             'product_name' => $product->name,
             'product_price' => $product->price,
+            'product_current_price' => $productCurrentPrice,
             'product_category' => $product->category?->name,
             'product_photo_count' => ($product->image ? 1 : 0) + $product->additionalImages->count(),
-            'price_changed' => (float) $product->price !== (float) $offer['price'],
+            'price_changed' => (float) $product->price !== (float) $feedBasePrice
+                || (float) $productCurrentPrice !== (float) $offer['price'],
             'description' => $this->hasDescription($product) ? 'Сохранить наше' : 'Заполнить из фида',
         ];
     }
@@ -281,5 +287,4 @@ class FeedPreviewService
                 ->count(),
         ];
     }
-
 }

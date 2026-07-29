@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FeedProductRollback
 {
-    public function __construct(private readonly FeedImageManager $imageManager) {}
+    public function __construct(
+        private readonly FeedImageManager $imageManager,
+        private readonly FeedPriceSynchronizer $priceSynchronizer,
+    ) {}
 
     public function rollback(FeedImportItem $item): void
     {
@@ -42,7 +45,14 @@ class FeedProductRollback
             return;
         }
 
-        $product->update(['is_active' => false]);
+        DB::transaction(function () use ($product, $snapshot) {
+            $product = Product::query()->lockForUpdate()->findOrFail($product->id);
+            $this->priceSynchronizer->rollback($snapshot['feed_discount'] ?? null);
+            $product->update([
+                'is_active' => false,
+                'discount_id' => null,
+            ]);
+        });
 
         if ($item->link) {
             $metadata = $item->link->metadata ?? [];
@@ -66,12 +76,17 @@ class FeedProductRollback
 
         DB::transaction(function () use ($product, $snapshot) {
             $product = Product::query()->lockForUpdate()->findOrFail($product->id);
-            $product->update([
+            $this->priceSynchronizer->rollback($snapshot['feed_discount'] ?? null);
+            $changes = [
                 'price' => $snapshot['price'],
                 'description' => $snapshot['description'],
                 'image' => $snapshot['image'],
                 'is_active' => $snapshot['is_active'],
-            ]);
+            ];
+            if (array_key_exists('discount_id', $snapshot)) {
+                $changes['discount_id'] = $snapshot['discount_id'];
+            }
+            $product->update($changes);
             $product->propertiesValues()->sync($snapshot['property_value_ids']);
             $product->additionalImages()->delete();
 

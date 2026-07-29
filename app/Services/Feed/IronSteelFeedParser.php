@@ -42,6 +42,7 @@ class IronSteelFeedParser
             $id = trim((string) $offer['id']);
             $name = trim((string) $offer->name);
             $price = trim((string) $offer->price);
+            $oldPrice = trim((string) $offer->oldprice);
             $categoryId = trim((string) $offer->categoryId);
 
             if ($id === '' || $name === '' || $price === '' || $categoryId === '') {
@@ -55,6 +56,18 @@ class IronSteelFeedParser
             $numericPrice = (float) $price;
             if (! is_numeric($price) || ! is_finite($numericPrice) || $numericPrice <= 0) {
                 throw new FeedException("У товара {$id} некорректная цена.");
+            }
+
+            $numericOldPrice = null;
+            if ($oldPrice !== '') {
+                $numericOldPrice = (float) $oldPrice;
+                if (
+                    ! is_numeric($oldPrice)
+                    || ! is_finite($numericOldPrice)
+                    || $numericOldPrice <= $numericPrice
+                ) {
+                    throw new FeedException("У товара {$id} некорректная старая цена.");
+                }
             }
 
             $params = [];
@@ -93,6 +106,7 @@ class IronSteelFeedParser
                 'pictures' => $pictures,
                 'url' => $this->nullableString($offer->url),
                 'price' => $numericPrice,
+                'old_price' => $numericOldPrice,
                 'category_id' => $categoryId,
                 'category_name' => $categories[$categoryId] ?? '',
                 'params' => $normalized['params'],

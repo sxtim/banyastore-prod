@@ -68,9 +68,31 @@
                 </td>
                 <td>
                     @if(isset($diff['product_price']))
-                        {{ number_format($diff['product_price'], 0, ',', ' ') }} →
+                        <div>
+                            Сейчас:
+                            {{ number_format($diff['product_current_price'] ?? $diff['product_price'], 0, ',', ' ') }}
+                            @if(
+                                isset($diff['product_current_price'])
+                                && (float) $diff['product_current_price'] !== (float) $diff['product_price']
+                            )
+                                <span class="text-muted">
+                                    (обычная {{ number_format($diff['product_price'], 0, ',', ' ') }})
+                                </span>
+                            @endif
+                        </div>
                     @endif
-                    {{ isset($payload['price']) ? number_format($payload['price'], 0, ',', ' ') : '—' }}
+                    @if(isset($payload['price']))
+                        <div>
+                            Из фида: {{ number_format($payload['price'], 0, ',', ' ') }}
+                            @if(!empty($payload['old_price']))
+                                <span class="text-muted">
+                                    (обычная {{ number_format($payload['old_price'], 0, ',', ' ') }})
+                                </span>
+                            @endif
+                        </div>
+                    @else
+                        —
+                    @endif
                 </td>
                 <td>
                     {{ $diff['feed_category'] ?? '—' }}

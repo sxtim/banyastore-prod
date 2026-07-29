@@ -47,7 +47,7 @@ class SeoTemplateService
         }
         if ($templateProduct) {
             $title = str_replace('#NAME#', $product->name, $templateProduct->text_template);
-            $title = str_replace('#PRICE#', $product->price, $title);
+            $title = str_replace('#PRICE#', $product->getCurrentPrice(), $title);
             foreach ($product->propertiesValues as $value) {
                 $title = str_replace('#PROP_'.$value->property->id.'#', $value->name, $title);
             }
@@ -100,4 +100,3 @@ class SeoTemplateService
         return null;
     }
 }
-

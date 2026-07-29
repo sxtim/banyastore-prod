@@ -3,7 +3,6 @@
 namespace App\Models\Shop;
 
 use App\Http\Filters\Filterable;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -14,13 +13,21 @@ class Discount extends Model
     protected $table = 'discounts';
 
     const TYPE_RUB = 'rub';
+
     const TYPE_PERCENT = 'percent';
 
     protected $fillable = [
+        'feed_source_id',
+        'feed_offer_id',
         'name',
         'type',
         'discount',
-        'is_active'
+        'is_active',
+    ];
+
+    protected $casts = [
+        'discount' => 'float',
+        'is_active' => 'boolean',
     ];
 
     public function products(): HasMany

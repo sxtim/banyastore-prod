@@ -7,7 +7,9 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Jobs\BuildFeedPreview;
 use App\Models\Feed\FeedImportRun;
 use App\Models\Feed\FeedProductLink;
+use App\Models\SeoTemplate;
 use App\Models\Shop\Category;
+use App\Models\Shop\Discount;
 use App\Models\Shop\Product;
 use App\Models\Shop\Property\Property;
 use App\Models\Shop\Property\PropertyValue;
@@ -18,6 +20,7 @@ use App\Services\Feed\FeedProductImporter;
 use App\Services\Feed\FeedProductRollback;
 use App\Services\Feed\FeedRollbackService;
 use App\Services\Feed\IronSteelSetupService;
+use App\Services\Seo\SeoTemplateService;
 use Illuminate\Bus\PendingBatch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
@@ -434,6 +437,204 @@ class FeedImportTest extends TestCase
         Storage::assertMissing('public/products/old.jpg');
     }
 
+    public function test_feed_discount_replaces_manual_discount_and_rollback_restores_it(): void
+    {
+        $source = app(IronSteelSetupService::class)->sync();
+        $manualDiscount = Discount::query()->create([
+            'name' => 'Ручная скидка',
+            'type' => Discount::TYPE_RUB,
+            'discount' => 5000,
+            'is_active' => true,
+        ]);
+        $product = $this->product('Наше название', 140000);
+        $product->update([
+            'discount_id' => $manualDiscount->id,
+            'image' => 'public/products/old.jpg',
+        ]);
+        Storage::put('public/products/old.jpg', $this->png());
+        $link = FeedProductLink::query()->create([
+            'feed_source_id' => $source->id,
+            'offer_id' => '1001',
+            'product_id' => $product->id,
+            'decision' => FeedProductLink::DECISION_LINK,
+        ]);
+        $run = $this->applyRun($source->id);
+        $payload = $this->offer('1001');
+        $payload['old_price'] = 165000.0;
+        $item = $run->items()->create([
+            'feed_product_link_id' => $link->id,
+            'product_id' => $product->id,
+            'offer_id' => '1001',
+            'action' => 'update',
+            'status' => 'ready',
+            'feed_payload' => $payload,
+        ]);
+        Http::fake([
+            'https://images.test/*' => Http::response(
+                $this->png(),
+                200,
+                ['Content-Type' => 'image/png']
+            ),
+        ]);
+
+        app(FeedProductImporter::class)->import($item);
+
+        $product->refresh()->unsetRelation('discount');
+        $this->assertSame(165000.0, $product->price);
+        $this->assertSame(150000.0, $product->getCurrentPrice());
+        $this->assertNotSame($manualDiscount->id, $product->discount_id);
+        $this->assertDatabaseHas('discounts', [
+            'id' => $product->discount_id,
+            'feed_source_id' => $source->id,
+            'feed_offer_id' => '1001',
+            'type' => Discount::TYPE_RUB,
+            'discount' => 15000,
+            'is_active' => true,
+        ]);
+        SeoTemplate::query()->create([
+            'is_main' => true,
+            'text_template' => 'Цена #PRICE#',
+            'type_material' => SeoTemplate::MATERIAL_TYPE_PRODUCT,
+            'type_template' => SeoTemplate::TYPE_TEMPLATE_TITLE,
+        ]);
+        $this->assertSame(
+            'Цена 150000',
+            app(SeoTemplateService::class)->getTemplateProduct($product)->getTitle()
+        );
+        $this->assertSame(
+            $manualDiscount->id,
+            $item->fresh()->before_snapshot['discount_id']
+        );
+
+        $rollbackItem = $this->rollbackItem($run, $item);
+        app(FeedProductRollback::class)->rollback($rollbackItem);
+
+        $product->refresh()->unsetRelation('discount');
+        $this->assertSame(140000.0, $product->price);
+        $this->assertSame($manualDiscount->id, $product->discount_id);
+        $this->assertSame(135000.0, $product->getCurrentPrice());
+        $this->assertDatabaseHas('discounts', [
+            'feed_source_id' => $source->id,
+            'feed_offer_id' => '1001',
+            'is_active' => false,
+        ]);
+    }
+
+    public function test_feed_discount_is_removed_and_can_be_restored_by_rollback(): void
+    {
+        $source = app(IronSteelSetupService::class)->sync();
+        $product = $this->product('Наше название', 140000);
+        $product->update(['image' => 'public/products/old.jpg']);
+        Storage::put('public/products/old.jpg', $this->png());
+        $link = FeedProductLink::query()->create([
+            'feed_source_id' => $source->id,
+            'offer_id' => '1001',
+            'product_id' => $product->id,
+            'decision' => FeedProductLink::DECISION_LINK,
+        ]);
+        Http::fake([
+            'https://images.test/*' => Http::response(
+                $this->png(),
+                200,
+                ['Content-Type' => 'image/png']
+            ),
+        ]);
+
+        $discountedRun = $this->applyRun($source->id);
+        $discountedPayload = $this->offer('1001');
+        $discountedPayload['old_price'] = 165000.0;
+        $discountedItem = $discountedRun->items()->create([
+            'feed_product_link_id' => $link->id,
+            'product_id' => $product->id,
+            'offer_id' => '1001',
+            'action' => 'update',
+            'status' => 'ready',
+            'feed_payload' => $discountedPayload,
+        ]);
+        app(FeedProductImporter::class)->import($discountedItem);
+        $feedDiscountId = $product->fresh()->discount_id;
+
+        $plainRun = $this->applyRun($source->id);
+        $plainItem = $plainRun->items()->create([
+            'feed_product_link_id' => $link->id,
+            'product_id' => $product->id,
+            'offer_id' => '1001',
+            'action' => 'update',
+            'status' => 'ready',
+            'feed_payload' => $this->offer('1001'),
+        ]);
+        app(FeedProductImporter::class)->import($plainItem);
+
+        $product->refresh()->unsetRelation('discount');
+        $this->assertSame(150000.0, $product->price);
+        $this->assertSame(150000.0, $product->getCurrentPrice());
+        $this->assertNull($product->discount_id);
+        $this->assertDatabaseHas('discounts', [
+            'id' => $feedDiscountId,
+            'is_active' => false,
+        ]);
+
+        $rollbackItem = $this->rollbackItem($plainRun, $plainItem);
+        app(FeedProductRollback::class)->rollback($rollbackItem);
+
+        $product->refresh()->unsetRelation('discount');
+        $this->assertSame(165000.0, $product->price);
+        $this->assertSame($feedDiscountId, $product->discount_id);
+        $this->assertSame(150000.0, $product->getCurrentPrice());
+        $this->assertDatabaseHas('discounts', [
+            'id' => $feedDiscountId,
+            'discount' => 15000,
+            'is_active' => true,
+        ]);
+    }
+
+    public function test_new_discounted_product_rollback_deactivates_managed_discount(): void
+    {
+        $source = app(IronSteelSetupService::class)->sync();
+        $link = FeedProductLink::query()->create([
+            'feed_source_id' => $source->id,
+            'offer_id' => '1002',
+            'decision' => FeedProductLink::DECISION_CREATE,
+        ]);
+        $run = $this->applyRun($source->id);
+        $payload = $this->offer('1002');
+        $payload['old_price'] = 55000.0;
+        $item = $run->items()->create([
+            'feed_product_link_id' => $link->id,
+            'offer_id' => '1002',
+            'action' => 'create',
+            'status' => 'ready',
+            'feed_payload' => $payload,
+        ]);
+        Http::fake([
+            'https://images.test/*' => Http::response(
+                $this->png(),
+                200,
+                ['Content-Type' => 'image/png']
+            ),
+        ]);
+
+        app(FeedProductImporter::class)->import($item);
+
+        $product = Product::query()->findOrFail($item->fresh()->product_id);
+        $product->unsetRelation('discount');
+        $discountId = $product->discount_id;
+        $this->assertSame(55000.0, $product->price);
+        $this->assertSame(48300.0, $product->getCurrentPrice());
+        $this->assertNotNull($discountId);
+
+        $rollbackItem = $this->rollbackItem($run, $item);
+        app(FeedProductRollback::class)->rollback($rollbackItem);
+
+        $product->refresh();
+        $this->assertFalse($product->is_active);
+        $this->assertNull($product->discount_id);
+        $this->assertDatabaseHas('discounts', [
+            'id' => $discountId,
+            'is_active' => false,
+        ]);
+    }
+
     public function test_photo_failure_updates_data_but_keeps_existing_photos(): void
     {
         $source = app(IronSteelSetupService::class)->sync();
@@ -677,6 +878,27 @@ class FeedImportTest extends TestCase
             'kind' => FeedImportRun::KIND_APPLY,
             'status' => FeedImportRun::STATUS_RUNNING,
             'started_at' => now(),
+        ]);
+    }
+
+    private function rollbackItem(
+        FeedImportRun $applyRun,
+        \App\Models\Feed\FeedImportItem $sourceItem
+    ): \App\Models\Feed\FeedImportItem {
+        $rollbackRun = FeedImportRun::query()->create([
+            'feed_source_id' => $applyRun->feed_source_id,
+            'parent_run_id' => $applyRun->id,
+            'kind' => FeedImportRun::KIND_ROLLBACK,
+            'status' => FeedImportRun::STATUS_RUNNING,
+        ]);
+
+        return $rollbackRun->items()->create([
+            'feed_product_link_id' => $sourceItem->feed_product_link_id,
+            'product_id' => $sourceItem->product_id,
+            'offer_id' => $sourceItem->offer_id,
+            'action' => 'rollback',
+            'status' => 'ready',
+            'before_snapshot' => $sourceItem->fresh()->before_snapshot,
         ]);
     }
 

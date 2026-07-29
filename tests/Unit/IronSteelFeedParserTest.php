@@ -21,6 +21,7 @@ class IronSteelFeedParserTest extends TestCase
         $this->assertSame('ПроМеталл', $parsed['offers']['1001']['vendor']);
         $this->assertSame('p1001', $parsed['offers']['1001']['vendor_code']);
         $this->assertSame(150000.0, $parsed['offers']['1001']['price']);
+        $this->assertNull($parsed['offers']['1001']['old_price']);
         $this->assertSame(
             ['Объем парной' => '12-20 м³'],
             $parsed['offers']['1001']['params']
@@ -58,6 +59,36 @@ class IronSteelFeedParserTest extends TestCase
 
         $this->expectException(FeedException::class);
         $this->expectExceptionMessage('некорректная цена');
+
+        $this->parser()->parse($xml);
+    }
+
+    public function test_it_parses_old_price(): void
+    {
+        $xml = file_get_contents(__DIR__.'/../Fixtures/iron-steel-feed.xml');
+        $xml = str_replace(
+            '<price>150000.00</price>',
+            '<price>150000.00</price><oldprice>165000</oldprice>',
+            $xml
+        );
+
+        $parsed = $this->parser()->parse($xml);
+
+        $this->assertSame(150000.0, $parsed['offers']['1001']['price']);
+        $this->assertSame(165000.0, $parsed['offers']['1001']['old_price']);
+    }
+
+    public function test_it_rejects_old_price_not_greater_than_current_price(): void
+    {
+        $xml = file_get_contents(__DIR__.'/../Fixtures/iron-steel-feed.xml');
+        $xml = str_replace(
+            '<price>150000.00</price>',
+            '<price>150000.00</price><oldprice>140000</oldprice>',
+            $xml
+        );
+
+        $this->expectException(FeedException::class);
+        $this->expectExceptionMessage('некорректная старая цена');
 
         $this->parser()->parse($xml);
     }
