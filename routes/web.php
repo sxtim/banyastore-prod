@@ -22,6 +22,18 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/shop', [\App\Http\Controllers\Backend\ShopController::class, 'index'])->name('shop.index');
 
+            Route::prefix('feed-imports')->name('feed-import.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backend\FeedImportController::class, 'index'])->name('index');
+                Route::post('/preview', [\App\Http\Controllers\Backend\FeedImportController::class, 'preview'])->name('preview');
+                Route::post('/runs/{run}/apply', [\App\Http\Controllers\Backend\FeedImportController::class, 'apply'])->name('apply');
+                Route::post('/runs/{run}/retry-errors', [\App\Http\Controllers\Backend\FeedImportController::class, 'retryErrors'])->name('retry-errors');
+                Route::post('/runs/{run}/rollback', [\App\Http\Controllers\Backend\FeedImportController::class, 'rollback'])->name('rollback');
+                Route::get('/runs/{run}/status', [\App\Http\Controllers\Backend\FeedImportController::class, 'status'])->name('status');
+                Route::get('/runs/{run}/report', [\App\Http\Controllers\Backend\FeedImportController::class, 'report'])->name('report');
+                Route::post('/items/{item}/decision', [\App\Http\Controllers\Backend\FeedImportController::class, 'decide'])->name('decision');
+                Route::get('/products/search', [\App\Http\Controllers\Backend\FeedImportController::class, 'searchProducts'])->name('product-search');
+            });
+
             //Продукты
             Route::prefix('product')->name('product.')->group(function () {
                 Route::get('/', [\App\Http\Controllers\Backend\ProductController::class, 'index'])->name('index');

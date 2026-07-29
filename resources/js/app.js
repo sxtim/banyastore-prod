@@ -2,6 +2,8 @@ import $ from 'jquery';
 require('./bootstrap');
 import mobileNav from './modules/mobile-nav';
 mobileNav();
+import productCardImages from './modules/product-card-images';
+productCardImages();
 import  './modules/sliders';
 import  './modules/product-detail-tabs';
 import store from "./blocks/vue/store/store";

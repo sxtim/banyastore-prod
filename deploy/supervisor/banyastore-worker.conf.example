@@ -1,0 +1,13 @@
+[program:banyastore-feed-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/banyastore/artisan queue:work database --queue=feed-imports,default --sleep=2 --tries=3 --timeout=240 --max-time=3600
+directory=/var/www/html/banyastore
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/banyastore-feed-worker.log
+stopwaitsecs=300

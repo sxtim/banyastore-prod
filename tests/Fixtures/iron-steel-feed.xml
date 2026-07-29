@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2026-07-24T00:00:03+03:00">
+    <shop>
+        <categories>
+            <category id="741483991681">Комбинированная отделка</category>
+            <category id="303980426391">Порталы и изделия из камня</category>
+            <category id="172963887011">Печное литьё</category>
+        </categories>
+        <offers>
+            <offer id="1001" group_id="group-100">
+                <name>Печь банная «Атмосфера L»</name>
+                <vendor>ПроМеталл</vendor>
+                <vendorCode>p1001</vendorCode>
+                <description>Масса печи - 200 кг&lt;br /&gt;&lt;br /&gt;Новое описание&lt;br /&gt;Вторая строка</description>
+                <picture>https://images.test/1001-main.jpg</picture>
+                <picture>https://images.test/1001-extra.jpg</picture>
+                <url>https://supplier.test/1001</url>
+                <price>150000.00</price>
+                <categoryId>741483991681</categoryId>
+                <param name="Объем парной">12-20 м3</param>
+                <param name="Масса печи">197 кг</param>
+            </offer>
+            <offer id="1002">
+                <name>Облицовка стены «Пироксенит»</name>
+                <vendorCode>p1002</vendorCode>
+                <description>Размер (ВхДхШ) - 785х660х560 мм&lt;br /&gt;Материал корпуса - Камень&lt;br /&gt;Размер в упаковке (ВхДхШ) - 950х735х770 мм&lt;br /&gt;&lt;br /&gt;Описание облицовки</description>
+                <picture>https://images.test/1002-main.jpg</picture>
+                <price>48300</price>
+                <categoryId>303980426391</categoryId>
+                <param name="Цвет">серый</param>
+            </offer>
+            <offer id="1003">
+                <name>Дверца чугунная</name>
+                <vendorCode>p1003</vendorCode>
+                <picture>https://images.test/1003-main.jpg</picture>
+                <price>10000</price>
+                <categoryId>172963887011</categoryId>
+            </offer>
+        </offers>
+    </shop>
+</yml_catalog>

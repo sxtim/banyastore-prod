@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\Backend\ImageRequest;
 use App\Http\Requests\Backend\ProductRequest;
+use App\Models\Feed\FeedSource;
 use App\Models\Shop\Category;
 use App\Models\Shop\Product;
 use App\Models\Shop\ProductFile;
@@ -29,20 +30,23 @@ class ProductController extends Controller
             ->with(['category','relatedProducts','boughtTogether'])
             ->paginate(15);
         $categories = Category::all();
+        $feedSources = FeedSource::query()->orderBy('name')->get();
         $filters = $filter->filters();
 
         if ($filters) {
             return response(view('backend.shop.product.index',
                 compact('products',
                     'filters',
-                    'categories')
+                    'categories',
+                    'feedSources')
             ))->withCookie('productsFilterBackend',http_build_query($filters));
         }
 
         return response(view('backend.shop.product.index',
             compact('products',
                 'filters',
-                'categories')
+                'categories',
+                'feedSources')
         ))->withoutCookie('productsFilterBackend');
     }
 
@@ -58,7 +62,14 @@ class ProductController extends Controller
     public function edit(Product $product): View
     {
         $products = Product::with(['category','relatedProducts','boughtTogether'])->get();
-        $product->load(['propertiesValues','discount','additionalImages','relatedProducts','boughtTogether']);
+        $product->load([
+            'propertiesValues',
+            'discount',
+            'additionalImages',
+            'relatedProducts',
+            'boughtTogether',
+            'feedLinks.source',
+        ]);
         $categories = Category::all();
         $properties = Property::with(['values'])->get();
         $tags = Product::LIST_TAG;

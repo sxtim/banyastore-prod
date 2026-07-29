@@ -40,6 +40,13 @@ class ProductFilter extends QueryFilter
         return $this->builder->where('category_id', $category);
     }
 
+    public function feedSource($sourceId): Builder
+    {
+        return $this->builder->whereHas('feedLinks', function ($query) use ($sourceId) {
+            $query->where('feed_source_id', $sourceId);
+        });
+    }
+
     public function properties(array $properties): Builder
     {
         return $this->builder->whereIn('products.id', function ($query) use ($properties) {

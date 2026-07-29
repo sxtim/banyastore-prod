@@ -217,9 +217,8 @@
   }
 
   @media (max-width: 650px) {
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
+    height: 348px;
+    min-height: 348px;
     width: calc(100% - 6px);
   }
 }
@@ -233,15 +232,15 @@
 
 .popular-goods__slider-container .card__picture {
   @media (max-width: 650px) {
-    height: 168px;
-    margin-bottom: 18px;
-    max-height: none;
+    flex-basis: 222px;
+    height: 222px;
+    margin-bottom: 0;
   }
 }
 
 .popular-goods__slider-container .card__picture img {
   @media (max-width: 650px) {
-    max-height: 108px;
+    max-height: 100%;
   }
 }
 
@@ -251,19 +250,19 @@
     flex: 1;
     flex-direction: column;
     margin-top: 0;
-    padding-top: 4px;
+    padding-top: 8px;
   }
 }
 
 .popular-goods__slider-container .card__desc-row {
   @media (max-width: 650px) {
-    min-height: 70px;
+    min-height: 68px;
   }
 }
 
 .popular-goods__slider-container .card__row-2 {
   @media (max-width: 650px) {
-    margin-top: 4px;
+    margin-top: auto;
   }
 }
 

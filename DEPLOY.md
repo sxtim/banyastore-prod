@@ -91,10 +91,14 @@ cd /var/www/html/banyastore
 - проверку, что target commit входит в `origin/main`
 - проверку `composer.lock`
 - проверку, что в target commit уже есть собранные frontend-ассеты
+- перевод сайта в maintenance mode
+- полный релизный бэкап базы и `storage/app/public`
 - `git reset --hard <commit>`
 - `composer install`, только если это явно разрешено и зависимости поменялись
 - `php artisan storage:link`, если ссылки нет
 - очистку и прогрев Laravel-кэша
+- перезапуск Laravel queue worker
+- вывод сайта из maintenance mode
 
 Миграции по умолчанию не запускаются.
 
@@ -119,9 +123,46 @@ cd /var/www/html/banyastore
 RUN_MIGRATIONS=1 ./deploy.sh <commit-hash-or-tag>
 ```
 
-## Бэкап базы
+## Релизный бэкап
 
-Скрипт бэкапа:
+Каждый `deploy.sh` до изменения кода автоматически создаёт полный снимок:
+
+- SQL-дамп базы;
+- архив `storage/app/public` со всеми публичными файлами;
+- commit, который был установлен до деплоя;
+- SHA-256 для проверки целостности.
+
+По умолчанию снимки складываются в:
+
+```bash
+/var/www/backups/banyastore/release_YYYYMMDD_HHMMSS_COMMIT
+```
+
+Ссылка `/var/www/backups/banyastore/latest` указывает на последний успешно
+созданный снимок.
+
+Создать такой снимок отдельно, например непосредственно перед первым импортом:
+
+```bash
+cd /var/www/html/banyastore
+MANAGE_MAINTENANCE=1 ./release-backup.sh
+```
+
+Проверить, что снимок читается:
+
+```bash
+./release-restore.sh --verify /var/www/backups/banyastore/latest
+```
+
+Автоматический релизный бэкап можно пропустить только в аварийной ситуации:
+
+```bash
+SKIP_RELEASE_BACKUP=1 ./deploy.sh <commit-hash-or-tag>
+```
+
+## Бэкап Только Базы
+
+Для отдельного SQL-дампа:
 
 ```bash
 cd /var/www/html/banyastore
@@ -146,7 +187,49 @@ BACKUP_DIR=/custom/path ./db-backup.sh
 banyastore_db_YYYYMMDD_HHMMSS.sql.gz
 ```
 
-Файловые бэкапы VPS доступны через панель Beget отдельно от этих SQL-дампов.
+Файловые бэкапы VPS доступны через панель Beget отдельно от этих снимков.
+
+## Worker импорта товаров
+
+Импорт фотографий и товаров выполняется через Laravel database queue. Пример
+конфигурации Supervisor находится в:
+
+```bash
+deploy/supervisor/banyastore-worker.conf.example
+```
+
+На проде установить конфигурацию Supervisor, задать в `.env`:
+
+```bash
+QUEUE_CONNECTION=database
+IRON_STEEL_FEED_URL=https://prometall.ru/tstore/yml/cf906418b8b8973e2d842ac7987a654f.yml
+FEED_ALLOWED_HOSTS=prometall.ru
+FEED_IMAGE_ALLOWED_HOSTS=static.tildacdn.com
+```
+
+и убедиться, что процесс `banyastore-feed-worker` запущен. Обычный
+`deploy.sh` вызывает `php artisan queue:restart`, поэтому worker забирает новый
+код без ручной перезагрузки.
+
+Если поставщик перенесёт фид или фотографии на другой домен, сначала проверить
+новый адрес, затем добавить его в соответствующий список через запятую. Импорт
+намеренно не скачивает данные с неизвестных доменов.
+
+После первой установки миграций один раз проверить и загрузить подтверждённые
+сопоставления товаров:
+
+```bash
+cd /var/www/html/banyastore
+php artisan feed:iron-steel:setup --dry-run
+php artisan feed:iron-steel:setup
+```
+
+Сначала должна успешно завершиться команда с `--dry-run`. Она проверяет CSV и
+существование указанных в нём ID товаров, но не меняет базу. Повторно выполнять
+настройку нужно после изменения URL источника, маппинга категорий, свойств или
+файла сопоставлений. Команда сохраняет прежний slug `iron-steel`, поэтому
+существующие связи по `offer id` не теряются при переходе на полный фид
+ProMetall.
 
 ## Проверка состояния прода
 
@@ -165,16 +248,48 @@ git log --oneline -3
 ## main...origin/main
 ```
 
-## Откат
+## Откат Импорта
 
-Откат кода:
+Если проблема только в применённом фиде, в админке открыть:
+
+```text
+Интернет-магазин → Импорт товаров → История
+```
+
+Кнопка `Откатить` возвращает состояние товаров перед последним импортом:
+
+- цену, описание и свойства;
+- старые фотографии;
+- новые товары деактивирует и отсоединяет от фида.
+
+Это основной и самый быстрый откат после импорта.
+
+## Полный Откат Релиза
+
+Если проблема в коде, миграциях или импортный откат не сработал, восстановить
+полный релизный снимок:
+
+```bash
+cd /var/www/html/banyastore
+./release-restore.sh --verify /var/www/backups/banyastore/release_...
+CONFIRM_RESTORE=YES ./release-restore.sh /var/www/backups/banyastore/release_...
+```
+
+Перед разрушительным восстановлением скрипт автоматически создаёт ещё один
+аварийный снимок текущего состояния. Затем возвращает commit, базу, публичные
+файлы, Laravel-кэши и worker. Если процесс прервётся после начала изменения
+данных, сайт останется в maintenance mode.
+
+Откат только кода:
+
 
 ```bash
 cd /var/www/html/banyastore
 ./deploy.sh <previous-commit-hash>
 ```
 
-Если откатывались миграции или данные, сначала проверить свежий SQL-бэкап и только потом выполнять ручной SQL-откат или `php artisan migrate:rollback`.
+После миграций или импорта одного отката кода недостаточно: использовать полный
+релизный снимок, а не ручной `migrate:rollback`.
 
 ## Важные замечания
 
@@ -183,3 +298,4 @@ cd /var/www/html/banyastore
 - Если на проде появились локальные изменения, сначала разобраться с `git status`, а потом деплоить.
 - Для обычного PHP-only релиза не нужен `RUN_COMPOSER=1` и не нужен `RUN_MIGRATIONS=1`.
 - Для релиза с frontend-изменениями ассеты нужно сначала собрать локально и включить в тот же commit, который потом уедет на прод.
+- Периодически проверять размер `/var/www/backups/banyastore`. Старые снимки удалять вручную только после проверки актуального снимка и оставлять минимум два последних пригодных для восстановления релиза.

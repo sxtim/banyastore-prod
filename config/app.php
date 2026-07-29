@@ -59,6 +59,11 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'local_admin' => [
+        'enabled' => (bool) env('LOCAL_ADMIN_BYPASS', false),
+        'user_id' => (int) env('LOCAL_ADMIN_ID', 0),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

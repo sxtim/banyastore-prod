@@ -1,4 +1,18 @@
 @csrf
+@isset($product)
+    @if($product->feedLinks->isNotEmpty())
+        <div class="alert alert-info">
+            @foreach($product->feedLinks as $feedLink)
+                <div>
+                    <strong>{{ $feedLink->source->name }}</strong>:
+                    offer id {{ $feedLink->offer_id }},
+                    последняя синхронизация {{ $feedLink->last_synced_at?->format('d.m.Y H:i') ?? 'ещё не выполнялась' }},
+                    статус {{ $feedLink->last_status ?? 'не задан' }}.
+                </div>
+            @endforeach
+        </div>
+    @endif
+@endisset
 <div class="row">
     <div class="col-4">
         <label for="name" class="main-label">Название товара</label>

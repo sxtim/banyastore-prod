@@ -40,6 +40,11 @@
                 Скидки
             </a>
         </div>
+        <div class="col-md-3 mt-3">
+            <a href="{{ route('backend.feed-import.index') }}" class="btn btn-block btn-outline-primary">
+                Импорт товаров
+            </a>
+        </div>
     </div>
 
 

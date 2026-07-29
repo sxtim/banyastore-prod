@@ -340,6 +340,26 @@ if(document.getElementById('bought-together-goods__slider')) {
 
 if(document.getElementById('product-detail-keen-slider')) {
     var slider3 = new KeenSlider("#product-detail-keen-slider")
+    var productSliderPrev = document.querySelector("[data-product-slider-prev]")
+    var productSliderNext = document.querySelector("[data-product-slider-next]")
+
+    function updateProductSliderArrows(slider) {
+        if (!productSliderPrev || !productSliderNext) return
+
+        var currentSlide = slider.track.details.rel
+        productSliderPrev.disabled = currentSlide === 0
+        productSliderNext.disabled = currentSlide === slider.track.details.slides.length - 1
+    }
+
+    if (productSliderPrev && productSliderNext) {
+        productSliderPrev.addEventListener("click", () => slider3.prev())
+        productSliderNext.addEventListener("click", () => slider3.next())
+        slider3.on("created", updateProductSliderArrows)
+        slider3.on("slideChanged", updateProductSliderArrows)
+        slider3.on("updated", updateProductSliderArrows)
+        updateProductSliderArrows(slider3)
+    }
+
     var thumbnails = new KeenSlider(
         "#product-detail-thumbnails",
         {
@@ -387,4 +407,3 @@ if (document.getElementById("projects-page__slider")) {
     }, [navigationPopularGoods]);
 
 }
-

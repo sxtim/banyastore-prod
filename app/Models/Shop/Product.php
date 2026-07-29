@@ -6,6 +6,7 @@ use App\Http\Filters\Filterable;
 //use App\Http\Filters\ProductFilter;
 
 
+use App\Models\Feed\FeedProductLink;
 use App\Models\Shop\ProductFile;
 use App\Models\Shop\Property\PropertyValue;
 use Illuminate\Database\Eloquent\Model;
@@ -103,7 +104,9 @@ class Product extends Model
     protected $casts = [
         'price' => 'float',
         'description' => 'array',
-        'preview_text' => 'array'
+        'preview_text' => 'array',
+        'is_active' => 'boolean',
+        'is_popular' => 'boolean',
     ];
 
 
@@ -161,6 +164,11 @@ class Product extends Model
         return $this
             ->hasMany(ProductFile::class, 'product_id')
             ->where('type', ProductFile::TYPE_IMAGE);
+    }
+
+    public function feedLinks(): HasMany
+    {
+        return $this->hasMany(FeedProductLink::class);
     }
 
     public function favorite(int $userId): Product

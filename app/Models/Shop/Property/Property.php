@@ -3,12 +3,13 @@ namespace App\Models\Shop\Property;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Property extends Model
 {
-    use HasSlug;
+    use HasSlug, SoftDeletes;
 
     protected $table = 'properties';
 

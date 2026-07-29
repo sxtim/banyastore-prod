@@ -39,6 +39,18 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col">
+                            <label for="feed-source" class="main-label">Источник</label>
+                            <select name="feed-source" id="feed-source" class="form-control">
+                                <option value="">Все товары</option>
+                                @foreach($feedSources as $feedSource)
+                                    <option value="{{ $feedSource->id }}"
+                                        {{ isset($filters['feed-source']) && $filters['feed-source'] == $feedSource->id ? 'selected' : '' }}>
+                                        Связан с {{ $feedSource->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg btn-wrap">
                         <a href="{{ route('backend.product.index') }}" class="btn btn-secondary" style="align-self: flex-end">Сбросить фильтр</a>
@@ -106,6 +118,9 @@
             }
             if (document.getElementById('category').value === '') {
                 document.getElementById('category').setAttribute('disabled','disabled')
+            }
+            if (document.getElementById('feed-source').value === '') {
+                document.getElementById('feed-source').setAttribute('disabled','disabled')
             }
         })
     </script>

@@ -14,6 +14,8 @@ Environment flags:
   FIRST_GIT_DEPLOY=1   Allow first deploy when HEAD is not checked out yet
   RUN_COMPOSER=1       Run composer install when composer.lock changed or vendor is missing
   RUN_MIGRATIONS=1     Run php artisan migrate --force after code deploy
+  SKIP_RELEASE_BACKUP=1
+                       Skip the automatic database and public-files backup
 EOF
 }
 
@@ -112,7 +114,51 @@ if [ "${#MISSING_TARGET_ASSETS[@]}" -gt 0 ]; then
     exit 1
 fi
 
+SITE_IS_DOWN=0
+DEPLOY_MUTATED=0
+RELEASE_BACKUP_SCRIPT=""
+DB_BACKUP_SCRIPT=""
+deploy_cleanup() {
+    rm -f "$RELEASE_BACKUP_SCRIPT" "$DB_BACKUP_SCRIPT"
+    if [ "$SITE_IS_DOWN" = "1" ]; then
+        if [ "$DEPLOY_MUTATED" = "0" ]; then
+            php artisan up >/dev/null 2>&1 || true
+        else
+            echo "Deploy failed after changing the release. The site remains in maintenance mode."
+            echo "Restore the printed release backup before enabling the site."
+        fi
+    fi
+}
+trap deploy_cleanup EXIT
+
+echo "Enable maintenance mode"
+php artisan down --retry=60
+SITE_IS_DOWN=1
+
+if [ "${SKIP_RELEASE_BACKUP:-0}" != "1" ]; then
+    echo "Create release backup before changing code"
+    RELEASE_BACKUP_SCRIPT="$(mktemp)"
+    DB_BACKUP_SCRIPT="$(mktemp)"
+    if git cat-file -e "$COMMIT:release-backup.sh" 2>/dev/null; then
+        git show "$COMMIT:release-backup.sh" > "$RELEASE_BACKUP_SCRIPT"
+    else
+        cp "$APP_DIR/release-backup.sh" "$RELEASE_BACKUP_SCRIPT"
+    fi
+    if git cat-file -e "$COMMIT:db-backup.sh" 2>/dev/null; then
+        git show "$COMMIT:db-backup.sh" > "$DB_BACKUP_SCRIPT"
+    else
+        cp "$APP_DIR/db-backup.sh" "$DB_BACKUP_SCRIPT"
+    fi
+    APP_DIR="$APP_DIR" DB_BACKUP_SCRIPT="$DB_BACKUP_SCRIPT" bash "$RELEASE_BACKUP_SCRIPT"
+    rm -f "$RELEASE_BACKUP_SCRIPT" "$DB_BACKUP_SCRIPT"
+    RELEASE_BACKUP_SCRIPT=""
+    DB_BACKUP_SCRIPT=""
+else
+    echo "WARNING: release backup explicitly skipped"
+fi
+
 git reset --hard "$COMMIT"
+DEPLOY_MUTATED=1
 
 if [ "$INSTALL_DEPENDENCIES" = "1" ]; then
     echo "Install PHP dependencies"
@@ -157,5 +203,9 @@ php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+php artisan queue:restart
+php artisan up
+SITE_IS_DOWN=0
+trap - EXIT
 
 echo "Deploy completed"

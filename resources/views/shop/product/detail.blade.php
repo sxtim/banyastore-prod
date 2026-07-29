@@ -13,13 +13,41 @@
                 </div>
                 <div class="product-detail__slider-wrapper">
                     <div id="product-detail-keen-slider" class="keen-slider">
+                        @if($product->image)
+                            <div class="keen-slider__slide product-detail__slider-slide">
+                                <img class="product-detail__slider-img"
+                                     src="{{ $product->getImageUrlAttribute() }}"
+                                     alt="{{ $product->name }}">
+                            </div>
+                        @endif
                         @foreach($product->additionalImages as $image)
                             <div class="keen-slider__slide product-detail__slider-slide">
-                                <img src="{{ $image->getImageUrlAttribute() }}" alt="slide">
+                                <img class="product-detail__slider-img"
+                                     src="{{ $image->getImageUrlAttribute() }}"
+                                     alt="slide">
                             </div>
                         @endforeach
                     </div>
+                    @if(($product->image ? 1 : 0) + $product->additionalImages->count() > 1)
+                        <button class="product-detail__slider-arrow product-detail__slider-arrow--prev"
+                                type="button"
+                                aria-label="Предыдущее изображение"
+                                data-product-slider-prev>
+                            <img src="{{ asset('images/icons/arrow-left.svg') }}" alt="">
+                        </button>
+                        <button class="product-detail__slider-arrow product-detail__slider-arrow--next"
+                                type="button"
+                                aria-label="Следующее изображение"
+                                data-product-slider-next>
+                            <img src="{{ asset('images/icons/arrow-right.svg') }}" alt="">
+                        </button>
+                    @endif
                     <div id="product-detail-thumbnails" class="keen-slider product-detail__thumbnails">
+                        @if($product->image)
+                            <div class="keen-slider__slide product-detail__slider-thumb">
+                                <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->name }}">
+                            </div>
+                        @endif
                         @foreach($product->additionalImages as $image)
                             <div class="keen-slider__slide product-detail__slider-thumb">
                                 <img src="{{ $image->getImageUrlAttribute() }}" alt="slide">

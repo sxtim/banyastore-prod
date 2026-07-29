@@ -61,6 +61,22 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+## Локальная проверка импорта ProMetall
+
+Импорт сначала проверяется только на локальной копии продовой базы:
+
+```bash
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan feed:iron-steel:setup --dry-run
+./vendor/bin/sail artisan feed:iron-steel:setup
+./vendor/bin/sail artisan queue:work database --queue=feed-imports,default --tries=3 --timeout=240
+```
+
+После запуска worker раздел доступен по адресу
+`/backend/feed-imports`. Проверка фида не меняет каталог; применение и откат
+выполняются через очередь.
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
