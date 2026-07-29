@@ -45,7 +45,10 @@ class IronSteelOfferNormalizer
         'Масса в упаковке',
     ];
 
-    public function __construct(private readonly FeedValueNormalizer $values) {}
+    public function __construct(
+        private readonly FeedValueNormalizer $values,
+        private readonly FeedDescriptionSanitizer $descriptionSanitizer,
+    ) {}
 
     public function normalize(array $rawParams, string $description): array
     {
@@ -79,7 +82,7 @@ class IronSteelOfferNormalizer
             }
         }
 
-        $lines = $this->descriptionLines($description);
+        $lines = $this->descriptionSanitizer->lines($this->descriptionLines($description));
         $descriptionParams = [];
         $matchedLines = [];
         $packagingLines = [];

@@ -17,6 +17,7 @@ class FeedProductImporter
         private readonly FeedImageManager $imageManager,
         private readonly ProductSnapshotService $snapshotService,
         private readonly FeedPriceSynchronizer $priceSynchronizer,
+        private readonly FeedDescriptionSanitizer $descriptionSanitizer,
     ) {}
 
     public function import(FeedImportItem $item): void
@@ -83,8 +84,9 @@ class FeedProductImporter
             DB::transaction(function () use ($item, $product, $payload, $snapshot, $photoPaths) {
                 $product = Product::query()->lockForUpdate()->findOrFail($product->id);
                 $changes = [];
+                $currentDescription = $this->descriptionSanitizer->editorData($product->description);
 
-                if (empty($product->description['blocks'] ?? [])) {
+                if (empty($currentDescription['blocks'] ?? [])) {
                     $description = $this->descriptionFactory->make(
                         $payload['description'],
                         $payload['packaging_lines'] ?? []
@@ -92,6 +94,8 @@ class FeedProductImporter
                     if ($description) {
                         $changes['description'] = $description;
                     }
+                } elseif ($currentDescription !== $product->description) {
+                    $changes['description'] = $currentDescription;
                 }
 
                 if ($photoPaths !== null) {

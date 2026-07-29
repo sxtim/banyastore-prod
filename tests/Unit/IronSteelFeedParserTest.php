@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Services\Feed\FeedDescriptionSanitizer;
 use App\Services\Feed\FeedException;
 use App\Services\Feed\FeedValueNormalizer;
 use App\Services\Feed\IronSteelBrandSeriesResolver;
@@ -103,7 +104,7 @@ class IronSteelFeedParserTest extends TestCase
         $values = new FeedValueNormalizer;
 
         return new IronSteelFeedParser(
-            new IronSteelOfferNormalizer($values),
+            new IronSteelOfferNormalizer($values, new FeedDescriptionSanitizer),
             new IronSteelBrandSeriesResolver
         );
     }

@@ -471,7 +471,12 @@ class FeedImportTest extends TestCase
         $source = app(IronSteelSetupService::class)->sync();
         $product = $this->product('Наше название', 140000);
         $product->update([
-            'description' => ['blocks' => [['type' => 'paragraph', 'data' => ['text' => 'Наше описание']]]],
+            'description' => ['blocks' => [[
+                'type' => 'paragraph',
+                'data' => [
+                    'text' => "Наше описание<br>\n__________________________________<br>\nСкачать 3d модель",
+                ],
+            ]]],
             'image' => 'public/products/old.jpg',
         ]);
         Storage::put('public/products/old.jpg', $this->png());

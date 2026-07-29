@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Services\Feed\FeedDescriptionSanitizer;
 use App\Services\Feed\FeedValueNormalizer;
 use App\Services\Feed\IronSteelOfferNormalizer;
 use PHPUnit\Framework\TestCase;
@@ -115,8 +116,34 @@ HTML;
         );
     }
 
+    public function test_it_removes_supplier_page_controls_but_keeps_useful_tail_content(): void
+    {
+        $result = $this->normalizer()->normalize([], implode("\n", [
+            'Нормальное описание товара.',
+            'Гарантия 5 лет подробнее →',
+            '__________________________________',
+            'Скачать 3d модель',
+            'Открыть паспорт на печь',
+            '↓ Полные характеристики печи ↓',
+            'Толщина трубы - 3 мм',
+        ]));
+
+        $this->assertSame(implode("\n", [
+            'Нормальное описание товара.',
+            'Гарантия 5 лет',
+            'Толщина трубы - 3 мм',
+        ]), $result['description']);
+        $this->assertSame(
+            ['Гарантия 5 лет', 'Толщина трубы - 3 мм'],
+            $result['unmapped_description_lines']
+        );
+    }
+
     private function normalizer(): IronSteelOfferNormalizer
     {
-        return new IronSteelOfferNormalizer(new FeedValueNormalizer);
+        return new IronSteelOfferNormalizer(
+            new FeedValueNormalizer,
+            new FeedDescriptionSanitizer
+        );
     }
 }
