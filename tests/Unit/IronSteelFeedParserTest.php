@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Services\Feed\FeedException;
 use App\Services\Feed\FeedValueNormalizer;
+use App\Services\Feed\IronSteelBrandSeriesResolver;
 use App\Services\Feed\IronSteelFeedParser;
 use App\Services\Feed\IronSteelOfferNormalizer;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +24,11 @@ class IronSteelFeedParserTest extends TestCase
         $this->assertSame(150000.0, $parsed['offers']['1001']['price']);
         $this->assertNull($parsed['offers']['1001']['old_price']);
         $this->assertSame(
-            ['Объем парной' => '12-20 м³'],
+            [
+                'Объем парной' => '12-20 м³',
+                'Бренд' => 'ПроМеталл',
+                'Серия' => 'Атмосфера',
+            ],
             $parsed['offers']['1001']['params']
         );
         $this->assertSame('197 кг', $parsed['offers']['1001']['raw_params']['Масса печи']);
@@ -97,6 +102,9 @@ class IronSteelFeedParserTest extends TestCase
     {
         $values = new FeedValueNormalizer;
 
-        return new IronSteelFeedParser(new IronSteelOfferNormalizer($values));
+        return new IronSteelFeedParser(
+            new IronSteelOfferNormalizer($values),
+            new IronSteelBrandSeriesResolver
+        );
     }
 }

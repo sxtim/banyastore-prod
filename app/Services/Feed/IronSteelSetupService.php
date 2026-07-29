@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class IronSteelSetupService
 {
+    public function __construct(
+        private readonly IronSteelBrandAliasMerger $brandAliasMerger,
+    ) {}
+
     public function sync(): FeedSource
     {
         $config = config('feed_import.iron_steel');
@@ -76,6 +80,8 @@ class IronSteelSetupService
                     ]
                 );
             }
+
+            $this->brandAliasMerger->merge();
 
             return $source->fresh();
         });

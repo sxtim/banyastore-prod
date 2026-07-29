@@ -115,6 +115,81 @@ class FeedImportTest extends TestCase
             'category_id' => null,
             'is_excluded' => true,
         ]);
+        $this->assertDatabaseHas('feed_property_mappings', [
+            'feed_source_id' => $source->id,
+            'external_name' => 'Серия',
+            'property_id' => Property::query()->where('name', 'Серия')->value('id'),
+            'target_name' => 'Серия',
+        ]);
+    }
+
+    public function test_setup_merges_legacy_brand_aliases_without_duplicate_assignments(): void
+    {
+        $brand = Property::query()->create([
+            'name' => 'Бренд',
+            'is_required' => false,
+        ]);
+        $proMetall = PropertyValue::query()->create([
+            'property_id' => $brand->id,
+            'name' => 'ПроМеталл',
+        ]);
+        $prometall = PropertyValue::query()->create([
+            'property_id' => $brand->id,
+            'name' => 'Prometall',
+        ]);
+        $craft = PropertyValue::query()->create([
+            'property_id' => $brand->id,
+            'name' => 'Craft',
+        ]);
+        $ferrum = PropertyValue::query()->create([
+            'property_id' => $brand->id,
+            'name' => 'Ferrum',
+        ]);
+        $unrelated = PropertyValue::query()->create([
+            'property_id' => $brand->id,
+            'name' => 'Другой бренд',
+        ]);
+
+        $prometallProduct = $this->product('Prometall', 100000);
+        $prometallProduct->propertiesValues()->attach([$prometall->id, $proMetall->id]);
+        $craftProduct = $this->product('Craft', 100000);
+        $craftProduct->propertiesValues()->attach($craft);
+        $ferrumProduct = $this->product('Ferrum', 100000);
+        $ferrumProduct->propertiesValues()->attach($ferrum);
+        $unrelatedProduct = $this->product('Другой бренд', 100000);
+        $unrelatedProduct->propertiesValues()->attach($unrelated);
+
+        app(IronSteelSetupService::class)->sync();
+        app(IronSteelSetupService::class)->sync();
+
+        $craftCanonical = PropertyValue::query()
+            ->where('property_id', $brand->id)
+            ->where('name', 'Крафт')
+            ->firstOrFail();
+        $ferrumCanonical = PropertyValue::query()
+            ->where('property_id', $brand->id)
+            ->where('name', 'Феррум')
+            ->firstOrFail();
+
+        $this->assertSame(
+            [$proMetall->id],
+            $prometallProduct->propertiesValues()->pluck('property_values.id')->all()
+        );
+        $this->assertSame(
+            [$craftCanonical->id],
+            $craftProduct->propertiesValues()->pluck('property_values.id')->all()
+        );
+        $this->assertSame(
+            [$ferrumCanonical->id],
+            $ferrumProduct->propertiesValues()->pluck('property_values.id')->all()
+        );
+        $this->assertSame(
+            [$unrelated->id],
+            $unrelatedProduct->propertiesValues()->pluck('property_values.id')->all()
+        );
+        $this->assertSoftDeleted($prometall);
+        $this->assertSoftDeleted($craft);
+        $this->assertSoftDeleted($ferrum);
     }
 
     public function test_preview_does_not_change_catalog_and_groups_offers(): void
@@ -406,6 +481,11 @@ class FeedImportTest extends TestCase
         ], ['is_required' => false]);
         $brandValue = PropertyValue::query()->create(['property_id' => $brand->id, 'name' => 'Наш бренд']);
         $product->propertiesValues()->attach($brandValue);
+        $series = Property::query()->where('name', 'Серия')->firstOrCreate([
+            'name' => 'Серия',
+        ], ['is_required' => false]);
+        $seriesValue = PropertyValue::query()->create(['property_id' => $series->id, 'name' => 'Старая серия']);
+        $product->propertiesValues()->attach($seriesValue);
 
         $link = FeedProductLink::query()->create([
             'feed_source_id' => $source->id,
@@ -431,7 +511,10 @@ class FeedImportTest extends TestCase
         $this->assertSame('Наше описание', $product->description['blocks'][0]['data']['text']);
         $this->assertSame(150000.0, $product->price);
         $this->assertStringContainsString('/feed/iron-steel/1001/', $product->image);
-        $this->assertTrue($product->propertiesValues->contains('name', 'Наш бренд'));
+        $this->assertFalse($product->propertiesValues->contains('name', 'Наш бренд'));
+        $this->assertFalse($product->propertiesValues->contains('name', 'Старая серия'));
+        $this->assertTrue($product->propertiesValues->contains('name', 'ПроМеталл'));
+        $this->assertTrue($product->propertiesValues->contains('name', 'Атмосфера'));
         $this->assertTrue($product->propertiesValues->contains('name', '12-20 м³'));
         $this->assertSame('success', $item->fresh()->status);
         Storage::assertMissing('public/products/old.jpg');

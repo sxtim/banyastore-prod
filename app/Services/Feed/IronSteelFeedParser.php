@@ -9,7 +9,10 @@ class IronSteelFeedParser
 {
     private const MAX_IMAGES_PER_OFFER = 20;
 
-    public function __construct(private readonly IronSteelOfferNormalizer $normalizer) {}
+    public function __construct(
+        private readonly IronSteelOfferNormalizer $normalizer,
+        private readonly IronSteelBrandSeriesResolver $brandSeriesResolver,
+    ) {}
 
     public function parse(string $xml): array
     {
@@ -80,6 +83,13 @@ class IronSteelFeedParser
             }
             $description = trim((string) $offer->description);
             $normalized = $this->normalizer->normalize($params, $description);
+            $categoryName = $categories[$categoryId] ?? '';
+            $normalized['params'] = $this->brandSeriesResolver->resolve(
+                $normalized['params'],
+                $name,
+                $this->nullableString($offer->vendor),
+                $categoryName
+            );
 
             $pictures = [];
             foreach ($offer->picture as $picture) {
@@ -108,7 +118,7 @@ class IronSteelFeedParser
                 'price' => $numericPrice,
                 'old_price' => $numericOldPrice,
                 'category_id' => $categoryId,
-                'category_name' => $categories[$categoryId] ?? '',
+                'category_name' => $categoryName,
                 'params' => $normalized['params'],
                 'raw_params' => $normalized['raw_params'],
                 'description_params' => $normalized['description_params'],
