@@ -33,6 +33,19 @@ class FeedApplyService
                     throw new FeedException('Проверка устарела. Перед импортом проверьте фид заново.');
                 }
 
+                if ($preview->items()->where('action', 'pending')->exists()) {
+                    throw new FeedException('Сначала разберите товары во вкладке «Требуют решения».');
+                }
+
+                $readyItems = $preview->items()
+                    ->whereIn('action', ['update', 'create'])
+                    ->where('status', 'ready')
+                    ->orderBy('id')
+                    ->get();
+                if ($readyItems->isEmpty()) {
+                    throw new FeedException('Изменений для импорта нет.');
+                }
+
                 $run = FeedImportRun::query()->create([
                     'feed_source_id' => $preview->feed_source_id,
                     'user_id' => $userId,
@@ -46,24 +59,19 @@ class FeedApplyService
                 ]);
 
                 $jobs = [];
-                foreach ($preview->items()->orderBy('id')->get() as $previewItem) {
-                    $ready = in_array($previewItem->action, ['update', 'create'], true)
-                        && $previewItem->status === 'ready';
-
+                foreach ($readyItems as $previewItem) {
                     $item = $run->items()->create([
                         'feed_product_link_id' => $previewItem->feed_product_link_id,
                         'product_id' => $previewItem->product_id,
                         'offer_id' => $previewItem->offer_id,
                         'action' => $previewItem->action,
-                        'status' => $ready ? 'ready' : 'skipped',
+                        'status' => 'ready',
                         'feed_payload' => $previewItem->feed_payload,
                         'diff' => $previewItem->diff,
                         'error' => $previewItem->error,
                     ]);
 
-                    if ($ready) {
-                        $jobs[] = new ApplyFeedImportItem($item->id);
-                    }
+                    $jobs[] = new ApplyFeedImportItem($item->id);
                 }
 
                 return [$run, $jobs];

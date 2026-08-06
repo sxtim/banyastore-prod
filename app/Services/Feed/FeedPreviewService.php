@@ -17,6 +17,7 @@ class FeedPreviewService
         private readonly FeedCategoryResolver $categoryResolver,
         private readonly FeedCandidateMatcher $candidateMatcher,
         private readonly FeedRunGuard $runGuard,
+        private readonly FeedProductChangeDetector $changeDetector,
     ) {}
 
     public function create(FeedSource $source, ?int $userId): FeedImportRun
@@ -86,6 +87,7 @@ class FeedPreviewService
     private function buildItems(FeedImportRun $run, FeedSource $source, array $offers): void
     {
         $seenOfferIds = [];
+        $previousPayloads = $this->previouslyAppliedPayloads($source);
 
         foreach ($offers as $offer) {
             $seenOfferIds[] = $offer['offer_id'];
@@ -109,10 +111,22 @@ class FeedPreviewService
             $this->syncLinkMetadata($link, $offer);
 
             $product = $link->product_id ? Product::query()
-                ->with(['category', 'propertiesValues.property', 'additionalImages'])
+                ->with(['category', 'discount', 'propertiesValues.property', 'additionalImages'])
                 ->find($link->product_id) : null;
 
             [$action, $status, $error] = $this->resolveAction($link, $product, $offer, $source);
+            $diff = $this->diff(
+                $source,
+                $offer,
+                $product,
+                $action,
+                $previousPayloads[$link->id] ?? null,
+                $link->last_synced_at !== null
+            );
+            if ($action === 'update' && empty($diff['changes'])) {
+                $action = 'unchanged';
+                $status = 'skipped';
+            }
 
             FeedImportItem::query()->create([
                 'feed_import_run_id' => $run->id,
@@ -122,7 +136,7 @@ class FeedPreviewService
                 'action' => $action,
                 'status' => $status,
                 'feed_payload' => $offer,
-                'diff' => $this->diff($source, $offer, $product, $action),
+                'diff' => $diff,
                 'error' => $error,
             ]);
         }
@@ -217,7 +231,14 @@ class FeedPreviewService
         return ['pending', 'pending', null];
     }
 
-    private function diff(FeedSource $source, array $offer, ?Product $product, string $action): array
+    private function diff(
+        FeedSource $source,
+        array $offer,
+        ?Product $product,
+        string $action,
+        ?array $previousPayload,
+        bool $wasSynced
+    ): array
     {
         $category = $this->categoryResolver->resolve($source, $offer);
         $base = [
@@ -256,7 +277,32 @@ class FeedPreviewService
             'price_changed' => (float) $product->price !== (float) $feedBasePrice
                 || (float) $productCurrentPrice !== (float) $offer['price'],
             'description' => $this->hasDescription($product) ? 'Сохранить наше' : 'Заполнить из фида',
+            'changes' => $this->changeDetector->detect(
+                $source,
+                $offer,
+                $product,
+                $previousPayload,
+                $wasSynced
+            ),
         ];
+    }
+
+    private function previouslyAppliedPayloads(FeedSource $source): array
+    {
+        return FeedImportItem::query()
+            ->select(['feed_import_items.id', 'feed_product_link_id', 'feed_payload'])
+            ->whereNotNull('feed_product_link_id')
+            ->whereIn('feed_import_items.status', ['success', 'warning'])
+            ->whereHas('run', fn ($query) => $query
+                ->where('feed_source_id', $source->id)
+                ->where('kind', FeedImportRun::KIND_APPLY))
+            ->latest('feed_import_items.id')
+            ->get()
+            ->unique('feed_product_link_id')
+            ->mapWithKeys(fn (FeedImportItem $item) => [
+                $item->feed_product_link_id => $item->feed_payload,
+            ])
+            ->all();
     }
 
     private function hasDescription(Product $product): bool
@@ -276,6 +322,7 @@ class FeedPreviewService
         return [
             'total' => $run->items()->count(),
             'update' => $counts['update'] ?? 0,
+            'unchanged' => $counts['unchanged'] ?? 0,
             'create' => $counts['create'] ?? 0,
             'pending' => $counts['pending'] ?? 0,
             'excluded' => $counts['excluded'] ?? 0,

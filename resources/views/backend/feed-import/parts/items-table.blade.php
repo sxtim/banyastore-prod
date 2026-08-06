@@ -5,9 +5,7 @@
             <th>Статус</th>
             <th>Товар фида</th>
             <th>Наш товар</th>
-            <th>Цена</th>
-            <th>Категория</th>
-            <th>Фото</th>
+            <th>Что изменится</th>
             <th>Подробности</th>
         </tr>
         </thead>
@@ -18,7 +16,7 @@
             <tr>
                 <td>
                     {{ [
-                        'update' => 'Синхронизировать',
+                        'update' => 'Изменить',
                         'create' => 'Создать',
                         'pending' => 'Решить',
                         'excluded' => 'Исключено',
@@ -61,45 +59,39 @@
                         <span class="text-muted">Связи с товаром нет</span>
                     @endif
                 </td>
-                <td>
-                    @if(isset($diff['product_price']))
-                        <div>
-                            Сейчас:
-                            {{ number_format($diff['product_current_price'] ?? $diff['product_price'], 0, ',', ' ') }}
-                            @if(
-                                isset($diff['product_current_price'])
-                                && (float) $diff['product_current_price'] !== (float) $diff['product_price']
-                            )
-                                <span class="text-muted">
-                                    (обычная {{ number_format($diff['product_price'], 0, ',', ' ') }})
-                                </span>
-                            @endif
-                        </div>
-                    @endif
-                    @if(isset($payload['price']))
-                        <div>
-                            Из фида: {{ number_format($payload['price'], 0, ',', ' ') }}
-                            @if(!empty($payload['old_price']))
-                                <span class="text-muted">
-                                    (обычная {{ number_format($payload['old_price'], 0, ',', ' ') }})
-                                </span>
-                            @endif
-                        </div>
+                <td style="min-width: 280px;">
+                    @if($item->action === 'create')
+                        <div><strong>Новый товар</strong></div>
+                        <div>Цена: {{ number_format($payload['price'] ?? 0, 0, ',', ' ') }} руб.</div>
+                        <div>Категория: {{ $diff['target_category'] ?? 'не определена' }}</div>
+                        <div>Фотографий: {{ $diff['feed_photo_count'] ?? 0 }}</div>
                     @else
-                        —
-                    @endif
-                </td>
-                <td>
-                    {{ $diff['feed_category'] ?? '—' }}
-                    @if(!empty($diff['target_category']))
-                        → {{ $diff['target_category'] }}
-                    @endif
-                </td>
-                <td>
-                    @if($item->action === 'removed')
-                        —
-                    @else
-                        {{ $diff['product_photo_count'] ?? 0 }} → {{ $diff['feed_photo_count'] ?? 0 }}
+                        @foreach(($diff['changes'] ?? []) as $key => $change)
+                            @if($key === 'price')
+                                <div class="mb-1">
+                                    <strong>Цена:</strong>
+                                    {{ number_format($change['from'], 0, ',', ' ') }} →
+                                    {{ number_format($change['to'], 0, ',', ' ') }} руб.
+                                    @if((float) ($change['base_to'] ?? $change['to']) !== (float) $change['to'])
+                                        <span class="text-muted">
+                                            (обычная {{ number_format($change['base_to'], 0, ',', ' ') }})
+                                        </span>
+                                    @endif
+                                </div>
+                            @elseif($key === 'properties')
+                                @foreach($change as $propertyChange)
+                                    <div class="mb-1">
+                                        <strong>{{ $propertyChange['label'] }}:</strong>
+                                        {{ $propertyChange['from'] }} → {{ $propertyChange['to'] }}
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="mb-1">
+                                    <strong>{{ $change['label'] }}:</strong>
+                                    {{ $change['from'] }} → {{ $change['to'] }}
+                                </div>
+                            @endif
+                        @endforeach
                     @endif
                 </td>
                 <td>

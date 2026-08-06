@@ -65,6 +65,10 @@ class FeedImportController extends Controller
                     $itemAction !== '',
                     fn ($query) => $query->where('action', $itemAction)
                 )
+                ->when(
+                    $itemAction === '',
+                    fn ($query) => $query->whereIn('action', ['update', 'create'])
+                )
                 ->orderBy('id')
                 ->paginate(30, ['*'], 'items_page')
                 ->withQueryString()

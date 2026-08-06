@@ -213,6 +213,7 @@ class FeedImportTest extends TestCase
         $this->assertSame([
             'total' => 3,
             'update' => 1,
+            'unchanged' => 0,
             'create' => 1,
             'pending' => 0,
             'excluded' => 1,
@@ -229,6 +230,67 @@ class FeedImportTest extends TestCase
         $this->assertSame('ПроМеталл', $updateItem->link->metadata['feed_vendor']);
         $this->assertSame('group-100', $updateItem->link->metadata['feed_group_id']);
         $this->assertSame('update', $updateItem->action);
+    }
+
+    public function test_unchanged_products_are_not_shown_or_imported_again(): void
+    {
+        $source = app(IronSteelSetupService::class)->sync();
+        $product = $this->product('Наше название', 140000);
+        $link = FeedProductLink::query()->create([
+            'feed_source_id' => $source->id,
+            'offer_id' => '1001',
+            'product_id' => $product->id,
+            'decision' => FeedProductLink::DECISION_LINK,
+        ]);
+        FeedProductLink::query()->create([
+            'feed_source_id' => $source->id,
+            'offer_id' => '1002',
+            'decision' => FeedProductLink::DECISION_EXCLUDE,
+        ]);
+        $appliedRun = $this->applyRun($source->id);
+        $appliedItem = $appliedRun->items()->create([
+            'feed_product_link_id' => $link->id,
+            'product_id' => $product->id,
+            'offer_id' => '1001',
+            'action' => 'update',
+            'status' => 'ready',
+            'feed_payload' => $this->offer('1001'),
+        ]);
+        Http::fake([
+            config('feed_import.iron_steel.url') => Http::response($this->feedXml, 200),
+            'https://images.test/*' => Http::response(
+                $this->png(),
+                200,
+                ['Content-Type' => 'image/png']
+            ),
+        ]);
+
+        app(FeedProductImporter::class)->import($appliedItem);
+        $appliedRun->update([
+            'status' => FeedImportRun::STATUS_COMPLETED,
+            'finished_at' => now(),
+        ]);
+        $preview = app(FeedPreviewService::class)->create($source, null);
+
+        $previewItem = $preview->items()->where('offer_id', '1001')->firstOrFail();
+        $this->assertSame('unchanged', $previewItem->action);
+        $this->assertSame('skipped', $previewItem->status);
+        $this->assertSame(0, $preview->summary['update']);
+        $this->assertSame(1, $preview->summary['unchanged']);
+
+        $response = $this
+            ->withoutMiddleware([Authenticate::class, RoleMiddleware::class])
+            ->get(route('backend.feed-import.index'));
+
+        $response->assertOk()
+            ->assertSee('Изменений нет.')
+            ->assertSee('1 совпадает с фидом')
+            ->assertDontSee('offer id 1001')
+            ->assertDontSee(route('backend.feed-import.apply', $preview), false);
+
+        $this->expectException(FeedException::class);
+        $this->expectExceptionMessage('Изменений для импорта нет.');
+        app(FeedApplyService::class)->start($preview, null);
     }
 
     public function test_import_screen_hides_technical_property_sources(): void
@@ -255,7 +317,7 @@ class FeedImportTest extends TestCase
             ->assertDontSee('Расхождения свойств')
             ->assertDontSee('Параметры &lt;param&gt;', false)
             ->assertDontSee('Извлечено из описания')
-            ->assertDontSee('Описание:</strong>', false)
+            ->assertSee('не заполнено → заполнить из фида')
             ->assertDontSee('Связан не с тем товаром');
         $this->assertArrayNotHasKey('property_conflicts', $run->summary);
     }

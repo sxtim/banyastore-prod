@@ -19,8 +19,9 @@
             </p>
             <ol class="pl-4 mb-3">
                 <li><strong>Проверить фид</strong> — скачать свежие данные и подготовить отчёт. Товары сайта при этом не меняются.</li>
+                <li>В отчёте показываются только новые товары и товары с реальными изменениями. Если изменений нет, таблица и кнопка импорта не показываются.</li>
                 <li>Если во вкладке <strong>Требуют решения</strong> стоит ноль, ничего дополнительно делать не нужно.</li>
-                <li><strong>Запустить импорт</strong> — применить подготовленные изменения. Существующие товары обновятся, новые будут созданы.</li>
+                <li><strong>Запустить импорт</strong> — применить только показанные изменения. Существующие товары обновятся, новые будут созданы.</li>
                 <li><strong>История</strong> — посмотреть результаты, скачать CSV-отчёт или кнопкой «Откатить» отменить последний импорт.</li>
             </ol>
             <p>
@@ -138,9 +139,10 @@
             </div>
         @elseif ($latestPreview)
             @php($summary = $latestPreview->summary ?? [])
+            @php($changeCount = ($summary['update'] ?? 0) + ($summary['create'] ?? 0))
             <div class="row mb-4">
                 @foreach([
-                    'update' => ['Связанные товары', 'primary'],
+                    'update' => ['Изменить', 'primary'],
                     'create' => ['Создать', 'success'],
                     'pending' => ['Требуют решения', 'warning'],
                     'errors' => ['Ошибки', 'danger'],
@@ -154,9 +156,17 @@
                 @endforeach
             </div>
 
-            @if(($summary['excluded'] ?? 0) > 0 || ($summary['removed'] ?? 0) > 0)
+            @if($changeCount === 0 && ($summary['pending'] ?? 0) === 0 && ($summary['errors'] ?? 0) === 0)
+                <div class="alert alert-success mb-4">
+                    <strong>Изменений нет.</strong>
+                    Все связанные товары уже соответствуют текущему фиду.
+                </div>
+            @endif
+
+            @if(($summary['unchanged'] ?? 0) > 0 || ($summary['excluded'] ?? 0) > 0 || ($summary['removed'] ?? 0) > 0)
                 <p class="text-muted mb-3">
                     Без изменений:
+                    {{ $summary['unchanged'] ?? 0 }} совпадает с фидом,
                     {{ $summary['excluded'] ?? 0 }} исключено,
                     {{ $summary['removed'] ?? 0 }} отсутствует в текущем фиде.
                 </p>
@@ -166,6 +176,8 @@
                 @if(
                     !$activeRun
                     && $canApplyPreview
+                    && $changeCount > 0
+                    && ($summary['pending'] ?? 0) === 0
                     && $latestPreview->status === \App\Models\Feed\FeedImportRun::STATUS_READY
                 )
                     <form action="{{ route('backend.feed-import.apply', $latestPreview) }}" method="post"
@@ -179,20 +191,22 @@
                 <span class="ml-3 text-muted">Проверка #{{ $latestPreview->id }}, снимок {{ Str::limit($latestPreview->snapshot_hash, 12, '') }}</span>
             </div>
 
-            <div class="mb-3">
-                @foreach([
-                    '' => 'Все',
-                    'update' => 'Связанные товары',
-                    'create' => 'Создать',
-                ] as $action => $label)
-                    <a href="{{ route('backend.feed-import.index', array_filter(['item_action' => $action])) }}"
-                       class="btn btn-sm {{ $itemAction === $action ? 'btn-primary' : 'btn-outline-secondary' }} mr-1 mb-1">
-                        {{ $label }}
-                    </a>
-                @endforeach
-            </div>
+            @if($changeCount > 0)
+                <div class="mb-3">
+                    @foreach([
+                        '' => 'Все изменения',
+                        'update' => 'Изменить',
+                        'create' => 'Создать',
+                    ] as $action => $label)
+                        <a href="{{ route('backend.feed-import.index', array_filter(['item_action' => $action])) }}"
+                           class="btn btn-sm {{ $itemAction === $action ? 'btn-primary' : 'btn-outline-secondary' }} mr-1 mb-1">
+                            {{ $label }}
+                        </a>
+                    @endforeach
+                </div>
 
-            @include('backend.feed-import.parts.items-table', ['items' => $items])
+                @include('backend.feed-import.parts.items-table', ['items' => $items])
+            @endif
         @else
             <div class="alert alert-light border">Сначала выполните предварительную проверку фида.</div>
         @endif
