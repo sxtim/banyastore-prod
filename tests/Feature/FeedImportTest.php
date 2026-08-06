@@ -250,10 +250,13 @@ class FeedImportTest extends TestCase
 
         $response->assertOk()
             ->assertSee('Характеристики после импорта')
+            ->assertSee('Исправить связь')
             ->assertSee('offer id 1001')
             ->assertDontSee('Расхождения свойств')
             ->assertDontSee('Параметры &lt;param&gt;', false)
-            ->assertDontSee('Извлечено из описания');
+            ->assertDontSee('Извлечено из описания')
+            ->assertDontSee('Описание:</strong>', false)
+            ->assertDontSee('Связан не с тем товаром');
         $this->assertArrayNotHasKey('property_conflicts', $run->summary);
     }
 

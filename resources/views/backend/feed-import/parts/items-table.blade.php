@@ -112,9 +112,6 @@
                                     <div>{{ $name }}: {{ $value }}</div>
                                 @endforeach
                             @endif
-                            @if(!empty($diff['description']))
-                                <div class="mt-2"><strong>Описание:</strong> {{ $diff['description'] }}</div>
-                            @endif
                             @if(!empty($diff['message']))
                                 <div>{{ $diff['message'] }}</div>
                             @endif
@@ -125,7 +122,7 @@
                                     @csrf
                                     <input type="hidden" name="decision" value="pending">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                        Связан не с тем товаром
+                                        Исправить связь
                                     </button>
                                 </form>
                             @endif
