@@ -204,6 +204,12 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 php artisan queue:restart
+
+echo "Restore Laravel writable directory permissions"
+chown -R www-data:www-data storage bootstrap/cache
+find storage bootstrap/cache -type d -exec chmod 775 {} \;
+find storage bootstrap/cache -type f -exec chmod 664 {} \;
+
 php artisan up
 SITE_IS_DOWN=0
 trap - EXIT
