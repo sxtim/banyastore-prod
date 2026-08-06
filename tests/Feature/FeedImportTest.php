@@ -918,6 +918,26 @@ class FeedImportTest extends TestCase
         $this->assertTrue($source->fresh()->updated_at->equalTo($configuredAt));
     }
 
+    public function test_import_screen_shows_when_catalog_was_really_updated(): void
+    {
+        $source = app(IronSteelSetupService::class)->sync();
+        FeedImportRun::query()->create([
+            'feed_source_id' => $source->id,
+            'kind' => FeedImportRun::KIND_APPLY,
+            'status' => FeedImportRun::STATUS_COMPLETED,
+            'started_at' => '2026-08-06 14:28:11',
+            'finished_at' => '2026-08-06 14:29:37',
+        ]);
+
+        $response = $this
+            ->withoutMiddleware([Authenticate::class, RoleMiddleware::class])
+            ->get(route('backend.feed-import.index'));
+
+        $response->assertOk()
+            ->assertSee('Товары сайта обновлены:')
+            ->assertSee('06.08.2026 14:29');
+    }
+
     public function test_csv_report_escapes_spreadsheet_formulas(): void
     {
         $source = app(IronSteelSetupService::class)->sync();

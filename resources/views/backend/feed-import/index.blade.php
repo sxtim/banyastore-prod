@@ -56,9 +56,15 @@
     @endif
 
     <div class="border-top border-bottom py-2 mb-4 text-muted">
-        Последняя успешная проверка:
-        {{ $latestPreview?->created_at?->format('d.m.Y H:i') ?? 'не выполнялась' }}.
-        Дата фида: {{ $latestPreview?->feed_generated_at?->format('d.m.Y H:i') ?? 'неизвестна' }}.
+        <div>
+            Товары сайта обновлены:
+            <strong>{{ $latestSuccessfulImport?->finished_at?->format('d.m.Y H:i') ?? 'ещё не обновлялись' }}</strong>.
+        </div>
+        <div>
+            Последняя проверка: {{ $latestPreview?->finished_at?->format('d.m.Y H:i') ?? 'не выполнялась' }}.
+            Фид поставщика сформирован:
+            {{ $latestPreview?->feed_generated_at?->format('d.m.Y H:i') ?? 'дата не указана' }}.
+        </div>
     </div>
 
     @if ($activeRun)

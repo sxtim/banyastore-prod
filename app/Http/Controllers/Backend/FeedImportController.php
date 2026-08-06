@@ -37,6 +37,11 @@ class FeedImportController extends Controller
             ->where('kind', FeedImportRun::KIND_PREVIEW)
             ->latest('id')
             ->first();
+        $latestSuccessfulImport = $source->runs()
+            ->where('kind', FeedImportRun::KIND_APPLY)
+            ->where('status', FeedImportRun::STATUS_COMPLETED)
+            ->latest('id')
+            ->first();
         $activeRun = $source->runs()
             ->whereIn('status', [FeedImportRun::STATUS_PREPARING, FeedImportRun::STATUS_RUNNING])
             ->latest('id')
@@ -79,6 +84,7 @@ class FeedImportController extends Controller
             'tab',
             'latestPreview',
             'latestPreviewAttempt',
+            'latestSuccessfulImport',
             'activeRun',
             'items',
             'pendingItems',
