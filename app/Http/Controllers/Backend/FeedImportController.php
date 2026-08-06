@@ -46,8 +46,19 @@ class FeedImportController extends Controller
             ->whereIn('status', [FeedImportRun::STATUS_PREPARING, FeedImportRun::STATUS_RUNNING])
             ->latest('id')
             ->first();
+        $completedImportForLatestPreview = $latestPreview
+            ? $source->runs()
+                ->where('kind', FeedImportRun::KIND_APPLY)
+                ->where('parent_run_id', $latestPreview->id)
+                ->whereIn('status', [
+                    FeedImportRun::STATUS_COMPLETED,
+                    FeedImportRun::STATUS_COMPLETED_WITH_ERRORS,
+                ])
+                ->latest('id')
+                ->first()
+            : null;
         $itemAction = $request->string('item_action')->value();
-        $items = $latestPreview
+        $items = $latestPreview && ! $completedImportForLatestPreview
             ? $latestPreview->items()
                 ->with(['product.category', 'link'])
                 ->when(
@@ -58,7 +69,7 @@ class FeedImportController extends Controller
                 ->paginate(30, ['*'], 'items_page')
                 ->withQueryString()
             : null;
-        $pendingItems = $latestPreview
+        $pendingItems = $latestPreview && ! $completedImportForLatestPreview
             ? $latestPreview->items()
                 ->with(['product.category', 'link'])
                 ->where('action', 'pending')
@@ -85,6 +96,7 @@ class FeedImportController extends Controller
             'latestPreview',
             'latestPreviewAttempt',
             'latestSuccessfulImport',
+            'completedImportForLatestPreview',
             'activeRun',
             'items',
             'pendingItems',

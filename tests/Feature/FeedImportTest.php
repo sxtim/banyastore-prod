@@ -941,6 +941,45 @@ class FeedImportTest extends TestCase
             ->assertSee('06.08.2026 14:29');
     }
 
+    public function test_completed_import_hides_the_applied_preview_table(): void
+    {
+        $source = app(IronSteelSetupService::class)->sync();
+        $product = $this->product('Наше название', 140000);
+        FeedProductLink::query()->create([
+            'feed_source_id' => $source->id,
+            'offer_id' => '1001',
+            'product_id' => $product->id,
+            'decision' => FeedProductLink::DECISION_LINK,
+        ]);
+        $preview = app(FeedPreviewService::class)->create($source, null);
+        $import = FeedImportRun::query()->create([
+            'feed_source_id' => $source->id,
+            'parent_run_id' => $preview->id,
+            'kind' => FeedImportRun::KIND_APPLY,
+            'status' => FeedImportRun::STATUS_COMPLETED,
+            'summary' => [
+                'total' => 3,
+                'success' => 2,
+                'skipped' => 1,
+                'error' => 0,
+            ],
+            'started_at' => now()->subMinute(),
+            'finished_at' => now(),
+        ]);
+
+        $response = $this
+            ->withoutMiddleware([Authenticate::class, RoleMiddleware::class])
+            ->get(route('backend.feed-import.index'));
+
+        $response->assertOk()
+            ->assertSee("Импорт #{$import->id}")
+            ->assertSee('успешно завершён')
+            ->assertSee('Обработано: 2')
+            ->assertSee('Открыть историю')
+            ->assertDontSee('Характеристики после импорта')
+            ->assertDontSee('offer id 1001');
+    }
+
     public function test_csv_report_escapes_spreadsheet_formulas(): void
     {
         $source = app(IronSteelSetupService::class)->sync();

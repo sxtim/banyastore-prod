@@ -118,7 +118,25 @@
             </form>
         @endif
 
-        @if ($latestPreview)
+        @if ($completedImportForLatestPreview)
+            @php($importSummary = $completedImportForLatestPreview->summary ?? [])
+            @php($importHasErrors = ($importSummary['error'] ?? 0) > 0)
+            <div class="alert alert-{{ $importHasErrors ? 'warning' : 'success' }}">
+                <strong>
+                    Импорт #{{ $completedImportForLatestPreview->id }}
+                    {{ $importHasErrors ? 'завершён с ошибками' : 'успешно завершён' }}
+                    {{ $completedImportForLatestPreview->finished_at?->format('d.m.Y H:i') }}.
+                </strong>
+                <div class="mt-1">
+                    Обработано: {{ $importSummary['success'] ?? 0 }},
+                    пропущено: {{ $importSummary['skipped'] ?? 0 }},
+                    ошибок: {{ $importSummary['error'] ?? 0 }}.
+                </div>
+                <a href="{{ route('backend.feed-import.index', ['tab' => 'history']) }}">
+                    Открыть историю
+                </a>
+            </div>
+        @elseif ($latestPreview)
             @php($summary = $latestPreview->summary ?? [])
             <div class="row mb-4">
                 @foreach([
