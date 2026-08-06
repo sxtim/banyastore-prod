@@ -218,20 +218,20 @@ class FeedImportTest extends TestCase
             'excluded' => 1,
             'removed' => 0,
             'errors' => 0,
-            'property_conflicts' => 1,
         ], $run->summary);
         $this->assertSame(140000.0, $product->fresh()->price);
         Storage::assertExists($run->snapshot_path);
-        $conflictItem = $run->items()->where('offer_id', '1001')->firstOrFail();
-        $this->assertSame('Масса печи', $conflictItem->diff['property_conflicts'][0]['name']);
-        $this->assertSame('ПроМеталл', $conflictItem->diff['feed_vendor']);
-        $this->assertSame('group-100', $conflictItem->diff['feed_group_id']);
-        $this->assertSame('ПроМеталл', $conflictItem->link->metadata['feed_vendor']);
-        $this->assertSame('group-100', $conflictItem->link->metadata['feed_group_id']);
-        $this->assertSame('update', $conflictItem->action);
+        $updateItem = $run->items()->where('offer_id', '1001')->firstOrFail();
+        $this->assertSame('197 кг', $updateItem->diff['feed_properties']['Масса печи']);
+        $this->assertArrayNotHasKey('property_conflicts', $updateItem->diff);
+        $this->assertSame('ПроМеталл', $updateItem->diff['feed_vendor']);
+        $this->assertSame('group-100', $updateItem->diff['feed_group_id']);
+        $this->assertSame('ПроМеталл', $updateItem->link->metadata['feed_vendor']);
+        $this->assertSame('group-100', $updateItem->link->metadata['feed_group_id']);
+        $this->assertSame('update', $updateItem->action);
     }
 
-    public function test_property_conflicts_can_be_filtered_in_preview(): void
+    public function test_import_screen_hides_technical_property_sources(): void
     {
         $source = app(IronSteelSetupService::class)->sync();
         $product = $this->product('Наше название', 140000);
@@ -246,15 +246,15 @@ class FeedImportTest extends TestCase
 
         $response = $this
             ->withoutMiddleware([Authenticate::class, RoleMiddleware::class])
-            ->get(route('backend.feed-import.index', ['item_action' => 'property_conflicts']));
+            ->get(route('backend.feed-import.index'));
 
         $response->assertOk()
-            ->assertSee('Расхождения свойств')
-            ->assertSee('Эти характеристики не обновляются автоматически.')
+            ->assertSee('Характеристики после импорта')
             ->assertSee('offer id 1001')
-            ->assertDontSee('offer id 1002')
-            ->assertDontSee('offer id 1003');
-        $this->assertSame(1, $run->summary['property_conflicts']);
+            ->assertDontSee('Расхождения свойств')
+            ->assertDontSee('Параметры &lt;param&gt;', false)
+            ->assertDontSee('Извлечено из описания');
+        $this->assertArrayNotHasKey('property_conflicts', $run->summary);
     }
 
     public function test_preview_reports_only_linked_products_missing_from_feed(): void

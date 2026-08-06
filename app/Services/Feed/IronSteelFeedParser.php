@@ -122,7 +122,6 @@ class IronSteelFeedParser
                 'params' => $normalized['params'],
                 'raw_params' => $normalized['raw_params'],
                 'description_params' => $normalized['description_params'],
-                'property_conflicts' => $normalized['property_conflicts'],
                 'unmapped_description_lines' => $normalized['unmapped_description_lines'],
                 'packaging_lines' => $normalized['packaging_lines'],
             ];

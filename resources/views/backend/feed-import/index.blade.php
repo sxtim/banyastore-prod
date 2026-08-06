@@ -15,12 +15,11 @@
         <summary>Как работать с импортом</summary>
         <div class="pt-3 pb-1">
             <p>
-                Безопасный порядок работы: проверить фид, разобрать спорные товары,
-                проверить список изменений и только потом запустить импорт.
+                Обычный порядок: проверить фид и запустить импорт.
             </p>
             <ol class="pl-4 mb-3">
                 <li><strong>Проверить фид</strong> — скачать свежие данные и подготовить отчёт. Товары сайта при этом не меняются.</li>
-                <li><strong>Требуют решения</strong> — связать товар фида с нашим товаром или выбрать «Создать новый».</li>
+                <li>Если во вкладке <strong>Требуют решения</strong> стоит ноль, ничего дополнительно делать не нужно.</li>
                 <li><strong>Запустить импорт</strong> — применить подготовленные изменения. Существующие товары обновятся, новые будут созданы.</li>
                 <li><strong>История</strong> — посмотреть результаты, скачать CSV-отчёт или кнопкой «Откатить» отменить последний импорт.</li>
             </ol>
@@ -29,18 +28,8 @@
                 наши название и категория сохраняются. Если в фиде есть старая цена, она показывается
                 зачёркнутой, а текущая цена товара совпадает с ценой фида.
                 Товары из исключённых категорий и товары, пропавшие из фида, не изменяются.
+                Для характеристик используются структурированные поля фида; описание только дополняет недостающие данные.
             </p>
-            <p class="mb-2"><strong>Кнопки над таблицей</strong> только фильтруют отчёт:</p>
-            <p class="mb-1"><strong>Все</strong> — все позиции проверки.</p>
-            <p class="mb-1"><strong>Обновить</strong> — связанные товары, которые будут обновлены.</p>
-            <p class="mb-1"><strong>Создать</strong> — новые товары, которых ещё нет на сайте.</p>
-            <p class="mb-1"><strong>Требуют решения</strong> — товары, для которых нужно вручную выбрать действие.</p>
-            <p class="mb-1"><strong>Исключено</strong> — позиции, которые импортировать не нужно.</p>
-            <p class="mb-1">
-                <strong>Нет в текущем фиде</strong> — связанный товар сайта пропал из фида.
-                Он останется на сайте без изменений.
-            </p>
-            <p class="mb-0"><strong>Показать</strong> — раскрыть свойства и другие подробности по товару.</p>
         </div>
     </details>
 
@@ -127,14 +116,12 @@
             @php($summary = $latestPreview->summary ?? [])
             <div class="row mb-4">
                 @foreach([
-                    'update' => ['Обновить', 'primary'],
+                    'update' => ['Связанные товары', 'primary'],
                     'create' => ['Создать', 'success'],
                     'pending' => ['Требуют решения', 'warning'],
-                    'excluded' => ['Исключено', 'secondary'],
-                    'removed' => ['Нет в текущем фиде', 'secondary'],
                     'errors' => ['Ошибки', 'danger'],
                 ] as $key => [$label, $color])
-                    <div class="col-md-2 col-6 mb-2">
+                    <div class="col-md-3 col-6 mb-2">
                         <div class="border-left border-{{ $color }} pl-3 py-2">
                             <div class="small text-muted">{{ $label }}</div>
                             <strong class="h4">{{ $summary[$key] ?? 0 }}</strong>
@@ -143,15 +130,12 @@
                 @endforeach
             </div>
 
-            @if(($summary['property_conflicts'] ?? 0) > 0)
-                <div class="alert alert-warning">
-                    В {{ $summary['property_conflicts'] }} товарах значения характеристик в
-                    <code>&lt;param&gt;</code> и описании фида расходятся.
-                    Эти характеристики не обновляются автоматически.
-                    <a href="{{ route('backend.feed-import.index', ['item_action' => 'property_conflicts']) }}">
-                        Показать товары
-                    </a>
-                </div>
+            @if(($summary['excluded'] ?? 0) > 0 || ($summary['removed'] ?? 0) > 0)
+                <p class="text-muted mb-3">
+                    Без изменений:
+                    {{ $summary['excluded'] ?? 0 }} исключено,
+                    {{ $summary['removed'] ?? 0 }} отсутствует в текущем фиде.
+                </p>
             @endif
 
             <div class="d-flex align-items-center mb-3">
@@ -174,12 +158,8 @@
             <div class="mb-3">
                 @foreach([
                     '' => 'Все',
-                    'update' => 'Обновить',
+                    'update' => 'Связанные товары',
                     'create' => 'Создать',
-                    'pending' => 'Требуют решения',
-                    'excluded' => 'Исключено',
-                    'removed' => 'Нет в текущем фиде',
-                    'property_conflicts' => 'Расхождения свойств',
                 ] as $action => $label)
                     <a href="{{ route('backend.feed-import.index', array_filter(['item_action' => $action])) }}"
                        class="btn btn-sm {{ $itemAction === $action ? 'btn-primary' : 'btn-outline-secondary' }} mr-1 mb-1">

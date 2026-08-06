@@ -46,11 +46,7 @@ class FeedImportController extends Controller
             ? $latestPreview->items()
                 ->with(['product.category', 'link'])
                 ->when(
-                    $itemAction === 'property_conflicts',
-                    fn ($query) => $query->whereJsonLength('diff->property_conflicts', '>', 0)
-                )
-                ->when(
-                    $itemAction !== '' && $itemAction !== 'property_conflicts',
+                    $itemAction !== '',
                     fn ($query) => $query->where('action', $itemAction)
                 )
                 ->orderBy('id')
@@ -318,7 +314,6 @@ class FeedImportController extends Controller
                 'ID товара',
                 'Название фида',
                 'Ошибка',
-                'Конфликты свойств',
                 'Не сопоставлено из описания',
                 'Упаковка',
             ]);
@@ -326,14 +321,6 @@ class FeedImportController extends Controller
             $run->items()->orderBy('id')->chunk(200, function ($items) use ($file) {
                 foreach ($items as $item) {
                     $diff = $item->diff ?? [];
-                    $conflicts = collect($diff['property_conflicts'] ?? [])
-                        ->map(fn (array $conflict) => sprintf(
-                            '%s: <param> %s / описание %s',
-                            $conflict['name'],
-                            $conflict['param'],
-                            $conflict['description']
-                        ))
-                        ->implode('; ');
                     fputcsv($file, array_map([$this, 'safeCsvValue'], [
                         $item->offer_id,
                         $item->action,
@@ -341,7 +328,6 @@ class FeedImportController extends Controller
                         $item->product_id,
                         $item->feed_payload['name'] ?? '',
                         $item->error,
-                        $conflicts,
                         implode('; ', $diff['unmapped_description_lines'] ?? []),
                         implode('; ', $diff['packaging_lines'] ?? []),
                     ]));

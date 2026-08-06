@@ -231,7 +231,6 @@ class FeedPreviewService
             'feed_properties' => $offer['params'],
             'raw_feed_properties' => $offer['raw_params'] ?? $offer['params'],
             'description_properties' => $offer['description_params'] ?? [],
-            'property_conflicts' => $offer['property_conflicts'] ?? [],
             'unmapped_description_lines' => $offer['unmapped_description_lines'] ?? [],
             'packaging_lines' => $offer['packaging_lines'] ?? [],
             'feed_photo_count' => count($offer['pictures']),
@@ -282,9 +281,6 @@ class FeedPreviewService
             'excluded' => $counts['excluded'] ?? 0,
             'removed' => $counts['removed'] ?? 0,
             'errors' => $run->items()->where('status', 'error')->count(),
-            'property_conflicts' => $run->items()
-                ->whereJsonLength('diff->property_conflicts', '>', 0)
-                ->count(),
         ];
     }
 }

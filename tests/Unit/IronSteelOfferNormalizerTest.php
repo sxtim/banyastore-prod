@@ -44,17 +44,16 @@ HTML;
         $this->assertSame(['Гарантия 36 месяцев'], $result['unmapped_description_lines']);
     }
 
-    public function test_param_description_conflict_is_not_synchronized_or_removed(): void
+    public function test_param_has_priority_over_description(): void
     {
         $result = $this->normalizer()->normalize(
             ['Масса камней в сетке' => '120 кг'],
             'Масса камней в сетке 120-150 кг<br /><br />Описание'
         );
 
-        $this->assertArrayNotHasKey('Масса камней в сетке', $result['params']);
-        $this->assertSame('120 кг', $result['property_conflicts'][0]['param']);
-        $this->assertSame('120-150 кг', $result['property_conflicts'][0]['description']);
-        $this->assertStringContainsString('Масса камней в сетке 120-150 кг', $result['description']);
+        $this->assertSame('120 кг', $result['params']['Масса камней в сетке']);
+        $this->assertArrayNotHasKey('property_conflicts', $result);
+        $this->assertSame('Описание', $result['description']);
     }
 
     public function test_equivalent_units_do_not_create_a_false_conflict(): void
@@ -65,7 +64,7 @@ HTML;
         );
 
         $this->assertSame(['Объем парной' => '12-20 м³'], $result['params']);
-        $this->assertSame([], $result['property_conflicts']);
+        $this->assertArrayNotHasKey('property_conflicts', $result);
         $this->assertSame('Описание', $result['description']);
     }
 

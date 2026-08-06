@@ -18,18 +18,13 @@
             <tr>
                 <td>
                     {{ [
-                        'update' => 'Обновить',
+                        'update' => 'Синхронизировать',
                         'create' => 'Создать',
                         'pending' => 'Решить',
                         'excluded' => 'Исключено',
                         'removed' => 'Нет в текущем фиде',
                     ][$item->action] ?? $item->action }}
                     @if($item->error)<div class="text-danger">{{ $item->error }}</div>@endif
-                    @if(!empty($diff['property_conflicts']))
-                        <div class="text-warning mt-1">
-                            Конфликт свойств: {{ count($diff['property_conflicts']) }}
-                        </div>
-                    @endif
                 </td>
                 <td>
                     @if($item->action === 'removed')
@@ -111,51 +106,11 @@
                     <details>
                         <summary>Показать</summary>
                         <div class="mt-2">
-                            @if(!empty($diff['raw_feed_properties']))
-                                <div><strong>Параметры &lt;param&gt;</strong></div>
-                                @foreach($diff['raw_feed_properties'] as $name => $value)
-                                    <div>{{ $name }}: {{ $value }}</div>
-                                @endforeach
-                            @endif
-                            @if(!empty($diff['description_properties']))
-                                <div class="mt-2"><strong>Извлечено из описания</strong></div>
-                                @foreach($diff['description_properties'] as $name => $value)
-                                    <div>{{ $name }}: {{ $value }}</div>
-                                @endforeach
-                            @endif
                             @if(!empty($diff['feed_properties']))
-                                <div class="mt-2"><strong>Будет записано в характеристики</strong></div>
+                                <div><strong>Характеристики после импорта</strong></div>
                                 @foreach($diff['feed_properties'] as $name => $value)
                                     <div>{{ $name }}: {{ $value }}</div>
                                 @endforeach
-                            @endif
-                            @if(!empty($diff['property_conflicts']))
-                                <div class="text-warning mt-2">
-                                    <strong>Не обновляем автоматически из-за расхождения</strong>
-                                    @foreach($diff['property_conflicts'] as $conflict)
-                                        <div>
-                                            {{ $conflict['name'] }}:
-                                            &lt;param&gt; «{{ $conflict['param'] }}»,
-                                            описание «{{ $conflict['description'] }}»
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if(!empty($diff['unmapped_description_lines']))
-                                <div class="text-muted mt-2">
-                                    <strong>Оставлено в описании без автосопоставления</strong>
-                                    @foreach($diff['unmapped_description_lines'] as $line)
-                                        <div>{{ $line }}</div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if(!empty($diff['packaging_lines']))
-                                <div class="mt-2">
-                                    <strong>Будет добавлено в блок «Упаковка»</strong>
-                                    @foreach($diff['packaging_lines'] as $line)
-                                        <div>{{ $line }}</div>
-                                    @endforeach
-                                </div>
                             @endif
                             @if(!empty($diff['description']))
                                 <div class="mt-2"><strong>Описание:</strong> {{ $diff['description'] }}</div>
@@ -170,7 +125,7 @@
                                     @csrf
                                     <input type="hidden" name="decision" value="pending">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                        Изменить сопоставление
+                                        Связан не с тем товаром
                                     </button>
                                 </form>
                             @endif

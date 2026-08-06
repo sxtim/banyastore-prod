@@ -54,7 +54,6 @@ class IronSteelOfferNormalizer
     {
         $normalizedRawParams = [];
         $params = [];
-        $conflicts = [];
 
         foreach ($rawParams as $rawName => $rawValue) {
             $value = $this->values->display((string) $rawValue);
@@ -62,23 +61,9 @@ class IronSteelOfferNormalizer
             $expandedParams = $this->expandParam($rawName, $value);
 
             foreach ($expandedParams as $name => $expandedValue) {
-                if (
-                    isset($params[$name])
-                    && $this->values->comparisonKey($params[$name])
-                        !== $this->values->comparisonKey($expandedValue)
-                ) {
-                    $conflicts[$name] = [
-                        'name' => $name,
-                        'param' => $params[$name],
-                        'description' => $expandedValue,
-                        'message' => 'В фиде переданы разные значения одного свойства.',
-                    ];
-                    unset($params[$name]);
-
-                    continue;
+                if (! isset($params[$name])) {
+                    $params[$name] = $expandedValue;
                 }
-
-                $params[$name] = $expandedValue;
             }
         }
 
@@ -108,44 +93,13 @@ class IronSteelOfferNormalizer
             [$name, $value] = $match;
             $matchedLines[$index] = $name;
 
-            if (
-                isset($descriptionParams[$name])
-                && $this->values->comparisonKey($descriptionParams[$name])
-                    !== $this->values->comparisonKey($value)
-            ) {
-                $conflicts[$name] = [
-                    'name' => $name,
-                    'param' => $descriptionParams[$name],
-                    'description' => $value,
-                    'message' => 'В описании переданы разные значения одного свойства.',
-                ];
-                unset($descriptionParams[$name]);
-
-                continue;
+            if (! isset($descriptionParams[$name])) {
+                $descriptionParams[$name] = $value;
             }
-
-            $descriptionParams[$name] = $value;
         }
 
         foreach ($descriptionParams as $name => $descriptionValue) {
-            if (isset($params[$name])) {
-                if (
-                    $this->values->comparisonKey($params[$name])
-                    !== $this->values->comparisonKey($descriptionValue)
-                ) {
-                    $conflicts[$name] = [
-                        'name' => $name,
-                        'param' => $params[$name],
-                        'description' => $descriptionValue,
-                        'message' => 'Значение в <param> отличается от значения в описании.',
-                    ];
-                    unset($params[$name]);
-                }
-
-                continue;
-            }
-
-            if (! isset($conflicts[$name])) {
+            if (! isset($params[$name])) {
                 $params[$name] = $descriptionValue;
             }
         }
@@ -160,7 +114,6 @@ class IronSteelOfferNormalizer
             if (
                 $matchedName !== null
                 && isset($params[$matchedName])
-                && ! isset($conflicts[$matchedName])
             ) {
                 continue;
             }
@@ -175,7 +128,6 @@ class IronSteelOfferNormalizer
             'params' => $params,
             'raw_params' => $normalizedRawParams,
             'description_params' => $descriptionParams,
-            'property_conflicts' => array_values($conflicts),
             'unmapped_description_lines' => array_values(array_unique($unmappedLines)),
             'packaging_lines' => array_values(array_unique($packagingLines)),
             'description' => $this->joinLines($cleanLines),

@@ -27,6 +27,7 @@ class IronSteelFeedParserTest extends TestCase
         $this->assertSame(
             [
                 'Объем парной' => '12-20 м³',
+                'Масса печи' => '197 кг',
                 'Бренд' => 'ПроМеталл',
                 'Серия' => 'Атмосфера',
             ],
@@ -34,7 +35,7 @@ class IronSteelFeedParserTest extends TestCase
         );
         $this->assertSame('197 кг', $parsed['offers']['1001']['raw_params']['Масса печи']);
         $this->assertSame('200 кг', $parsed['offers']['1001']['description_params']['Масса печи']);
-        $this->assertSame('Масса печи', $parsed['offers']['1001']['property_conflicts'][0]['name']);
+        $this->assertArrayNotHasKey('property_conflicts', $parsed['offers']['1001']);
         $this->assertCount(2, $parsed['offers']['1001']['pictures']);
         $this->assertSame('Комбинированная отделка', $parsed['offers']['1001']['category_name']);
     }
