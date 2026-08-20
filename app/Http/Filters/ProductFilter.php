@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductFilter extends QueryFilter
 {
-    private const MAX_PROPERTY_GROUPS = 20;
+    private const MAX_PROPERTY_GROUPS = 30;
 
     private const MAX_PROPERTY_VALUES_PER_GROUP = 40;
 
@@ -15,15 +15,15 @@ class ProductFilter extends QueryFilter
     {
         $filters = parent::filters();
 
-        if (! array_key_exists('properties', $filters)) {
-            return $filters;
+        if (array_key_exists('properties', $filters)) {
+            $filters['properties'] = $this->normalizePropertiesFilter($filters['properties']);
+
+            if ($filters['properties'] === []) {
+                unset($filters['properties']);
+            }
         }
 
-        $filters['properties'] = $this->normalizePropertiesFilter($filters['properties']);
-
-        if ($filters['properties'] === []) {
-            unset($filters['properties']);
-        }
+        $filters = $this->normalizePriceFilter($filters);
 
         return $filters;
     }
@@ -59,6 +59,7 @@ class ProductFilter extends QueryFilter
                     '=',
                     'products_property_values.property_value_id'
                 )
+                ->whereNull('property_values.deleted_at')
                 ->where(function ($query) use ($properties) {
                     foreach ($properties as $propertyId => $values) {
                         $query->orWhere(function ($query) use ($propertyId, $values) {
@@ -74,6 +75,16 @@ class ProductFilter extends QueryFilter
                     [count($properties)]
                 );
         });
+    }
+
+    public function priceMin($price): Builder
+    {
+        return $this->builder->where('products.price', '>=', $price);
+    }
+
+    public function priceMax($price): Builder
+    {
+        return $this->builder->where('products.price', '<=', $price);
     }
 
     public function sort($column): Builder
@@ -150,5 +161,40 @@ class ProductFilter extends QueryFilter
         }
 
         return $normalized;
+    }
+
+    private function normalizePriceFilter(array $filters): array
+    {
+        $priceFilters = array_intersect_key($filters, array_flip(['price_min', 'price_max']));
+
+        if ($priceFilters === []) {
+            return $filters;
+        }
+
+        $validator = Validator::make($priceFilters, [
+            'price_min' => ['sometimes', 'integer', 'min:0'],
+            'price_max' => ['sometimes', 'integer', 'min:0'],
+        ]);
+
+        $validator->after(function ($validator) use ($priceFilters) {
+            if (
+                isset($priceFilters['price_min'], $priceFilters['price_max'])
+                && (int) $priceFilters['price_min'] > (int) $priceFilters['price_max']
+            ) {
+                $validator->errors()->add('price_min', 'Minimum price must not exceed maximum price.');
+            }
+        });
+
+        if ($validator->fails()) {
+            abort(400, 'Invalid price filter.');
+        }
+
+        foreach (['price_min', 'price_max'] as $key) {
+            if (array_key_exists($key, $priceFilters)) {
+                $filters[$key] = (int) $priceFilters[$key];
+            }
+        }
+
+        return $filters;
     }
 }

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@yield('pagetitle')</title>
     <link rel="stylesheet" href="{{ mix('css/main.css') }}"/>
+    <script defer src="{{ mix('js/manifest.js') }}"></script>
+    <script defer src="{{ mix('js/vendor.js') }}"></script>
+    <script defer src="{{ mix('js/app.js') }}"></script>
     <link rel="icon" href="favicon.ico">
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
@@ -26,7 +29,7 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/97923337" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <meta name="description" content="@yield('description')" />
     <!-- /Yandex.Metrika counter -->
-    <link rel="canonical" href="{{ url()->current() }}" />
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
     @yield('head')
 </head>
 <body>
@@ -42,10 +45,6 @@
 </div>
 
 @include('blocks/footer')
-
-<script src="{{ mix('js/manifest.js') }}"></script>
-<script src="{{ mix('js/vendor.js') }}"></script>
-<script src="{{ mix('js/app.js') }}"></script>
 
 </body>
 </html>

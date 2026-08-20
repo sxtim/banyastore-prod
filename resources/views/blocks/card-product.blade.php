@@ -8,7 +8,7 @@
             @endif
             <btn-favorite-product-component :product-id="{{ $product->id }}"></btn-favorite-product-component>
         </div>
-        <img src="{{ $product->getImageUrlAttribute() }}" alt="card-img">
+        <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
     </div>
     <div class="card__desc">
         <div class="card__desc-row">

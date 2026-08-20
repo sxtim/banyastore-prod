@@ -33,8 +33,6 @@
  * Date: 2023-08-28T13:37Z
  */
 
-/*! #__NO_SIDE_EFFECTS__ */
-
 /**
  * Base Paragraph Block for the Editor.js.
  * Represents a regular text block
@@ -62,7 +60,19 @@
  */
 
 /**
-* @vue/shared v3.4.31
+* @vue/runtime-core v3.5.41
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/runtime-dom v3.5.41
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/shared v3.5.41
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/

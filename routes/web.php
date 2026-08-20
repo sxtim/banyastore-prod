@@ -182,6 +182,9 @@ Route::get('/mail', [\App\Http\Controllers\MailController::class, 'send'])->name
 //Аякс
 Route::prefix('ajax')->name('ajax.')->group(function () {
 
+    Route::get('/category/{slug}/facets', \App\Http\Controllers\Ajax\CatalogFacetController::class)
+        ->name('category.facets');
+
     //Аякс-корзина
     Route::prefix('basket')->name('basket.')->group(function () {
         Route::post('/get-basket', [\App\Http\Controllers\Ajax\BasketController::class, 'getBasket'])->name('get-basket');

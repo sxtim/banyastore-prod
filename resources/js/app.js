@@ -22,6 +22,7 @@ import RegisterComponent from "./blocks/vue/Auth/RegisterComponent";
 import FeedbackPage from "./blocks/vue/FeedbackPage";
 import UpdatePasswordComponent from "./blocks/vue/Auth/UpdatePasswordComponent";
 import CookieComponent from "./blocks/vue/Cookie/CookieComponent.vue";
+import CatalogFiltersComponent from "./blocks/vue/Filters/CatalogFiltersComponent.vue";
 
 //
 if (document.getElementById('header')) {
@@ -63,6 +64,46 @@ if (document.getElementById('catalog')) {
     }).use(store)
         .mount("#catalog")
 }
+
+if (document.getElementById('catalog-filter-app')) {
+    createApp({
+        components: {
+            CatalogFiltersComponent
+        }
+    }).mount('#catalog-filter-app')
+}
+
+let catalogProductsApp = null;
+
+const mountCatalogProducts = () => {
+    const catalogProducts = document.getElementById('catalog-products-app');
+
+    if (!catalogProducts) {
+        return;
+    }
+
+    catalogProductsApp = createApp({
+        components: {
+            BtnAddBasketComponent,
+            BtnFavoriteProductComponent
+        }
+    }).use(store);
+    catalogProductsApp.mount(catalogProducts);
+};
+
+mountCatalogProducts();
+
+window.addEventListener('catalog:replace-results', (event) => {
+    const catalogProducts = document.getElementById('catalog-products-app');
+
+    if (!catalogProducts) {
+        return;
+    }
+
+    catalogProductsApp?.unmount();
+    catalogProducts.innerHTML = event.detail.html;
+    mountCatalogProducts();
+});
 
 if (document.getElementById('login-form')) {
     createApp({

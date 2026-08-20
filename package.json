@@ -10,11 +10,15 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "test:unit": "node --test tests/JavaScript/*.test.mjs",
+        "test:ui": "playwright test",
+        "test:frontend": "npm run test:unit && npm run test:ui"
     },
     "devDependencies": {
         "@editorjs/editorjs": "^2.27.2",
         "@editorjs/header": "^2.7.0",
+        "@playwright/test": "^1.62.1",
         "@vue/compiler-sfc": "^3.2.29",
         "browser-sync": "^2.27.5",
         "browser-sync-webpack-plugin": "^2.3.0",
@@ -40,6 +44,7 @@
         "maska": "^1.5.0",
         "postcss": "^8.3.10",
         "postcss-import": "^14.0.2",
+        "reka-ui": "^2.10.1",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.43.3",
         "sass-loader": "^12.2.0",
